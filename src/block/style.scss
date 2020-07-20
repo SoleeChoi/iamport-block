@@ -16,8 +16,13 @@
 /**
  * antd styling
  */
-.ant-form-vertical .ant-form-item {
-  margin-bottom: 0.5rem;
+.ant-form {
+  .ant-form-item {
+    margin-bottom: 0.5rem;
+  }
+  .ant-form-item-label > label::after {
+    display: none;
+  }
 }
 .has-error .ant-form-explain {
   padding-left: 0.66rem;
