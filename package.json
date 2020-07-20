@@ -1,0 +1,21 @@
+{
+  "name": "iamport-block-cgb-guten-block",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "cgb-scripts start",
+    "start-react": "cross-env webpack --watch",
+    "build": "cross-env NODE_ENV=production webpack -p && cgb-scripts build",
+    "eject": "cgb-scripts eject"
+  },
+  "dependencies": {
+    "@wordpress/components": "^10.0.1",
+    "@wordpress/element": "^2.16.0",
+    "antd": "^3.26.16",
+    "cgb-scripts": "1.23.1"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.13.0",
+    "css-loader": "^3.6.0"
+  }
+}
