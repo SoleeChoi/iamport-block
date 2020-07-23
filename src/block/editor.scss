@@ -21,6 +21,10 @@
       width: 100%;
     }
 
+    .ant-divider {
+      background-color: #344e81;
+    }
+
     h3, .imp-label-container {
       width: 100%;
       // 기본 입력 필드, 커스텀 입력 필드
@@ -50,9 +54,24 @@
       color: #888;
       font-weight: normal;
     }
+
+    .imp-custom-fields-container {
+      // margin-bottom: 2rem;
+      .ant-col .ant-btn {
+        // 옵션 삭제
+        width: 100%;
+      }
+    }
+
     button[type="submit"] {
       width: 100%;
       margin-top: 2rem;
+    }
+
+    // override wordpress default css
+    input[type="text"] {
+      border-color: #d9d9d9;
+      font-size: 16px;
     }
   }
 }

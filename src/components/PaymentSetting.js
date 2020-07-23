@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Form, Row, Col, Input, Checkbox, Button, Modal } from 'antd';
+import { Form, Button, Modal, message } from 'antd';
 
-// import PaymentAmount from './PaymentAmount';
 import AddCustomFieldsModal from './AddCustomFieldsModal';
-import CustomField from './CustomField';
-
-import { PAY_METHODS } from '../constants';
+import BasicFields from './BasicFields';
+import CustomFields from './CustomFields';
 
 const { __ } = wp.i18n;
-const { Item } = Form;
 
 export function PaymentSetting({ form, attributes, className, setAttributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue } = form;
@@ -19,9 +16,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
   const [customFields, setCustomFields] = useState(attributes.customFields || []);
 
   useEffect(() => {
-    console.log(attributes);
     setTimeout(() => {
-      // 기본 값: 버튼 라벨, 팝업 파이틀, 팝업 설명, 주문명, 결제수단, 결제금액
       const newFieldsValue = {
         buttonName: buttonName || __('결제하기', 'iamport-block'),
         title: title || __('참가권 결제', 'iamport-block'),
@@ -31,11 +26,6 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         amount: amount || 1000,
         payMethods: payMethods || [], 
       };
-
-      // 커스텀 입력 필드
-      customFields.forEach(({ label, value }) => {
-        newFieldsValue[label] = value;
-      });
       setFieldsValue(newFieldsValue);
     }, 0);
   }, []);
@@ -43,25 +33,21 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
   function onSubmit() {
     validateFields((error, values) => {
       if (!error) {
-        // 기본 값: 버튼 라벨, 팝업 파이틀, 팝업 설명, 주문명, 결제수단, 결제금액
-        const newAttributes = {};
+        const newAttributes = { customFields: values.customFields };
         Object.keys(values).forEach(key => {
           const value = values[key];
           if (['buttonName', 'title', 'description', 'payMethods'].indexOf(key) !== -1) {
             newAttributes[key] = value;
           }
         });
-
-        // 커스텀 입력 필드
-        const newCustomFields = customFields.map(field => {
-          return {
-            ...field,
-            value: values[field.label],
-          };
-        });
-        newAttributes.customFields = newCustomFields;
         console.log(newAttributes);
         setAttributes(newAttributes);
+        Modal.info({
+          centered: true,
+          title: __('아임포트 블록 설정', 'iamport-block'),
+          content: __('아임포트 블록 설정 정보가 저장되었습니다. 우측 상단 업데이트 버튼을 눌러주세요.', 'iamport-block'),
+          okText: __('확인', 'iamport-block'),
+        })
       }
     });
   }
@@ -69,10 +55,6 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
   function onAddCustomField(customField) {
     setCustomFields(customFields.concat([customField]));
     setIsOpen(false);
-  }
-
-  function onEditCustomField() {
-    // customField 수정
   }
 
   function onDeleteCustomField(label) {
@@ -92,61 +74,57 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     })
   }
 
+  function onAddOption(index) {
+    // 입력 필드 옵션 추가
+    const newCustomFields = customFields.map((field, fieldIndex) => {
+      const { options } = field;
+      if (index === fieldIndex) {
+        return {
+          ...field,
+          options: options.concat(['']),
+        }
+      }
+      return field;
+    });
+    setCustomFields(newCustomFields);
+  }
+
+  function onDeleteOption(index, optionValue) {
+    // 입력 필드 옵션 삭제
+    const newCustomFields = customFields.map((field, fieldIndex) => {
+      const { options } = field;
+      if (index === fieldIndex) {
+        return {
+          ...field,
+          options: options.filter(option => option !== optionValue),
+        }
+      }
+      return field;
+    });
+    setCustomFields(newCustomFields);
+  }
+
   return (
     <div className={className} onSubmit={onSubmit}>
       <Form layout="horizontal" labelAlign="left">
-        <h3>기본 입력 필드</h3>
-        <Item label={__('결제 버튼 라벨','iamport-block')}>
-          {getFieldDecorator('buttonName')(
-            <Input size="large" />,
-          )}
-        </Item>
-        <Item label={__('결제 팝업 타이틀','iamport-block')}>
-          {getFieldDecorator('title')(
-            <Input size="large" />,
-          )}
-        </Item>
-        <Item label={__('결제 팝업 설명','iamport-block')}>
-          {getFieldDecorator('description')(
-            <Input size="large" />,
-          )}
-        </Item>
-        <Item label={__('주문명','iamport-block')}>
-          {getFieldDecorator('name')(
-            <Input size="large" />,
-          )}
-        </Item>
-        <Item label={__('결제수단','iamport-block')}>
-          {getFieldDecorator('payMethods')(
-            <Checkbox.Group>
-              <Row>
-                {Object.keys(PAY_METHODS).map(method =>
-                  <Col key={method} md={12} lg={8} xl={6}>
-                    <Checkbox value={method}>{PAY_METHODS[method]}</Checkbox>
-                  </Col>
-                )}
-              </Row>
-            </Checkbox.Group>
-          )}
-        </Item>
-        {/* 결제금액 */}
-        {/* <PaymentAmount
-          mode={mode}
-          amount={amount}
-          onChangeMode={mode => setAttributes({ mode })}
-          onChangeAmount={amount => setAttributes({ amount })}
-        /> */}
+        <BasicFields getFieldDecorator={getFieldDecorator} />
         <h3>
-          <span>커스텀 입력 필드</span>
-          <Button size="large" onClick={() => setIsOpen(true)}>추가하기</Button>
+          <span>{__('커스텀 입력 필드', 'iamport-block')}</span>
+          <Button
+            size="large"
+            type="primary"
+            ghost
+            onClick={() => setIsOpen(true)}
+          >{__('입력 필드 추가', 'iamport-block')}</Button>
         </h3>
-        {customFields.length === 0 && <h4>설정된 커스텀 입력 필드가 없습니다.</h4>}
-        {customFields.map(field =>
-          <CustomField
+        {customFields.length === 0 && <h4>{__('설정된 커스텀 입력 필드가 없습니다.', 'iamport-block')}</h4>}
+        {customFields.map((field, index) =>
+          <CustomFields
             field={field}
+            index={index}
             getFieldDecorator={getFieldDecorator}
-            onEdit={onEditCustomField}
-            onDelete={onDeleteCustomField}
+            onAddOption={() => onAddOption(index)}
+            onDeleteOption={optionValue => onDeleteOption(index, optionValue)}
           />
         )}
         <Button
