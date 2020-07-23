@@ -4,15 +4,6 @@
  * CSS for both Frontend+Backend.
  */
 
-.wp-block-cgb-iamport-block  {
-  background: $primary-bg;
-  border: 0.2rem solid $primary;
-  color: $black;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem;
-}
-
 /**
  * antd styling
  */
@@ -38,7 +29,6 @@
     margin: 0 0.25rem;
   }
 }
-
 /**
  * override wordpress default css
  */
@@ -48,4 +38,7 @@
 .ant-form-item-control:not(.has-error) input:focus {
   border-color: #40a9ff;
   outline: none;
+}
+.ant-modal input[type=text] {
+  border-color: #d9d9d9;  
 }

@@ -6,10 +6,53 @@
  */
 
 .wp-block-cgb-iamport-block  {
-  background: $green;
-  border: 0.2rem solid $black;
+  background: $primary-bg;
+  border: 0.2rem solid $primary;
   color: $black;
   margin: 0 auto;
   max-width: 740px;
   padding: 2rem;
+
+  .ant-form {
+    .ant-form-item-children,
+    .ant-checkbox-group,
+    .ant-radio-group,
+    .ant-form-item-label {
+      width: 100%;
+    }
+
+    h3, .imp-label-container {
+      width: 100%;
+      // 기본 입력 필드, 커스텀 입력 필드
+      // 커스텀 입력 필드 라벨 컨테이너
+      &:after {
+        clear: both;
+        display: block;
+        content: ' ';
+      }
+      > span {
+        float: left;
+        line-height: 40px;
+      }
+      > button, > .anticon {
+        // 커스텀 입력 필드 추가하기
+        float: right;
+      }
+      > .anticon {
+        // 라벨 수정 / 삭제 버튼
+        margin-left: 1rem;
+        line-height: 40px;
+      }
+    }
+    h4 {
+      // 설정된 커스텀 입력 필드가 없습니다.
+      text-align: center;
+      color: #888;
+      font-weight: normal;
+    }
+    button[type="submit"] {
+      width: 100%;
+      margin-top: 2rem;
+    }
+  }
 }

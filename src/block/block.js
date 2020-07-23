@@ -67,7 +67,11 @@ export default registerBlockType( 'cgb/iamport-block', {
     payMethods: {
       type: 'array',
       selector: 'input',
-    }
+    },
+    customFields: {
+      type: 'array',
+      selector: 'input',
+    },
   },
 
 	/**
