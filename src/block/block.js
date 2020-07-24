@@ -56,19 +56,19 @@ export default registerBlockType( 'cgb/iamport-block', {
       type: 'string',
       selector: 'input',
     },
-    mode: { // 결제금액 유형
+    amountType: { // 결제 금액 유형
       type: 'string',
       selector: 'input',
     },
-    amount: { // 결제금액
-      type: 'number',
-      selector: 'input',
-    },
-    payMethods: {
+    amountOptions: { // 결제금액 정보
       type: 'array',
       selector: 'input',
     },
-    customFields: {
+    payMethods: { // 결제 수단 정보
+      type: 'array',
+      selector: 'input',
+    },
+    customFields: { // 커스텀 입력 필드 정보
       type: 'array',
       selector: 'input',
     },

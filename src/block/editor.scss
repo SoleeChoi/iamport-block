@@ -25,31 +25,13 @@
       background-color: #344e81;
     }
 
-    h3, .imp-label-container {
-      width: 100%;
-      // 기본 입력 필드, 커스텀 입력 필드
-      // 커스텀 입력 필드 라벨 컨테이너
-      &:after {
-        clear: both;
-        display: block;
-        content: ' ';
-      }
-      > span {
-        float: left;
-        line-height: 40px;
-      }
-      > button, > .anticon {
-        // 커스텀 입력 필드 추가하기
-        float: right;
-      }
-      > .anticon {
-        // 라벨 수정 / 삭제 버튼
-        margin-left: 1rem;
-        line-height: 40px;
-      }
+    h3 {
+      // 기본 입력 필드, 결제 금액 필드, 커스텀 필드 타이틀
+      margin-bottom: 0;
     }
+
     h4 {
-      // 설정된 커스텀 입력 필드가 없습니다.
+      // 설정된 커스텀 입력 필드가 없습니다
       text-align: center;
       color: #888;
       font-weight: normal;
@@ -57,39 +39,35 @@
 
     .imp-custom-fields-container {
       // 커스텀 입력 필드 컨테이너
-      &, .ant-col.ant-col-12:last-child {
-        text-align: right;
-      }
-      .imp-custom-field-label-container {
-        // 라벨 컨테이너
-        width: 100%;
-        text-align: left;
-        color: rgba(0, 0, 0, 0.85);
-        display: inline-block;
-        overflow: hidden;
-        line-height: 39.9999px;
-        white-space: nowrap;
-        vertical-align: middle;
-        position: relative;
-        min-height: 1px;
-        // 필수입력 여부
-        .ant-checkbox-wrapper {
-          margin-left: 1rem;
-        }
+      text-align: right;
+    }
+
+    .imp-label-container {
+      // 라벨 컨테이너
+      width: 100%;
+      text-align: left;
+      color: rgba(0, 0, 0, 0.85);
+      display: inline-block;
+      overflow: hidden;
+      line-height: 39.9999px;
+      white-space: nowrap;
+      vertical-align: middle;
+      position: relative;
+      min-height: 1px;
+
+      // 필수입력 여부
+      .ant-checkbox-wrapper {
+        margin-left: 1rem;
       }
     }
 
-    > .ant-btn {
-      // 필드 추가하기
-      width: 100%;
-    }
-    button[type="submit"] {
-      // 저장하기
-      margin-top: 1rem;
+    .ant-col.ant-col-2 {
+      text-align: center;
     }
 
     // override wordpress default css
-    input[type="text"] {
+    input[type="text"],
+    input[type="number"] {
       border-color: #d9d9d9;
       font-size: 16px;
     }

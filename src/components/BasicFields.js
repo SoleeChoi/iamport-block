@@ -1,7 +1,5 @@
 import { Form, Row, Col, Input, Checkbox } from 'antd';
 
-// import PaymentAmount from './PaymentAmount';
-
 import { PAY_METHODS } from '../constants';
 
 const { __ } = wp.i18n;
@@ -12,12 +10,32 @@ export function BasicFields({ getFieldDecorator }) {
     <div>
       <h3>{__('기본 입력 필드', 'iamport-block')}</h3>
       <Item label={__('결제 버튼 라벨','iamport-block')}>
-        {getFieldDecorator('buttonName')(
+        {getFieldDecorator(
+          'buttonName',
+          {
+            rules: [
+              {
+                required: true,
+                message: '필수 입력입니다',
+              },
+            ],
+          },
+        )(
           <Input size="large" />,
         )}
       </Item>
       <Item label={__('결제 팝업 타이틀','iamport-block')}>
-        {getFieldDecorator('title')(
+        {getFieldDecorator(
+          'title',
+          {
+            rules: [
+              {
+                required: true,
+                message: '필수 입력입니다',
+              },
+            ],
+          },
+        )(
           <Input size="large" />,
         )}
       </Item>
@@ -27,12 +45,32 @@ export function BasicFields({ getFieldDecorator }) {
         )}
       </Item>
       <Item label={__('주문명','iamport-block')}>
-        {getFieldDecorator('name')(
+        {getFieldDecorator(
+          'name',
+          {
+            rules: [
+              {
+                required: true,
+                message: '필수 입력입니다',
+              },
+            ],
+          },
+        )(
           <Input size="large" />,
         )}
       </Item>
       <Item label={__('결제수단','iamport-block')}>
-        {getFieldDecorator('payMethods')(
+        {getFieldDecorator(
+          'payMethods',
+          {
+            rules: [
+              {
+                required: true,
+                message: '필수 선택입니다',
+              },
+            ],
+          },
+        )(
           <Checkbox.Group>
             <Row>
               {Object.keys(PAY_METHODS).map(method =>
@@ -44,13 +82,6 @@ export function BasicFields({ getFieldDecorator }) {
           </Checkbox.Group>
         )}
       </Item>
-      {/* 결제금액 */}
-      {/* <PaymentAmount
-        mode={mode}
-        amount={amount}
-        onChangeMode={mode => setAttributes({ mode })}
-        onChangeAmount={amount => setAttributes({ amount })}
-      /> */}
     </div>
   );
 }

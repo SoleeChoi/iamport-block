@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Row, Col, Select, Input, Checkbox, Icon, Button, Divider } from 'antd';
 
-const { Option } = Select;
+import { OPTION_TYPES } from '../constants';
 
+const { Option } = Select;
 const { __ } = wp.i18n;
 
 export function CustomFields({
@@ -58,24 +59,13 @@ export function CustomFields({
         {__('필드삭제', 'iamport-block')}
       </Button>
       <Row gutter={[8, 8]}>
-        <Col span={12}>
-          <div class="imp-custom-field-label-container">
-            {__('입력 라벨', 'iamport-block')}
+        <Col span={11}>
+          <div class="imp-label-container">
+            {__('입력 유형', 'iamport-block')}
             <Checkbox
               checked={required}
               onChange={({ target: { checked } }) => onChange({ ...field, required: checked })}
             >{__('필수 입력/선택 여부', 'iamport-block')}</Checkbox>
-          </div>
-          <Input
-            size="large"
-            value={label}
-            onChange={({ target : { value } }) => onChange({ ...field, label: value })}
-            style={{ width: '100%' }}
-          />
-        </Col>
-        <Col span={12}>
-          <div class="imp-custom-field-label-container">
-            {__('입력 유형', 'iamport_block')}
           </div>
           <Select
             size="large"
@@ -84,25 +74,33 @@ export function CustomFields({
             value={type}
             onChange={onChangeType}
           >
-            <Option value="text">{__('텍스트', 'iamport-block')}</Option>
-            <Option value="file">{__('파일첨부', 'iamport-block')}</Option>
-            <Option value="address">{__('주소', 'iamport-block')}</Option>
-            <Option value="agreement">{__('약관 동의', 'iamport-block')}</Option>
-            <Option value="checkbox">{__('복수선택', 'iamport-block')}</Option>
-            <Option value="radio">{__('단일선택 (라디오)', 'iamport-block')}</Option>
-            <Option value="dropdown">{__('단일선택 (드롭다운)', 'iamport-block')}</Option>
+            {Object.keys(OPTION_TYPES).map(eachType =>
+              <Option value={eachType}>{OPTION_TYPES[eachType]}</Option>
+            )}
           </Select>
         </Col>
+        <Col span={11}>
+          <div class="imp-label-container">
+            {__('입력 라벨', 'iamport-block')}
+          </div>
+          <Input
+            size="large"
+            value={label}
+            onChange={({ target : { value } }) => onChange({ ...field, label: value })}
+            style={{ width: '100%' }}
+          />
+        </Col>
+        <Col span={2}></Col>
       </Row>
       {
         optionVisible &&
         <div>
-          <div class="imp-custom-field-label-container">
+          <div class="imp-label-container">
             {__('입력 옵션', 'iamport_block')}
           </div>
           {options.map((eachOption, optionIndex) =>
             <Row gutter={[8, 8]}>
-              <Col span={12}>
+              <Col span={22}>
                 <Input
                   size="large"
                   style={{ width: '100%' }}
@@ -111,7 +109,7 @@ export function CustomFields({
                   placeholder={__('옵션 값을 입력해주세요', 'iamport-block')}
                 />
               </Col>
-              <Col span={12}>
+              <Col span={2}>
                 <Button
                   size="large"
                   icon="close"
@@ -138,8 +136,8 @@ export function CustomFields({
       {
         agreementVisible &&
         <Row gutter={[8, 8]}>
-          <Col span={12}>
-            <div class="imp-custom-field-label-container">
+          <Col span={11}>
+            <div class="imp-label-container">
               {__('약관 라벨', 'iamport_block')}
             </div>
             <Input
@@ -150,8 +148,8 @@ export function CustomFields({
               onChange={({ target : { value } }) => onChangeAgreementOptions(value, 'label')}
             />
           </Col>
-          <Col span={12}>
-            <div class="imp-custom-field-label-container">
+          <Col span={11}>
+            <div class="imp-label-container">
               {__('약관 링크', 'iamport_block')}
             </div>
             <Input
@@ -162,6 +160,7 @@ export function CustomFields({
               onChange={({ target : { value } }) => onChangeAgreementOptions(value, 'link')}
             />
           </Col>
+          <Col span={2}></Col>
         </Row>
       }
       <Divider />
