@@ -24,4 +24,13 @@ export const OPTION_TYPES = {
   checkbox: __('복수선택', 'iamport-block'),
   radio: __('단일선택 (라디오)', 'iamport-block'),
   dropdown: __('단일선택 (드롭다운)', 'iamport-block'),
-}
+};
+
+export const BASIC_KEYS = [
+  'buttonName',
+  'title',
+  'description',
+  'payMethods',
+  'amountType',
+  'amountOptions',
+];

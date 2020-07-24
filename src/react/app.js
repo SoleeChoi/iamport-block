@@ -81,17 +81,17 @@ function App({ form, attributes }) {
                 />,
               )}
             </Item>
-            <Item label={__('결제자 이름','iamport-block')}>
+            <Item label={__('이름','iamport-block')}>
               {getFieldDecorator('buyer_name', {
                 rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],
               })(
                 <Input
                   size="large"
-                  placeholder={__('결제자 이름','iamport-block')}
+                  placeholder={__('이름','iamport-block')}
                 />,
               )}
             </Item>
-            <Item label={__('결제자 이메일','iamport-block')}>
+            <Item label={__('이메일','iamport-block')}>
               {getFieldDecorator('buyer_email', {
                 rules: [{
                   required: true, message: __('필수입력입니다', 'iamport-block'),
@@ -100,18 +100,18 @@ function App({ form, attributes }) {
               })(
                 <Input
                   size="large"
-                  placeholder={__('결제자 이메일','iamport-block')}
+                  placeholder={__('이메일','iamport-block')}
                 />,
               )}
             </Item>
-            <Item label={__('결제자 전화번호','iamport-block')}>
+            <Item label={__('전화번호','iamport-block')}>
               {getFieldDecorator('buyer_tel', {
                 rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],
               })(
                 <Input
                   size="large"
                   type="number"
-                  placeholder={__('결제자 전화번호','iamport-block')}
+                  placeholder={__('전화번호','iamport-block')}
                 />,
               )}
             </Item>

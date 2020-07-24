@@ -5,6 +5,8 @@ import BasicFields from './BasicFields';
 import PaymentAmount from './PaymentAmount';
 import CustomFields from './CustomFields';
 
+import { BASIC_KEYS } from '../constants';
+
 const { __ } = wp.i18n;
 
 export function PaymentSetting({ form, attributes, className, setAttributes }) {
@@ -42,7 +44,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         };
         Object.keys(values).forEach(key => {
           const value = values[key];
-          if (['buttonName', 'title', 'description', 'payMethods'].indexOf(key) !== -1) {
+          if (BASIC_KEYS.indexOf(key) !== -1) {
             newAttributes[key] = value;
           }
         });
