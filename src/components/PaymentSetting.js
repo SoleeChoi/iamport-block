@@ -46,7 +46,6 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
             newAttributes[key] = value;
           }
         });
-        console.log(newAttributes);
         setAttributes(newAttributes);
         
         Modal.info({
@@ -59,7 +58,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     });
   }
 
-  function onChangeAmountOption(value) {
+  function onChangeAmountType(value) {
     // 금액 옵션 변경했을때
     setAmountType(value);
     if (value === 'fixed'){
@@ -156,7 +155,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
           getFieldDecorator={getFieldDecorator}
           amountType={amountType}
           amountOptions={amountOptions}
-          onChange={onChangeAmountOption}
+          onChange={onChangeAmountType}
           onAdd={onAddAmountOptions}
           onDelete={onDeleteAmountOptions}
         />

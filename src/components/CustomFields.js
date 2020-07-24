@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col, Select, Input, Checkbox, Icon, Button, Divider } from 'antd';
 
 import { OPTION_TYPES } from '../constants';
@@ -12,6 +12,11 @@ export function CustomFields({
   const { label, type, required, options, agreementOptions } = field;
   const [optionVisible, setOptionVisible] = useState(getOptionVisible(type));
   const [agreementVisible, setAgreementVisible] = useState(getAgreementVisible(type));
+
+  useEffect(() => {
+    setOptionVisible(getOptionVisible(type));
+    setAgreementVisible(getAgreementVisible(type))
+  }, [field]);
 
   function onChangeType(value) {
     // 입력 유형 변경되었을때
