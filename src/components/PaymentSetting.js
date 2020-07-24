@@ -119,14 +119,14 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     setCustomFields(newCustomFields);
   }
 
-  function onDeleteOption(index, optionValue) {
+  function onDeleteOption(index, optionIndex) {
     // 입력 필드 옵션 삭제
     const newCustomFields = customFields.map((field, fieldIndex) => {
       const { options } = field;
       if (index === fieldIndex) {
         return {
           ...field,
-          options: options.filter(option => option !== optionValue),
+          options: options.filter((option, eachOptionIndex) => eachOptionIndex !== optionIndex),
         }
       }
       return field;
@@ -165,7 +165,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
           <CustomFields
             field={field}
             onAddOption={() => onAddOption(index)}
-            onDeleteOption={optionValue => onDeleteOption(index, optionValue)}
+            onDeleteOption={optionIndex => onDeleteOption(index, optionIndex)}
             onDeleteCustomField={() => onDeleteCustomField(index)}
             onChange={newCustomField => onChangeCustomFields(index, newCustomField)}
           />

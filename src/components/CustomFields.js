@@ -120,7 +120,7 @@ export function CustomFields({
                   icon="close"
                   shape="circle"
                   disabled={optionIndex === 0 && options.length === 1}
-                  onClick={() => onDeleteOption(eachOption)}
+                  onClick={() => onDeleteOption(optionIndex)}
                 />
               </Col>
             </Row>
