@@ -19,9 +19,14 @@
   padding-left: 0.66rem;
   margin-top: 0.5rem;
 }
+.ant-checkbox-group,
+.ant-radio-group {
+  width: 100%;
+}
 .imp-btn-container {
   text-align: center;
   margin-top: 1rem;
+
   button {
     width: 4rem;
     text-align: center;
