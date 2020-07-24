@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Form, Button, Modal, message } from 'antd';
+import { Form, Button, Modal } from 'antd';
 
-import AddCustomFieldsModal from './AddCustomFieldsModal';
 import BasicFields from './BasicFields';
 import CustomFields from './CustomFields';
 
@@ -12,7 +11,6 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
   const {
     buttonName, title, description, name, mode, amount, payMethods,
   } = attributes;
-  const [isOpen, setIsOpen] = useState(false);
   const [customFields, setCustomFields] = useState(attributes.customFields || []);
 
   useEffect(() => {
@@ -33,7 +31,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
   function onSubmit() {
     validateFields((error, values) => {
       if (!error) {
-        const newAttributes = { customFields: values.customFields };
+        const newAttributes = { customFields };
         Object.keys(values).forEach(key => {
           const value = values[key];
           if (['buttonName', 'title', 'description', 'payMethods'].indexOf(key) !== -1) {
@@ -53,9 +51,16 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     });
   }
 
-  function onAddCustomField(customField) {
-    setCustomFields(customFields.concat([customField]));
-    setIsOpen(false);
+  function onAddCustomField() {
+    // 필드 추가
+    const defaultField = {
+      label: '',
+      type: 'text',
+      options: [''],
+      agreementOptions: { label: '', link: '' },
+      required: false,
+    };
+    setCustomFields(customFields.concat(defaultField));
   }
 
   function onDeleteCustomField(index) {
@@ -70,8 +75,6 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
       onOk() {
         const newCustomFields = customFields.filter((field, fieldIndex) => fieldIndex !== index);
         setCustomFields(newCustomFields);
-
-        message.info('입력 필드가 삭제되었습니다.');
       },
     })
   }
@@ -106,6 +109,17 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     setCustomFields(newCustomFields);
   }
 
+  function onChangeCustomFields(index, newCustomField) {
+    // 입력 필드 옵션 수정
+    const newCustomFields = customFields.map((eachCustomField, eachIndex) => {
+      if (eachIndex === index) {
+        return newCustomField;
+      }
+      return eachCustomField;
+    });
+    setCustomFields(newCustomFields);
+  }
+
   return (
     <div className={className} onSubmit={onSubmit}>
       <Form layout="horizontal" labelAlign="left">
@@ -115,32 +129,24 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         {customFields.map((field, index) =>
           <CustomFields
             field={field}
-            index={index}
-            getFieldDecorator={getFieldDecorator}
             onAddOption={() => onAddOption(index)}
             onDeleteOption={optionValue => onDeleteOption(index, optionValue)}
             onDeleteCustomField={() => onDeleteCustomField(index)}
+            onChange={newCustomField => onChangeCustomFields(index, newCustomField)}
           />
         )}
         <Button
           size="large"
           type="primary"
           ghost
-          onClick={() => setIsOpen(true)}
-        >{__('필드 추가하기', 'iamport-block')}</Button>
+          onClick={onAddCustomField}
+        >{__('필드추가', 'iamport-block')}</Button>
         <Button
           type="primary"
           htmlType="submit"
           size="large"
         >{__('저장하기', 'iamport-block')}</Button>
       </Form>
-      {
-        isOpen &&
-        <AddCustomFieldsModal
-          onOk={onAddCustomField}
-          onClose={() => setIsOpen(false)}
-        />
-      }
     </div>
   );
 }

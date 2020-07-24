@@ -56,13 +56,25 @@
     }
 
     .imp-custom-fields-container {
-      .ant-col.ant-col-12:last-child {
+      // 커스텀 입력 필드 컨테이너
+      &, .ant-col.ant-col-12:last-child {
         text-align: right;
       }
       .imp-custom-field-label-container {
-        display: flex;
-        > span {
-          margin-right: 1rem;
+        // 라벨 컨테이너
+        width: 100%;
+        text-align: left;
+        color: rgba(0, 0, 0, 0.85);
+        display: inline-block;
+        overflow: hidden;
+        line-height: 39.9999px;
+        white-space: nowrap;
+        vertical-align: middle;
+        position: relative;
+        min-height: 1px;
+        // 필수입력 여부
+        .ant-checkbox-wrapper {
+          margin-left: 1rem;
         }
       }
     }

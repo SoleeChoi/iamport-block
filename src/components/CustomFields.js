@@ -1,124 +1,128 @@
-import { useState, useEffect } from 'react';
-import { Form, Row, Col, Select, Input, Checkbox, Icon, Button, Divider } from 'antd';
+import { useState } from 'react';
+import { Row, Col, Select, Input, Checkbox, Icon, Button, Divider } from 'antd';
 
-const { Item } = Form;
 const { Option } = Select;
 
 const { __ } = wp.i18n;
 
 export function CustomFields({
-  field, index, getFieldDecorator, onAddOption, onDeleteOption, onDeleteCustomField,
+  field, onAddOption, onDeleteOption, onDeleteCustomField, onChange,
 }) {
-  const { label, type, required, options } = field;
-  const defaultOptionVisible = options !== undefined && type !== 'text';
-  const [optionVisible, setOptionVisible] = useState(defaultOptionVisible);
+  const { label, type, required, options, agreementOptions } = field;
+  const [optionVisible, setOptionVisible] = useState(getOptionVisible(type));
+  const [agreementVisible, setAgreementVisible] = useState(getAgreementVisible(type));
 
-  useEffect(() => {
-    setOptionVisible(options !== undefined && type !== 'text');
-  });
+  function onChangeType(value) {
+    // 입력 유형 변경되었을때
+    const newOptionVisible = getOptionVisible(value);
+    setOptionVisible(newOptionVisible);
 
-  const LabelComponent = () =>
-    <div class="imp-custom-field-label-container">
-      <span>{__('입력 라벨', 'iamport-block')}</span>
-      <Item>
-        {getFieldDecorator(
-          `customFields[${index}].required`,
-          {
-            valuePropName: 'checked',
-            initialValue: required,
-          },
-        )(<Checkbox>{__('필수 입력 여부', 'iamport-block')}</Checkbox>)}
-      </Item>
-    </div>
+    const newAgreementVisible = getAgreementVisible(value);
+    setAgreementVisible(newAgreementVisible);
+
+    const newField = { ...field, type: value };
+    onChange(newField);
+  }
+
+  function onChangeOption(value, index) {
+    // 입력 옵션 값 변경되었을때
+    const newOptions = options.map((eachOption, optionIndex) => {
+      if (optionIndex === index) {
+        return value;
+      }
+      return eachOption;
+    });
+    onChange({ ...field, options: newOptions });
+  }
+
+  function onChangeAgreementOptions(value, type) {
+    // 약관 옵션 값 변경되었을때
+    const newAgreementOptions = { ...agreementOptions, [type]: value };
+    onChange({ ...field, agreementOptions: newAgreementOptions });
+  }
+
+  function getOptionVisible(value) {
+    return value !== 'text' && value !== 'file' && value !== 'address' && !getAgreementVisible(value);
+  }
+
+  function getAgreementVisible(value) {
+    return value === 'agreement';
+  }
 
   return (
     <div className="imp-custom-fields-container">
-      <Row>
+      <Button
+        type="danger"
+        onClick={onDeleteCustomField}
+      >
+        {__('필드삭제', 'iamport-block')}
+      </Button>
+      <Row gutter={[8, 8]}>
         <Col span={12}>
-          <Item label={<LabelComponent />}>
-            {getFieldDecorator(
-              `customFields[${index}].label`,
-              {
-                initialValue: label,
-              },
-            )(
-              <Input
-                size="large"
-                style={{ width: '100%' }}
-              />
-            )}
-          </Item>
-        </Col>
-        <Col span={12}>
-          <Button
-            type="danger"
+          <div class="imp-custom-field-label-container">
+            {__('입력 라벨', 'iamport-block')}
+            <Checkbox
+              checked={required}
+              onChange={({ target: { checked } }) => onChange({ ...field, required: checked })}
+            >{__('필수 입력/선택 여부', 'iamport-block')}</Checkbox>
+          </div>
+          <Input
             size="large"
-            icon="close"
-            shape="circle"
-            onClick={onDeleteCustomField}
+            value={label}
+            onChange={({ target : { value } }) => onChange({ ...field, label: value })}
+            style={{ width: '100%' }}
           />
         </Col>
-      </Row>
-      <Row>
         <Col span={12}>
-          <Item label={__('입력 유형', 'iamport-block')}>
-            {getFieldDecorator(
-              `customFields[${index}].type`,
-              {
-                initialValue: type,
-              },
-            )(
-              <Select
-                size="large"
-                style={{ width: '100%' }}
-                suffixIcon={<Icon type="caret-down" />}
-                onChange={value => setOptionVisible(value !== 'text')}
-              >
-                <Option value="text">{__('텍스트', 'iamport-block')}</Option>
-                <Option value="checkbox">{__('복수선택', 'iamport-block')}</Option>
-                <Option value="radio">{__('단일선택 (라디오)', 'iamport-block')}</Option>
-                <Option value="dropdown">{__('단일선택 (드롭다운)', 'iamport-block')}</Option>
-              </Select>
-            )}
-          </Item>
+          <div class="imp-custom-field-label-container">
+            {__('입력 유형', 'iamport_block')}
+          </div>
+          <Select
+            size="large"
+            style={{ width: '100%' }}
+            suffixIcon={<Icon type="caret-down" />}
+            value={type}
+            onChange={onChangeType}
+          >
+            <Option value="text">{__('텍스트', 'iamport-block')}</Option>
+            <Option value="file">{__('파일첨부', 'iamport-block')}</Option>
+            <Option value="address">{__('주소', 'iamport-block')}</Option>
+            <Option value="agreement">{__('약관 동의', 'iamport-block')}</Option>
+            <Option value="checkbox">{__('복수선택', 'iamport-block')}</Option>
+            <Option value="radio">{__('단일선택 (라디오)', 'iamport-block')}</Option>
+            <Option value="dropdown">{__('단일선택 (드롭다운)', 'iamport-block')}</Option>
+          </Select>
         </Col>
-        <Col span={12}></Col>
       </Row>
       {
         optionVisible &&
-        <Row>
-          <div class="ant-col ant-form-item-label ant-form-item-label-left">
-            <label>{__('입력 옵션', 'iamport_block')}</label>
+        <div>
+          <div class="imp-custom-field-label-container">
+            {__('입력 옵션', 'iamport_block')}
           </div>
           {options.map((eachOption, optionIndex) =>
-            <Row>
+            <Row gutter={[8, 8]}>
               <Col span={12}>
-                <Item>
-                  {getFieldDecorator(
-                    `customFields[${index}].options[${optionIndex}]`,
-                    {
-                      initialValue: eachOption,
-                    },
-                  )(
-                    <Input
-                      size="large"
-                      style={{ width: '100%' }}
-                      placeholder={__('옵션 값을 입력해주세요', 'iamport-block')}
-                    />
-                  )}
-                </Item>
+                <Input
+                  size="large"
+                  style={{ width: '100%' }}
+                  value={eachOption}
+                  onChange={({ target : { value } }) => onChangeOption(value, optionIndex)}
+                  placeholder={__('옵션 값을 입력해주세요', 'iamport-block')}
+                />
               </Col>
               <Col span={12}>
                 <Button
                   size="large"
                   icon="close"
                   shape="circle"
+                  disabled={optionIndex === 0 && options.length === 1}
                   onClick={() => onDeleteOption(eachOption)}
                 />
               </Col>
             </Row>
           )}
-          <Row>
+          <Row gutter={[8, 8]}>
             <Col span={24}>
               <Button
                 size="large"
@@ -129,6 +133,35 @@ export function CustomFields({
               />
             </Col>
           </Row>
+        </div>
+      }
+      {
+        agreementVisible &&
+        <Row gutter={[8, 8]}>
+          <Col span={12}>
+            <div class="imp-custom-field-label-container">
+              {__('약관 라벨', 'iamport_block')}
+            </div>
+            <Input
+              size="large"
+              style={{ width: '100%' }}
+              placeholder={__('예) 개인정보 이용제공 동의', 'iamport_block')}
+              value={agreementOptions.label}
+              onChange={({ target : { value } }) => onChangeAgreementOptions(value, 'label')}
+            />
+          </Col>
+          <Col span={12}>
+            <div class="imp-custom-field-label-container">
+              {__('약관 링크', 'iamport_block')}
+            </div>
+            <Input
+              size="large"
+              style={{ width: '100%' }}
+              placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport_block')}
+              value={agreementOptions.link}
+              onChange={({ target : { value } }) => onChangeAgreementOptions(value, 'link')}
+            />
+          </Col>
         </Row>
       }
       <Divider />
