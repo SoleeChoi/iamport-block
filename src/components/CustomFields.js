@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Form, Row, Col, Select, Input, Button, Divider } from 'antd';
+import { useState, useEffect } from 'react';
+import { Form, Row, Col, Select, Input, Checkbox, Icon, Button, Divider } from 'antd';
 
 const { Item } = Form;
 const { Option } = Select;
@@ -7,17 +7,61 @@ const { Option } = Select;
 const { __ } = wp.i18n;
 
 export function CustomFields({
-  field, index, getFieldDecorator, onAddOption, onDeleteOption,
+  field, index, getFieldDecorator, onAddOption, onDeleteOption, onDeleteCustomField,
 }) {
-  const { label, type, options } = field;
-  const [optionVisible, setOptionVisible] = useState(type !== 'text');
+  const { label, type, required, options } = field;
+  const defaultOptionVisible = options !== undefined && type !== 'text';
+  const [optionVisible, setOptionVisible] = useState(defaultOptionVisible);
+
+  useEffect(() => {
+    setOptionVisible(options !== undefined && type !== 'text');
+  });
+
+  const LabelComponent = () =>
+    <div class="imp-custom-field-label-container">
+      <span>{__('입력 라벨', 'iamport-block')}</span>
+      <Item>
+        {getFieldDecorator(
+          `customFields[${index}].required`,
+          {
+            valuePropName: 'checked',
+            initialValue: required,
+          },
+        )(<Checkbox>{__('필수 입력 여부', 'iamport-block')}</Checkbox>)}
+      </Item>
+    </div>
 
   return (
     <div className="imp-custom-fields-container">
-      {index !== 0 && <Divider />}
-      <Row gutter={[8, 0]}>
+      <Row>
         <Col span={12}>
-          <Item>
+          <Item label={<LabelComponent />}>
+            {getFieldDecorator(
+              `customFields[${index}].label`,
+              {
+                initialValue: label,
+              },
+            )(
+              <Input
+                size="large"
+                style={{ width: '100%' }}
+              />
+            )}
+          </Item>
+        </Col>
+        <Col span={12}>
+          <Button
+            type="danger"
+            size="large"
+            icon="close"
+            shape="circle"
+            onClick={onDeleteCustomField}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col span={12}>
+          <Item label={__('입력 유형', 'iamport-block')}>
             {getFieldDecorator(
               `customFields[${index}].type`,
               {
@@ -27,7 +71,7 @@ export function CustomFields({
               <Select
                 size="large"
                 style={{ width: '100%' }}
-                addonBefore={__('입력 유형', 'iamport-block')}
+                suffixIcon={<Icon type="caret-down" />}
                 onChange={value => setOptionVisible(value !== 'text')}
               >
                 <Option value="text">{__('텍스트', 'iamport-block')}</Option>
@@ -38,29 +82,17 @@ export function CustomFields({
             )}
           </Item>
         </Col>
-        <Col span={12}>
-          <Item>
-            {getFieldDecorator(
-              `customFields[${index}].label`,
-              {
-                initialValue: label,
-              },
-            )(
-              <Input
-                addonBefore={__('입력 라벨', 'iamport-block')}
-                size="large"
-                style={{ width: '100%' }}
-              />
-            )}
-          </Item>
-        </Col>
+        <Col span={12}></Col>
       </Row>
       {
         optionVisible &&
-        <Row gutter={[8, 0]}>
+        <Row>
+          <div class="ant-col ant-form-item-label ant-form-item-label-left">
+            <label>{__('입력 옵션', 'iamport_block')}</label>
+          </div>
           {options.map((eachOption, optionIndex) =>
-            <div>
-              <Col span={20}>
+            <Row>
+              <Col span={12}>
                 <Item>
                   {getFieldDecorator(
                     `customFields[${index}].options[${optionIndex}]`,
@@ -76,24 +108,30 @@ export function CustomFields({
                   )}
                 </Item>
               </Col>
-              <Col span={4}>
+              <Col span={12}>
                 <Button
                   size="large"
+                  icon="close"
+                  shape="circle"
                   onClick={() => onDeleteOption(eachOption)}
-                >{__('옵션 삭제', 'iamport-block')}</Button>
+                />
               </Col>
-            </div>
+            </Row>
           )}
-          <Col span={24}>
-            <Button
-              size="large"
-              type="dashed"
-              style={{ width: '100%' }}
-              onClick={onAddOption}
-            >{__('옵션 추가', 'iamport-block')}</Button>
-          </Col>
+          <Row>
+            <Col span={24}>
+              <Button
+                size="large"
+                type="dashed"
+                icon="plus"
+                style={{ width: '100%' }}
+                onClick={onAddOption}
+              />
+            </Col>
+          </Row>
         </Row>
       }
+      <Divider />
     </div>
   );
 }

@@ -42,12 +42,13 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         });
         console.log(newAttributes);
         setAttributes(newAttributes);
+        
         Modal.info({
           centered: true,
           title: __('아임포트 블록 설정', 'iamport-block'),
           content: __('아임포트 블록 설정 정보가 저장되었습니다. 우측 상단 업데이트 버튼을 눌러주세요.', 'iamport-block'),
           okText: __('확인', 'iamport-block'),
-        })
+        });
       }
     });
   }
@@ -57,7 +58,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     setIsOpen(false);
   }
 
-  function onDeleteCustomField(label) {
+  function onDeleteCustomField(index) {
     // customField 삭제
     Modal.confirm({
       centered: true,
@@ -67,9 +68,10 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
       okText: __('삭제하기', 'iamport-block'),
       cancelText: __('취소하기', 'iamport-block'),
       onOk() {
-        console.log(label);
-        const newCustomFields = customFields.filter(field => field.label !== label);
+        const newCustomFields = customFields.filter((field, fieldIndex) => fieldIndex !== index);
         setCustomFields(newCustomFields);
+
+        message.info('입력 필드가 삭제되었습니다.');
       },
     })
   }
@@ -108,15 +110,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     <div className={className} onSubmit={onSubmit}>
       <Form layout="horizontal" labelAlign="left">
         <BasicFields getFieldDecorator={getFieldDecorator} />
-        <h3>
-          <span>{__('커스텀 입력 필드', 'iamport-block')}</span>
-          <Button
-            size="large"
-            type="primary"
-            ghost
-            onClick={() => setIsOpen(true)}
-          >{__('입력 필드 추가', 'iamport-block')}</Button>
-        </h3>
+        <h3>{__('커스텀 입력 필드', 'iamport-block')}</h3>
         {customFields.length === 0 && <h4>{__('설정된 커스텀 입력 필드가 없습니다.', 'iamport-block')}</h4>}
         {customFields.map((field, index) =>
           <CustomFields
@@ -125,8 +119,15 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
             getFieldDecorator={getFieldDecorator}
             onAddOption={() => onAddOption(index)}
             onDeleteOption={optionValue => onDeleteOption(index, optionValue)}
+            onDeleteCustomField={() => onDeleteCustomField(index)}
           />
         )}
+        <Button
+          size="large"
+          type="primary"
+          ghost
+          onClick={() => setIsOpen(true)}
+        >{__('필드 추가하기', 'iamport-block')}</Button>
         <Button
           type="primary"
           htmlType="submit"

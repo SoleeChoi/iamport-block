@@ -56,22 +56,33 @@
     }
 
     .imp-custom-fields-container {
-      // margin-bottom: 2rem;
-      .ant-col .ant-btn {
-        // 옵션 삭제
-        width: 100%;
+      .ant-col.ant-col-12:last-child {
+        text-align: right;
+      }
+      .imp-custom-field-label-container {
+        display: flex;
+        > span {
+          margin-right: 1rem;
+        }
       }
     }
 
-    button[type="submit"] {
+    > .ant-btn {
+      // 필드 추가하기
       width: 100%;
-      margin-top: 2rem;
+    }
+    button[type="submit"] {
+      // 저장하기
+      margin-top: 1rem;
     }
 
     // override wordpress default css
     input[type="text"] {
       border-color: #d9d9d9;
       font-size: 16px;
+    }
+    .ant-btn-background-ghost {
+      background-color: #fff!important;
     }
   }
 }
