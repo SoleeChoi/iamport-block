@@ -10,9 +10,9 @@ import { BASIC_KEYS } from '../constants';
 const { __ } = wp.i18n;
 
 export function PaymentSetting({ form, attributes, className, setAttributes }) {
-  const { validateFields, getFieldDecorator, setFieldsValue } = form;
+  const { validateFields, getFieldDecorator, setFieldsValue, getFieldValue } = form;
   const {
-    buttonName, title, description, name, payMethods,
+    buttonName, title, description, name, payMethods, cardQuota, vbankDue,
   } = attributes;
   const defaultAmountOption = [{ label: '', amount: 1000 }];
   const [amountType, setAmountType] = useState(attributes.amountType || 'variable');
@@ -29,6 +29,8 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         amountType: amountType || 'variable',
         amountOptions: amountOptions || defaultAmountOption,
         payMethods: payMethods || [], 
+        cardQuota: cardQuota || 0,
+        vbankDue: vbankDue || 0,
       };
       setFieldsValue(newFieldsValue);
     }, 0);
@@ -151,7 +153,10 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     <div className={className} onSubmit={onSubmit}>
       <Form layout="horizontal" labelAlign="left">
         {/* 기본 입력 필드 */}
-        <BasicFields getFieldDecorator={getFieldDecorator} />
+        <BasicFields
+          getFieldDecorator={getFieldDecorator}
+          payMethods={getFieldValue('payMethods')}  
+        />
         {/* 결제 금액 필드 */}
         <PaymentAmount 
           getFieldDecorator={getFieldDecorator}

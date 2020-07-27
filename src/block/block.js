@@ -68,6 +68,14 @@ export default registerBlockType( 'cgb/iamport-block', {
       type: 'array',
       selector: 'input',
     },
+    cardQuota: { // 신용카드 할부 개월수
+      type: 'number',
+      selector: 'select',
+    },
+    vbankDue: { // 가상계좌 입금 기한
+      type: 'number',
+      selector: 'select',
+    },
     customFields: { // 커스텀 입력 필드 정보
       type: 'array',
       selector: 'input',

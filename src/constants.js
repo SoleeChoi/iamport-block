@@ -27,10 +27,13 @@ export const OPTION_TYPES = {
 };
 
 export const BASIC_KEYS = [
+  'name',
   'buttonName',
   'title',
   'description',
   'payMethods',
   'amountType',
   'amountOptions',
+  'cardQuota',
+  'vbankDue',
 ];

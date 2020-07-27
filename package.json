@@ -12,7 +12,8 @@
     "@wordpress/components": "^10.0.1",
     "@wordpress/element": "^2.16.0",
     "antd": "^3.26.16",
-    "cgb-scripts": "1.23.1"
+    "cgb-scripts": "1.23.1",
+    "moment": "^2.27.0"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.13.0",

@@ -6,12 +6,14 @@ import BasicFields from './BasicFields';
 import CustomField from './CustomField';
 import ButtonContainer from './ButtonContainer';
 
+import { getDisplay, getVbankDue } from './utils';
+
 const { __ } = wp.i18n;
 
 function App({ form, attributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue } = form;
   const {
-    userCode, buttonName, title, description, name, amountOptions, payMethods, customFields,
+    userCode, buttonName, title, description, name, amountOptions, payMethods, cardQuota, vbankDue, customFields
   } = attributes;
 
   const defaultFieldType = customFields.length === 0 ? 'basic' : 'custom';
@@ -61,9 +63,13 @@ function App({ form, attributes }) {
   function onClickPayment() {
     validateFields((error, values) => {
       if (!error) {
+        const { pay_method } = values;
         const paymentData = {
           name,
+          display: getDisplay(cardQuota),
+          vbank_due: getVbankDue(pay_method, vbankDue),
         };
+
         const custom_data = {};
         Object.keys(values).forEach(key => {
           const value = values[key];
@@ -81,6 +87,8 @@ function App({ form, attributes }) {
             paymentData[key] = value;
           }
         });
+        console.log(paymentData);
+        console.log(custom_data);
         IMP.request_pay({ ...paymentData, custom_data }, response => {
           console.log(response);
           setLoading(false);
