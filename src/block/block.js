@@ -65,7 +65,7 @@ export default registerBlockType( 'cgb/iamport-block', {
       selector: 'input',
     },
     payMethods: { // 결제 수단 정보
-      type: 'array',
+      type: 'object',
       selector: 'input',
     },
     cardQuota: { // 신용카드 할부 개월수

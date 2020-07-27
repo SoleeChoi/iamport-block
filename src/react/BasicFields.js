@@ -14,9 +14,13 @@ function BasicFields({ show, getFieldDecorator, attributes }) {
       <Item label={__('결제수단','iamport-block')}>
         {getFieldDecorator('pay_method')(
           <Select size="large" suffixIcon={<Icon type="caret-down" />}>
-            {payMethods.map(method =>
-              <Option value={method} key={method}>{PAY_METHODS[method]}</Option>  
-            )}
+            {Object.keys(payMethods).map(method => {
+              if (payMethods[method].checked) {
+                return (
+                  <Option value={method} key={method}>{PAY_METHODS[method]}</Option>  
+                );
+              }
+            })}
           </Select>,
         )}
       </Item>

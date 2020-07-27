@@ -6,14 +6,12 @@ import BasicFields from './BasicFields';
 import CustomField from './CustomField';
 import ButtonContainer from './ButtonContainer';
 
-import { getDisplay, getVbankDue } from './utils';
-
-const { __ } = wp.i18n;
+import { getPaymentData } from './utils';
 
 function App({ form, attributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue } = form;
   const {
-    userCode, buttonName, title, description, name, amountOptions, payMethods, cardQuota, vbankDue, customFields
+    userCode, buttonName, title, description, amountOptions, payMethods, customFields
   } = attributes;
 
   const defaultFieldType = customFields.length === 0 ? 'basic' : 'custom';
@@ -35,7 +33,7 @@ function App({ form, attributes }) {
     setIsOpen(true);
 
     setTimeout(() => {
-      const [pay_method] = payMethods;
+      const [pay_method] = Object.keys(payMethods);
       const [{ value }] = amountOptions;
 
       const newFieldsValue = {
@@ -63,33 +61,8 @@ function App({ form, attributes }) {
   function onClickPayment() {
     validateFields((error, values) => {
       if (!error) {
-        const { pay_method } = values;
-        const paymentData = {
-          name,
-          display: getDisplay(cardQuota),
-          vbank_due: getVbankDue(pay_method, vbankDue),
-        };
-
-        const custom_data = {};
-        Object.keys(values).forEach(key => {
-          const value = values[key];
-          const [targetField] = customFields.filter(({ label }) => label === key);
-          if (targetField) {
-            // 커스텀 입력 필드
-            const { type } = targetField;
-            const customValue = getCustomValue(value, type);
-            if (customValue) {
-              // 값이 입력된 경우에만 집어 넣기
-              custom_data[key] = value;
-            }
-          } else if (value) {
-            // 기본 입력 필드. 값이 입력된 경우에만 집어 넣기
-            paymentData[key] = value;
-          }
-        });
-        console.log(paymentData);
-        console.log(custom_data);
-        IMP.request_pay({ ...paymentData, custom_data }, response => {
+        const paymentData = getPaymentData(values, attributes);
+        IMP.request_pay(paymentData, response => {
           console.log(response);
           setLoading(false);
           setIsOpen(false);
@@ -97,21 +70,6 @@ function App({ form, attributes }) {
         setLoading(true);
       }
     });
-  }
-
-  function getCustomValue(value, type) {
-    if (type === 'address') {
-      // 주소 입력 필드
-      let fullAddress;
-      Object.keys(value).forEach(addressKey => {
-        const addressValue = value[addressKey];
-        if (addressValue) {
-          fullAddress += `${addressValue} `;
-        }
-      });
-      return fullAddress;
-    }
-    return value;
   }
 
   return (

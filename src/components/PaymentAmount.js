@@ -38,31 +38,19 @@ export function PaymentAmount({
               index === 0 &&
               <Row gutter={[8, 0]}>
                 <Col span={11}>
-                  <div class="imp-label-container">
-                    {__('금액 유형', 'iamport_block')}
-                  </div>
+                  <div class="imp-label-container">{__('금액 유형', 'iamport_block')}</div>
                 </Col>
                 <Col span={13}>
-                  <div class="imp-label-container">
-                    {__('결제 금액', 'iamport_block')}
-                  </div>
+                  <div class="imp-label-container">{__('결제 금액', 'iamport_block')}</div>
                 </Col>
               </Row>
             }
             <Row gutter={[8, 0]}>
               <Col span={11}>
                 <Item>
-                  {getFieldDecorator(
-                    `amountOptions[${index}].label`,
-                    {
-                      rules: [
-                        {
-                          required: true,
-                          message: '필수 입력입니다',
-                        },
-                      ],
-                    },
-                  )(
+                  {getFieldDecorator(`amountOptions[${index}].label`, {
+                    rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
+                  })(
                     <Input
                       size="large"
                       style={{ width: '100%' }}
@@ -73,17 +61,9 @@ export function PaymentAmount({
               </Col>
               <Col span={11}>
                 <Item>
-                  {getFieldDecorator(
-                    `amountOptions[${index}].value`,
-                    {
-                      rules: [
-                        {
-                          required: true,
-                          message: '필수 입력입니다',
-                        },
-                      ],
-                    },
-                  )(
+                  {getFieldDecorator(`amountOptions[${index}].value`, {
+                    rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
+                  })(
                     <Input
                       size="large"
                       type="number"

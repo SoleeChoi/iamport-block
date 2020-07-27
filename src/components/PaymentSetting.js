@@ -5,7 +5,7 @@ import BasicFields from './BasicFields';
 import PaymentAmount from './PaymentAmount';
 import CustomFields from './CustomFields';
 
-import { BASIC_KEYS } from '../constants';
+import { BASIC_KEYS, DEFAULT_AMOUNT_OPTIONS, DEFAULT_PAY_METHODS } from '../constants';
 
 const { __ } = wp.i18n;
 
@@ -14,7 +14,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
   const {
     buttonName, title, description, name, payMethods, cardQuota, vbankDue,
   } = attributes;
-  const defaultAmountOption = [{ label: '', amount: 1000 }];
+  const defaultAmountOption = DEFAULT_AMOUNT_OPTIONS;
   const [amountType, setAmountType] = useState(attributes.amountType || 'variable');
   const [amountOptions, setAmountOptions] = useState(attributes.amountOptions || defaultAmountOption);
   const [customFields, setCustomFields] = useState(attributes.customFields || []);
@@ -28,7 +28,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         name: name || __('아임포트 워드프레스 결제버튼 생성 플러그인 주문', 'iamport-block'),
         amountType: amountType || 'variable',
         amountOptions: amountOptions || defaultAmountOption,
-        payMethods: payMethods || [], 
+        payMethods: payMethods || DEFAULT_PAY_METHODS, 
         cardQuota: cardQuota || 0,
         vbankDue: vbankDue || 0,
       };
