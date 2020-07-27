@@ -6,11 +6,11 @@ const { __ } = wp.i18n;
 const { Item } = Form;
 const { Option } = Select;
 
-function BasicFields({ getFieldDecorator, attributes }) {
+function BasicFields({ show, getFieldDecorator, attributes }) {
   const { payMethods, amountType, amountOptions } = attributes;
 
   return (
-    <div>
+    <div style={{ display: show ? 'block' : 'none' }}>
       <Item label={__('결제수단','iamport-block')}>
         {getFieldDecorator('pay_method')(
           <Select size="large" suffixIcon={<Icon type="caret-down" />}>

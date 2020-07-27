@@ -6,7 +6,7 @@ const { __ } = wp.i18n;
 const { Item } = Form;
 const { Option } = Select;
 
-function CustomField({ getFieldDecorator, field, onChangeAddress }) {
+function CustomField({ field, getFieldDecorator, onChangeAddress }) {
   const { label, type, options, agreementOptions, required } = field;
   switch(type) {
     case 'checkbox': {

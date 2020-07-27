@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 
 import BasicFields from './BasicFields';
 import CustomField from './CustomField';
+import ButtonContainer from './ButtonContainer';
 
 const { __ } = wp.i18n;
 
@@ -13,8 +14,11 @@ function App({ form, attributes }) {
     userCode, buttonName, title, description, name, amountOptions, payMethods, customFields,
   } = attributes;
 
+  const defaultFieldType = customFields.length === 0 ? 'basic' : 'custom';
   const [isOpen, setIsOpen] = useState(false);
+  const [fieldType, setFieldType] = useState(defaultFieldType);
   const [loading, setLoading] = useState(false);
+
   const ModalTitle = () => 
     <div>
       <h3>{title}</h3>
@@ -110,32 +114,36 @@ function App({ form, attributes }) {
           visible
           title={<ModalTitle />}
           footer={null}
-          onCancel={() => setIsOpen(false)}
+          onCancel={() => {
+            setIsOpen(false);
+            setFieldType(defaultFieldType);
+          }}
         >
           <Form layout="vertical" onSubmit={onClickPayment}>
+            <div style={{ display: fieldType === 'custom' ? 'block' : 'none' }}>
+              {customFields.map(field =>
+                <CustomField
+                  key={field.label}
+                  field={field}
+                  getFieldDecorator={getFieldDecorator}
+                  onChangeAddress={addressObj => setFieldsValue(addressObj)}
+                />
+              )}
+            </div>
             <BasicFields
               getFieldDecorator={getFieldDecorator}
-              attributes={attributes}  
+              attributes={attributes} 
+              show={fieldType === 'basic'}
             />
-            {customFields.map(field =>
-              <CustomField
-                key={field.label}
-                field={field}
-                getFieldDecorator={getFieldDecorator}
-                onChangeAddress={addressObj => setFieldsValue(addressObj)}
-              />
-            )}
           </Form>
-          <div className="imp-btn-container">
-            <Button size="large" onClick={() => setIsOpen(false)}>{__('닫기', 'iamport-block')}</Button>
-            <Button
-              type="primary"
-              size="large"
-              htmlType="submit"
-              loading={loading}
-              onClick={onClickPayment}
-            >{__('결제하기', 'iamport-block')}</Button>
-          </div>
+          <ButtonContainer
+            loading={loading}
+            fieldType={fieldType}
+            defaultFieldType={defaultFieldType}
+            onChangeFieldType={value => setFieldType(value)}
+            onCloseModal={() => setIsOpen(false)}
+            onPayment={onClickPayment}
+          />
         </Modal>
       }
     </div>

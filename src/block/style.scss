@@ -22,6 +22,7 @@
     }
   }
 }
+
 .has-error .ant-form-explain {
   padding-left: 0.66rem;
   margin-top: 0.5rem;
@@ -41,6 +42,28 @@
     display: inline-block;
     margin: 0 0.25rem;
   }
+}
+
+.ant-modal {
+ .ant-modal-header {
+   padding: 1.5rem 24px;
+   background-color: $primary;
+   .ant-modal-title {
+    h3, h5 {
+      margin-bottom: 0;
+    }
+    h5 {
+      margin-top: 0.2rem;
+    }
+    * {
+      color: #fff;
+      text-align: center;
+    }
+   }
+ }
+ .ant-modal-close-x svg {
+  color: white;
+ }
 }
 
 /**
