@@ -3,7 +3,7 @@ import { Modal, Form, Button } from 'antd';
 import 'antd/dist/antd.css';
 
 import BasicFields from './BasicFields';
-import CustomFields from './CustomFields';
+import CustomField from './CustomField';
 
 const { __ } = wp.i18n;
 
@@ -41,10 +41,11 @@ function App({ form, attributes }) {
         buyer_email: 'example@example.com',
       };
       customFields.forEach(({ label, type, options }) => {
+        // default값을 갖을 수 있는 입력 필드의 경우, default값을 설정
         const [defaultValue] = options;
         if (type === 'checkbox') {
           newFieldsValue[label] = [defaultValue]
-        } else {
+        } else if (type === 'dropdown' || type === 'radio') {
           newFieldsValue[label] = defaultValue;
         }
       });
@@ -55,20 +56,26 @@ function App({ form, attributes }) {
   function onClickPayment() {
     validateFields((error, values) => {
       if (!error) {
-        const customLabels = customFields.map(({ label }) => label);
         const paymentData = {
           name,
         };
         const custom_data = {};
         Object.keys(values).forEach(key => {
           const value = values[key];
-          if (customLabels.indexOf(key) === -1) {
+          const [targetField] = customFields.filter(({ label }) => label === key);
+          if (targetField) {
+            // 커스텀 입력 필드
+            const { type } = targetField;
+            const customValue = getCustomValue(value, type);
+            if (customValue) {
+              // 값이 입력된 경우에만 집어 넣기
+              custom_data[key] = value;
+            }
+          } else if (value) {
+            // 기본 입력 필드. 값이 입력된 경우에만 집어 넣기
             paymentData[key] = value;
-          } else {
-            custom_data[key] = value;
           }
         });
-
         IMP.request_pay({ ...paymentData, custom_data }, response => {
           console.log(response);
           setLoading(false);
@@ -77,6 +84,21 @@ function App({ form, attributes }) {
         setLoading(true);
       }
     });
+  }
+
+  function getCustomValue(value, type) {
+    if (type === 'address') {
+      // 주소 입력 필드
+      let fullAddress;
+      Object.keys(value).forEach(addressKey => {
+        const addressValue = value[addressKey];
+        if (addressValue) {
+          fullAddress += `${addressValue} `;
+        }
+      });
+      return fullAddress;
+    }
+    return value;
   }
 
   return (
@@ -95,20 +117,24 @@ function App({ form, attributes }) {
               getFieldDecorator={getFieldDecorator}
               attributes={attributes}  
             />
-            <CustomFields
-              getFieldDecorator={getFieldDecorator}
-              attributes={attributes}
-            />
+            {customFields.map(field =>
+              <CustomField
+                key={field.label}
+                field={field}
+                getFieldDecorator={getFieldDecorator}
+                onChangeAddress={addressObj => setFieldsValue(addressObj)}
+              />
+            )}
           </Form>
           <div className="imp-btn-container">
-            <Button size="large" onClick={() => setIsOpen(false)}>닫기</Button>
+            <Button size="large" onClick={() => setIsOpen(false)}>{__('닫기', 'iamport-block')}</Button>
             <Button
               type="primary"
               size="large"
               htmlType="submit"
               loading={loading}
               onClick={onClickPayment}
-            >결제하기</Button>
+            >{__('결제하기', 'iamport-block')}</Button>
           </div>
         </Modal>
       }

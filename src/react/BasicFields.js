@@ -15,7 +15,7 @@ function BasicFields({ getFieldDecorator, attributes }) {
         {getFieldDecorator('pay_method')(
           <Select size="large" suffixIcon={<Icon type="caret-down" />}>
             {payMethods.map(method =>
-              <Option value={method}>{PAY_METHODS[method]}</Option>  
+              <Option value={method} key={method}>{PAY_METHODS[method]}</Option>  
             )}
           </Select>,
         )}
@@ -28,7 +28,7 @@ function BasicFields({ getFieldDecorator, attributes }) {
           })(
             <Select size="large" suffixIcon={<Icon type="caret-down" />}>
               {amountOptions.map(({ label, value }) =>
-                <Option value={value}>{label}</Option>  
+                <Option value={value} key={value}>{label}</Option>  
               )}
             </Select>,
           )}

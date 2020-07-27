@@ -14,6 +14,13 @@
   .ant-form-item-label > label::after {
     display: none;
   }
+  .imp-address-container {
+    // 주소 입력 필드
+    margin-bottom: 0.5rem;
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+  }
 }
 .has-error .ant-form-explain {
   padding-left: 0.66rem;
@@ -35,6 +42,7 @@
     margin: 0 0.25rem;
   }
 }
+
 /**
  * override wordpress default css
  */
@@ -45,6 +53,13 @@
   border-color: #40a9ff;
   outline: none;
 }
-.ant-modal input[type=text] {
-  border-color: #d9d9d9;  
+.ant-modal {
+  input[type=text] {
+    border-color: #d9d9d9;  
+    border-radius: 4px;
+    &:focus {
+      border-color: #40a9ff;
+      outline: none;
+    }
+  }
 }

@@ -77,6 +77,12 @@ function iamport_block_cgb_block_assets() { // phpcs:ignore
     plugins_url( '/dist/iamport.react.js', dirname(__FILE__ )),
     filemtime( plugin_dir_path(__FILE__) . '/dist/iamport.react.js' )
   );
+  
+  // DAUM address API
+  wp_register_script(
+    'daum-address-api',
+    'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
+  );
 
 	/**
 	 * Register Gutenberg block on server-side.
