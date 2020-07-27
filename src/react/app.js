@@ -39,6 +39,7 @@ function App({ form, attributes }) {
       const newFieldsValue = {
         amount: value,
         pay_method,
+        merchant_uid: `mid_${new Date().getTime()}`,
         // TODO: 테스트 편의를 위해 선언한 것으로 아래 내용은 향후 삭제되어야 함
         buyer_name: '홍길동',
         buyer_tel: '01012341234',
