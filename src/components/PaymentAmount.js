@@ -120,17 +120,13 @@ export function PaymentAmount({
       }
       {
         amountType === 'selection' &&
-        <Row>
-          <Col span={24}>
-            <Button
-              size="large"
-              type="dashed"
-              icon="plus"
-              style={{ width: '100%' }}
-              onClick={onAdd}
-            />
-          </Col>
-        </Row>
+        <Button
+          size="large"
+          type="dashed"
+          icon="plus"
+          style={{ width: '100%' }}
+          onClick={onAdd}
+        />
       }
     </div>
   );

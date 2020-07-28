@@ -6,15 +6,14 @@ import BasicFields from './BasicFields';
 import CustomField from './CustomField';
 import ButtonContainer from './ButtonContainer';
 
-import { getPaymentData } from './utils';
+import { getDefaultFieldValues, getCustomLabels, getPaymentData } from './utils';
 
 function App({ form, attributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue } = form;
-  const {
-    userCode, buttonName, title, description, amountType, amountOptions, payMethods, customFields
-  } = attributes;
+  const { userCode, buttonName, title, description, customFields } = attributes;
 
   const defaultFieldType = customFields.length === 0 ? 'basic' : 'custom';
+  const customLabels = getCustomLabels(customFields);
   const [isOpen, setIsOpen] = useState(false);
   const [fieldType, setFieldType] = useState(defaultFieldType);
   const [loading, setLoading] = useState(false);
@@ -33,31 +32,22 @@ function App({ form, attributes }) {
     setIsOpen(true);
 
     setTimeout(() => {
-      const [pay_method] = payMethods;
-      const [{ label }] = amountOptions;
-
-      const newFieldsValue = {
-        pay_method,
-        merchant_uid: `mid_${new Date().getTime()}`,
-        // TODO: 테스트 편의를 위해 선언한 것으로 아래 내용은 향후 삭제되어야 함
-        buyer_name: '홍길동',
-        buyer_tel: '01012341234',
-        buyer_email: 'example@example.com',
-      };
-      if (amountType !== 'variable') {
-        newFieldsValue.amount = label;
-      }
-      customFields.forEach(({ label, type, options }) => {
-        // default값을 갖을 수 있는 입력 필드의 경우, default값을 설정
-        const [defaultValue] = options;
-        if (type === 'checkbox') {
-          newFieldsValue[label] = [defaultValue]
-        } else if (type === 'dropdown' || type === 'radio') {
-          newFieldsValue[label] = defaultValue;
-        }
-      });
-      setFieldsValue(newFieldsValue);
+      const defaultFieldValues = getDefaultFieldValues(attributes);
+      setFieldsValue(defaultFieldValues);
     }, 0);
+  }
+
+  function onClickNext() {
+    /**
+     * 기본 입력 필드로 넘어가기 전에,
+     * 커스텀 입력 필드에 대해 validation 체크를 한다
+     */
+    validateFields(customLabels, error => {
+      if (error) {
+        return false;
+      }
+      setFieldType('basic');
+    });
   }
 
   function onClickPayment() {
@@ -111,6 +101,7 @@ function App({ form, attributes }) {
             defaultFieldType={defaultFieldType}
             onChangeFieldType={value => setFieldType(value)}
             onCloseModal={() => setIsOpen(false)}
+            onClickNext={onClickNext}
             onPayment={onClickPayment}
           />
         </Modal>

@@ -1,9 +1,62 @@
 import moment from 'moment';
 
 // 모달 열었을때 셋팅되어있는 기본 값 계산
-export function getDefaultFieldValues() {
-  const getDefaultFieldValues = {};
-  return getDefaultFieldValues;
+export function getDefaultFieldValues(attributes) {
+  const { payMethods, amountType, amountOptions, customFields } = attributes;
+  const [pay_method] = payMethods;
+  const [{ label }] = amountOptions;
+
+  const defaultFieldValues = {
+    pay_method,
+    // TODO: 테스트 편의를 위해 선언한 것으로 아래 내용은 향후 삭제되어야 함
+    buyer_name: '홍길동',
+    buyer_tel: '01012341234',
+    buyer_email: 'example@example.com',
+  };
+  if (amountType !== 'variable') {
+    defaultFieldValues.amount = label;
+  }
+
+  customFields.forEach(({ label, type, options, agreementOptions }) => {
+    // default값을 갖을 수 있는 입력 필드의 경우, default값을 설정
+    const [defaultValue] = options;
+    switch (type) {
+      case 'checkbox': {
+        defaultFieldValues[label] = [defaultValue];
+        break;
+      }
+      case 'dropdown':
+      case 'radio': {
+        defaultFieldValues[label] = defaultValue;
+        break;  
+      }
+      case 'agreement': {
+        agreementOptions.forEach(({ label }) => {
+          defaultFieldValues[label] = false;
+        });
+        break;
+      }
+      default:
+        break;
+    }
+  });
+
+  return defaultFieldValues;
+}
+
+export function getCustomLabels(customFields) {
+  const customLabels = [];
+  customFields.forEach(({ type, label, agreementOptions }) => {
+    if (type === 'agreement') {
+      agreementOptions.forEach(agreementOption =>
+        customLabels.push(agreementOption.label)
+      );
+    } else {
+      customLabels.push(label);
+    }
+  });
+
+  return customLabels;
 }
 
 function getPg({ pgs, pgMids }, payMethod) {

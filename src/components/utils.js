@@ -7,6 +7,7 @@ import {
   PAY_METHODS,
   DEFAULT_PGS,
   DEFAULT_PG_MIDS,
+  DEFAULT_AGREEMENT_OPTIONS,
 } from '../constants';
 
 const { __ } = wp.i18n;
@@ -127,4 +128,11 @@ export function getNewAttributes(values) {
     }
   });
   return attributes;
+}
+
+export function getDefaultOptions(type) {
+  if (type === 'options') {
+    return [''];
+  }
+  return DEFAULT_AGREEMENT_OPTIONS;
 }

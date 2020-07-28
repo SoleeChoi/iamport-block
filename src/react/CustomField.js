@@ -68,25 +68,29 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
     }
     case 'agreement': {
       return (
-        <Item label={label}>
-          <Row>
-            <Col span={20}>
-              {getFieldDecorator(label, {
-                valuePropName: 'checked',
-                rules: [{ required, message: __('필수 선택입니다', 'iamport-block') }],
-              })(
-                <Checkbox key={agreementOptions.label}>{agreementOptions.label}</Checkbox>,
-              )}
-            </Col>
-            <Col span={4} style={{ 'textAlign': 'right' }}>
-              <a
-                href={agreementOptions.link}
-                key={agreementOptions.link}
-                target="_blank"
-              >{__('약관 보기', 'iamport-block')}</a>
-            </Col>
-          </Row>
-        </Item>
+        agreementOptions.map(({ label, link }, index) => 
+          <Item label={index === 0 && field.label}>
+            <Row>
+              <Col span={20}>
+                {getFieldDecorator(label, {
+                  valuePropName: 'checked',
+                  rules: [{
+                    validator:(_, value) => required && !value ? Promise.reject('약관 동의는 필수입니다') : Promise.resolve(),
+                  }],
+                })(
+                  <Checkbox>{label}</Checkbox>,
+                )}
+              </Col>
+              <Col span={4} style={{ 'textAlign': 'right' }}>
+                <a
+                  href={link}
+                  key={link}
+                  target="_blank"
+                >{__('약관 보기', 'iamport-block')}</a>
+              </Col>
+            </Row>
+          </Item>
+        )
       );
     }
     case 'address': {

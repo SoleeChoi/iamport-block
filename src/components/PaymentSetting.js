@@ -5,7 +5,7 @@ import BasicFields from './BasicFields';
 import PaymentAmount from './PaymentAmount';
 import CustomFields from './CustomFields';
 
-import { getDefaultAttributes, getNewAttributes } from './utils';
+import { getDefaultAttributes, getNewAttributes, getDefaultOptions } from './utils';
 import { DEFAULT_AMOUNT_OPTIONS, DEFAULT_CUSTOM_FIELD } from '../constants';
 
 const { __ } = wp.i18n;
@@ -84,30 +84,29 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     })
   }
 
-  function onAddOption(index) {
+  function onAddOption(index, type = 'options') {
     // 입력 필드 옵션 추가
     const newCustomFields = customFields.map((field, fieldIndex) => {
-      const { options } = field;
       if (index === fieldIndex) {
+        const defaultOptions = getDefaultOptions(type);
         return {
           ...field,
-          options: options.concat(['']),
-        }
+          [type]: field[type].concat(defaultOptions),
+        };
       }
       return field;
     });
     setCustomFields(newCustomFields);
   }
 
-  function onDeleteOption(index, optionIndex) {
+  function onDeleteOption(index, optionIndex, type = 'options') {
     // 입력 필드 옵션 삭제
     const newCustomFields = customFields.map((field, fieldIndex) => {
-      const { options } = field;
       if (index === fieldIndex) {
         return {
           ...field,
-          options: options.filter((option, eachOptionIndex) => eachOptionIndex !== optionIndex),
-        }
+          [type]: field[type].filter((option, eachOptionIndex) => eachOptionIndex !== optionIndex),
+        };
       }
       return field;
     });
@@ -148,8 +147,8 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         {customFields.map((field, index) =>
           <CustomFields
             field={field}
-            onAddOption={() => onAddOption(index)}
-            onDeleteOption={optionIndex => onDeleteOption(index, optionIndex)}
+            onAddOption={type => onAddOption(index, type)}
+            onDeleteOption={(optionIndex, type) => onDeleteOption(index, optionIndex, type)}
             onDeleteCustomField={() => onDeleteCustomField(index)}
             onChange={newCustomField => onChangeCustomFields(index, newCustomField)}
           />

@@ -51,6 +51,7 @@ export const BASIC_KEYS = [
 ];
 
 export const DEFAULT_AMOUNT_OPTIONS = [{ label: '', amount: 1000 }];
+export const DEFAULT_AGREEMENT_OPTIONS = [{ label: '', link: '' }];
 
 export const PGS_FOR_SAMSUNG = ['html5_inicis', 'kcp'];
 export const PGS_FOR_PHONE = ['html5_inicis', 'nice', 'mobilians', 'uplus', 'danal', 'jtnet'];
@@ -80,6 +81,6 @@ export const DEFAULT_CUSTOM_FIELD = {
   label: '',
   type: 'text',
   options: [''],
-  agreementOptions: { label: '', link: '' },
+  agreementOptions: DEFAULT_AGREEMENT_OPTIONS,
   required: false,
 };

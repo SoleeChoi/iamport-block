@@ -3,7 +3,13 @@ import { Button } from 'antd';
 const { __ } = wp.i18n;
 
 export function ButtonContainer({
-  fieldType, defaultFieldType, loading, onCloseModal, onChangeFieldType, onPayment,
+  fieldType,
+  defaultFieldType,
+  loading,
+  onClickNext,
+  onCloseModal,
+  onChangeFieldType,
+  onPayment,
 }) {
   if (fieldType === 'custom') {
     return (
@@ -15,7 +21,7 @@ export function ButtonContainer({
         <Button
           type="primary"
           size="large"
-          onClick={() => onChangeFieldType('basic')}
+          onClick={onClickNext}
         >{__('다음', 'iamport-block')}</Button>
       </div>
     );

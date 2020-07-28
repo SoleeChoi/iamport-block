@@ -7,7 +7,11 @@ const { Option } = Select;
 const { __ } = wp.i18n;
 
 export function CustomFields({
-  field, onAddOption, onDeleteOption, onDeleteCustomField, onChange,
+  field,
+  onAddOption,
+  onDeleteOption,
+  onDeleteCustomField,
+  onChange,
 }) {
   const { label, type, required, options, agreementOptions } = field;
   const [optionVisible, setOptionVisible] = useState(getOptionVisible(type));
@@ -41,9 +45,14 @@ export function CustomFields({
     onChange({ ...field, options: newOptions });
   }
 
-  function onChangeAgreementOptions(value, type) {
+  function onChangeAgreementOptions(value, index, type) {
     // 약관 옵션 값 변경되었을때
-    const newAgreementOptions = { ...agreementOptions, [type]: value };
+    const newAgreementOptions = agreementOptions.map((eachOption, optionIndex) => {
+      if (optionIndex === index) {
+        return { ...eachOption, [type]: value };
+      }
+      return eachOption;
+    });
     onChange({ ...field, agreementOptions: newAgreementOptions });
   }
 
@@ -72,6 +81,13 @@ export function CustomFields({
               onChange={({ target: { checked } }) => onChange({ ...field, required: checked })}
             >{__('필수 입력/선택 여부', 'iamport-block')}</Checkbox>
           </div>
+        </Col>
+        <Col span={13}>
+          <div class="imp-label-container">{__('입력 라벨', 'iamport-block')}</div>
+        </Col>
+      </Row>
+      <Row gutter={[8, 8]}>
+        <Col span={11}>
           <Select
             size="large"
             style={{ width: '100%' }}
@@ -85,9 +101,6 @@ export function CustomFields({
           </Select>
         </Col>
         <Col span={11}>
-          <div class="imp-label-container">
-            {__('입력 라벨', 'iamport-block')}
-          </div>
           <Input
             size="large"
             value={label}
@@ -140,33 +153,54 @@ export function CustomFields({
       }
       {
         agreementVisible &&
-        <Row gutter={[8, 8]}>
-          <Col span={11}>
-            <div class="imp-label-container">
-              {__('약관 라벨', 'iamport_block')}
-            </div>
-            <Input
-              size="large"
-              style={{ width: '100%' }}
-              placeholder={__('예) 개인정보 이용제공 동의', 'iamport_block')}
-              value={agreementOptions.label}
-              onChange={({ target : { value } }) => onChangeAgreementOptions(value, 'label')}
-            />
-          </Col>
-          <Col span={11}>
-            <div class="imp-label-container">
-              {__('약관 링크', 'iamport_block')}
-            </div>
-            <Input
-              size="large"
-              style={{ width: '100%' }}
-              placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport_block')}
-              value={agreementOptions.link}
-              onChange={({ target : { value } }) => onChangeAgreementOptions(value, 'link')}
-            />
-          </Col>
-          <Col span={2}></Col>
-        </Row>
+        <div>
+          <Row gutter={[8, 8]}>
+            <Col span={11}>
+              <div class="imp-label-container">{__('약관 라벨', 'iamport_block')}</div>
+            </Col>
+            <Col span={13}>
+              <div class="imp-label-container">{__('약관 링크', 'iamport_block')}</div>
+            </Col>
+          </Row>
+          {agreementOptions.map(({ label, link }, optionIndex) =>
+            <Row gutter={[8, 8]}>
+              <Col span={11}>
+                <Input
+                  size="large"
+                  style={{ width: '100%' }}
+                  placeholder={__('예) 개인정보 이용제공 동의', 'iamport_block')}
+                  value={label}
+                  onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'label')}
+                />
+              </Col>
+              <Col span={11}>
+                <Input
+                  size="large"
+                  style={{ width: '100%' }}
+                  placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport_block')}
+                  value={link}
+                  onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'link')}
+                />
+              </Col>
+              <Col span={2}>
+                <Button
+                  size="large"
+                  icon="close"
+                  shape="circle"
+                  disabled={optionIndex === 0 && agreementOptions.length === 1}
+                  onClick={() => onDeleteOption(optionIndex, 'agreementOptions')}
+                />
+              </Col>
+            </Row>
+          )}
+          <Button
+            size="large"
+            type="dashed"
+            icon="plus"
+            style={{ width: '100%', marginTop: '4px' }}
+            onClick={() => onAddOption('agreementOptions')}
+          />
+        </div>
       }
       <Divider />
     </div>
