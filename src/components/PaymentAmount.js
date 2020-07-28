@@ -13,12 +13,11 @@ export function PaymentAmount({
     <div>
       <h3>{__('결제 금액 필드', 'iamport-block')}</h3>
       <Row gutter={[8, 0]}>
-        <Col span={11}>
+        <Col span={7}>
           <Item label={__('금액 유형','iamport-block')}>
             {getFieldDecorator('amountType')(
               <Select
                 size="large"
-                style={{ width: '100%' }}
                 suffixIcon={<Icon type="caret-down" />}
                 onChange={onChange}
               >
@@ -29,12 +28,11 @@ export function PaymentAmount({
             )}
           </Item>
         </Col>
-        <Col span={11}>
+        <Col span={7}>
           <Item label={__('화폐 단위','iamport-block')}>
             {getFieldDecorator('currency')(
               <Select
                 size="large"
-                style={{ width: '100%' }}
                 suffixIcon={<Icon type="caret-down" />}
                 onChange={onChange}
               >
@@ -45,18 +43,6 @@ export function PaymentAmount({
             )}
           </Item>
         </Col>
-        {/* <Col span={11}>
-          <Item label={__('면세 금액','iamport-block')}>
-            {getFieldDecorator('taxFreeAmount')(
-              <Input
-                size="large"
-                type="number"
-                style={{ width: '100%' }}
-                placeholder={__('예) 1000', 'iamport_block')}
-              />,
-            )}
-          </Item>
-        </Col> */}
       </Row>
       {
         amountType !== 'variable' && amountOptions &&
@@ -65,30 +51,32 @@ export function PaymentAmount({
             {
               index === 0 &&
               <Row gutter={[8, 0]}>
-                <Col span={11}>
+                <Col span={7}>
                   <div class="imp-label-container">{__('금액 라벨', 'iamport_block')}</div>
                 </Col>
-                <Col span={13}>
+                <Col span={7}>
                   <div class="imp-label-container">{__('결제 금액', 'iamport_block')}</div>
+                </Col>
+                <Col span={10}>
+                  <div class="imp-label-container">{__('면세 금액', 'iamport_block')}</div>
                 </Col>
               </Row>
             }
             <Row gutter={[8, 0]}>
-              <Col span={11}>
+              <Col span={7}>
                 <Item>
                   {getFieldDecorator(`amountOptions[${index}].label`, {
                     rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
                   })(
                     <Input
                       size="large"
-                      style={{ width: '100%' }}
                       addonBefore={CURRENCY_OPTIONS[currency]}
                       placeholder={__('예) 1000(어린이)', 'iamport_block')}
                     />
                   )}
                 </Item>
               </Col>
-              <Col span={11}>
+              <Col span={7}>
                 <Item>
                   {getFieldDecorator(`amountOptions[${index}].value`, {
                     rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
@@ -96,13 +84,23 @@ export function PaymentAmount({
                     <Input
                       size="large"
                       type="number"
-                      style={{ width: '100%' }}
                       placeholder={__('예) 1000', 'iamport_block')}
                     />
                   )}
                 </Item>
               </Col>
-              <Col span={2}>
+              <Col span={7}>
+                <Item>
+                  {getFieldDecorator(`amountOptions[${index}].taxFreeAmount`)(
+                    <Input
+                      size="large"
+                      type="number"
+                      placeholder={__('예) 0', 'iamport_block')}
+                    />
+                  )}
+                </Item>
+              </Col>
+              <Col span={3}>
                 {
                   amountType === 'selection' &&
                   <Button

@@ -17,8 +17,20 @@
     .ant-form-item-children,
     .ant-checkbox-group,
     .ant-radio-group,
-    .ant-form-item-label {
+    .ant-form-item-label,
+    .ant-input,
+    .ant-select {
       width: 100%;
+    }
+
+    .ant-col.ant-col-3 {
+      text-align: right;
+    }
+    .ant-col.ant-col-10 {
+      text-align: left;
+      .ant-checkbox-wrapper {
+        line-height: 40px;
+      }
     }
 
     .ant-divider {
@@ -66,10 +78,6 @@
       .ant-checkbox-wrapper {
         margin-left: 1rem;
       }
-    }
-
-    .ant-col.ant-col-2 {
-      text-align: center;
     }
 
     // override wordpress default css

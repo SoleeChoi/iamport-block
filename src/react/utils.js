@@ -80,21 +80,24 @@ function getPayMethod(method) {
   }
 }
 
-function getAmount(attributes, amount) {
+function getAmountInfo(attributes, amount) {
   const { amountType, amountOptions } = attributes;
-  if (amountType === 'fixed') {
-    const [targetOption] = amountOptions.filter(({ label }) => label === amount);
+  if (amountType === 'fixed' || amountType === 'selection') {
+    const [targetOption] = amountOptions.filter(({ label, value }) =>
+      // 고정형은 라벨과 비교하고, 선택형은 값과 비교한다
+      (amountType === 'fixed' ? label : value) === amount,
+    );
     if (targetOption) {
-      // 고정형이면, 선택된 라벨과 매칭되는 값을 찾아 number로 파싱해 리턴한다
-      const { value } = targetOption;
-      return parseInt(value, 10);
+      // 고정형 또는 선택형이면, 선택된 라벨과 매칭되는 값을 찾아 number로 파싱해 리턴한다
+      const { value, taxFreeAmount } = targetOption;
+      return { amount: parseInt(value, 10), taxFreeAmount: parseInt(taxFreeAmount, 10) };
     }
   }
   /**
-   * 가변형 또는 선택형이면, 입력된 값을 number로 파싱해 리턴한다
-   * 고정형은 코드를 제대로 짰다면 여기에 도달할 수 없다
+   * 가변형이면, 입력된 값을 number로 파싱해 리턴한다
+   * 고정형과 선택형은 코드를 제대로 짰다면 여기에 도달할 수 없다
    */
-  return parseInt(amount, 10);
+  return { amount: parseInt(amount, 10), taxFreeAmount: 0 };
 }
 
 function getCardQuota(cardQuota) {
@@ -156,20 +159,21 @@ function getCustomValue(value, type) {
 // 유저가 입력한 값을 기반으로 결제 데이터 계산
 export function getPaymentData(values, attributes) {
   const { pay_method, amount, buyer_name, buyer_tel, buyer_email } = values;
-  const { name, currency, taxFreeAmount, cardQuota, vbankDue, digital, customFields } = attributes;
+  const { name, currency, cardQuota, vbankDue, digital, customFields } = attributes;
   const pg = getPg(attributes, pay_method);
   const payMethod = getPayMethod(pay_method);
 
+  const amountInfo = getAmountInfo(attributes, amount);
   const paymentData = {
     name,
     pg,
     pay_method: payMethod,
-    tax_free: taxFreeAmount || 0,
     buyer_name,
     buyer_tel,
     buyer_email,
     currency,
-    amount: getAmount(attributes, amount),
+    tax_free: amountInfo.taxFreeAmount,
+    amount: amountInfo.amount,
   };
 
   if (payMethod === 'card') {

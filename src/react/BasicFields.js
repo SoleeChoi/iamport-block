@@ -23,15 +23,28 @@ function BasicFields({ show, getFieldDecorator, attributes }) {
       {
         amountType === 'selection' ?
         <Item label={__('결제 금액', 'iamport-block')}>
-          {getFieldDecorator('amount', {
-            rules: [{ required: true, message: __('필수선택입니다', 'iamport-block') }],
-          })(
-            <Select size="large" suffixIcon={<Icon type="caret-down" />}>
-              {amountOptions.map(({ label, value }) =>
-                <Option value={value} key={value}>{label}</Option>  
-              )}
-            </Select>,
-          )}
+          <Input.Group compact>
+            <Input
+              size="large"
+              key="currency"
+              style={{ width: '10%' }}
+              defaultValue={CURRENCY_OPTIONS[currency]}  
+            />
+            {getFieldDecorator('amount', {
+              rules: [{ required: true, message: __('필수선택입니다', 'iamport-block') }],
+            })(
+              <Select
+                size="large"
+                key="amount"
+                style={{ width: '90%' }}
+                suffixIcon={<Icon type="caret-down" />}
+              >
+                {amountOptions.map(({ label, value }) =>
+                  <Option value={value} key={value}>{label}</Option>  
+                )}
+              </Select>,
+            )}
+          </Input.Group>
         </Item> :
         <Item label={__('결제 금액', 'iamport-block')}>
           {getFieldDecorator('amount', {

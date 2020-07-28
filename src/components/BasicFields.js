@@ -50,7 +50,7 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
         })(<Input size="large" />)}
       </Item>
       <Row>
-        <Col span={8}>
+        <Col span={7}>
           <Item label={__('결제 수단', 'iamport-block')}>
             {getFieldDecorator('payMethods', {
               rules: [{ required: true, message: __('필수 선택입니다', 'iamport-block') }],
@@ -63,7 +63,7 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
             )}
           </Item>
         </Col>
-        <Col span={16}>
+        <Col span={17}>
           {Object.keys(PAY_METHODS).map((method, index) =>
             <Item label={index === 0 && __('PG사', 'iamport-block')}>
               {getFieldDecorator(`pgMids.${method}`)(
@@ -84,7 +84,6 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
         {getFieldDecorator('cardQuota')(
           <Select
             size="large"
-            style={{ width: '100%' }}
             suffixIcon={<Icon type="caret-down" />}
           >
             {Array(13).fill(1).map((value, index) => {
@@ -109,7 +108,6 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
         {getFieldDecorator('vbankDue')(
           <Select
             size="large"
-            style={{ width: '100%' }}
             suffixIcon={<Icon type="caret-down" />}
           >
             {Array(14).fill(1).map((value, index) => {

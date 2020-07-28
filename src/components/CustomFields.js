@@ -69,28 +69,19 @@ export function CustomFields({
       <Button
         type="danger"
         onClick={onDeleteCustomField}
-      >
-        {__('필드삭제', 'iamport-block')}
-      </Button>
+      >{__('필드삭제', 'iamport-block')}</Button>
       <Row gutter={[8, 8]}>
-        <Col span={11}>
-          <div class="imp-label-container">
-            {__('입력 유형', 'iamport-block')}
-            <Checkbox
-              checked={required}
-              onChange={({ target: { checked } }) => onChange({ ...field, required: checked })}
-            >{__('필수 입력/선택 여부', 'iamport-block')}</Checkbox>
-          </div>
+        <Col span={7}>
+          <div class="imp-label-container">{__('입력 유형', 'iamport-block')}</div>
         </Col>
-        <Col span={13}>
+        <Col span={17}>
           <div class="imp-label-container">{__('입력 라벨', 'iamport-block')}</div>
         </Col>
       </Row>
       <Row gutter={[8, 8]}>
-        <Col span={11}>
+        <Col span={7}>
           <Select
             size="large"
-            style={{ width: '100%' }}
             suffixIcon={<Icon type="caret-down" />}
             value={type}
             onChange={onChangeType}
@@ -100,34 +91,35 @@ export function CustomFields({
             )}
           </Select>
         </Col>
-        <Col span={11}>
+        <Col span={7}>
           <Input
             size="large"
             value={label}
             onChange={({ target : { value } }) => onChange({ ...field, label: value })}
-            style={{ width: '100%' }}
           />
         </Col>
-        <Col span={2}></Col>
+        <Col span={10}>
+          <Checkbox
+              checked={required}
+              onChange={({ target: { checked } }) => onChange({ ...field, required: checked })}
+            >{__('필수 입력/선택 여부', 'iamport-block')}</Checkbox>
+        </Col>
       </Row>
       {
         optionVisible &&
         <div>
-          <div class="imp-label-container">
-            {__('입력 옵션', 'iamport_block')}
-          </div>
+          <div class="imp-label-container">{__('입력 옵션', 'iamport_block')}</div>
           {options.map((eachOption, optionIndex) =>
             <Row gutter={[8, 8]}>
-              <Col span={22}>
+              <Col span={21}>
                 <Input
                   size="large"
-                  style={{ width: '100%' }}
                   value={eachOption}
                   onChange={({ target : { value } }) => onChangeOption(value, optionIndex)}
                   placeholder={__('옵션 값을 입력해주세요', 'iamport-block')}
                 />
               </Col>
-              <Col span={2}>
+              <Col span={3}>
                 <Button
                   size="large"
                   icon="close"
@@ -138,51 +130,45 @@ export function CustomFields({
               </Col>
             </Row>
           )}
-          <Row gutter={[8, 8]}>
-            <Col span={24}>
-              <Button
-                size="large"
-                type="dashed"
-                icon="plus"
-                style={{ width: '100%' }}
-                onClick={onAddOption}
-              />
-            </Col>
-          </Row>
+          <Button
+            size="large"
+            type="dashed"
+            icon="plus"
+            style={{ width: '100%', marginTop: '4px' }}
+            onClick={() => onAddOption('options')}
+          />
         </div>
       }
       {
         agreementVisible &&
         <div>
           <Row gutter={[8, 8]}>
-            <Col span={11}>
+            <Col span={7}>
               <div class="imp-label-container">{__('약관 라벨', 'iamport_block')}</div>
             </Col>
-            <Col span={13}>
+            <Col span={17}>
               <div class="imp-label-container">{__('약관 링크', 'iamport_block')}</div>
             </Col>
           </Row>
           {agreementOptions.map(({ label, link }, optionIndex) =>
             <Row gutter={[8, 8]}>
-              <Col span={11}>
+              <Col span={7}>
                 <Input
                   size="large"
-                  style={{ width: '100%' }}
                   placeholder={__('예) 개인정보 이용제공 동의', 'iamport_block')}
                   value={label}
                   onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'label')}
                 />
               </Col>
-              <Col span={11}>
+              <Col span={14}>
                 <Input
                   size="large"
-                  style={{ width: '100%' }}
                   placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport_block')}
                   value={link}
                   onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'link')}
                 />
               </Col>
-              <Col span={2}>
+              <Col span={3}>
                 <Button
                   size="large"
                   icon="close"

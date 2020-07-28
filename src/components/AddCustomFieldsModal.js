@@ -39,7 +39,6 @@ export function AddCustomFieldsModal({ onOk, onClose }) {
             placeholder={__('입력 유형 선택', 'iamport-block')}
             value={type}
             size="large"
-            style={{ width: '100%' }}
             onChange={value => setType(value)}
           >
             <Option value="text">{__('텍스트', 'iamport-block')}</Option>
@@ -52,7 +51,6 @@ export function AddCustomFieldsModal({ onOk, onClose }) {
           <Input
             value={label}
             size="large"
-            style={{ width: '100%' }}
             placeholder={__('입력 라벨', 'iamport-block')}
             onChange={({ target: { value } }) => setLabel(value)}  
           />
@@ -66,7 +64,6 @@ export function AddCustomFieldsModal({ onOk, onClose }) {
               <Input
                 value={eachOption}
                 size="large"
-                style={{ width: '100%' }}
                 placeholder={__('옵션 값을 입력해주세요', 'iamport-block')}
                 onChange={({ target: { value }}) => onChangeOption(value, index)}  
               />
@@ -76,7 +73,6 @@ export function AddCustomFieldsModal({ onOk, onClose }) {
             <Button
               size="large"
               type="dashed"
-              style={{ width: '100%' }}
               onClick={() => setOptions(options.concat(['']))}
             >{__('옵션 추가', 'iamport-block')}</Button>
           </Col>

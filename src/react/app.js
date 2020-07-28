@@ -58,6 +58,7 @@ function App({ form, attributes }) {
           console.log(response);
           setLoading(false);
           setIsOpen(false);
+          setFieldType('basic');
         });
         setLoading(true);
       }
