@@ -11,9 +11,13 @@
   .ant-form-item {
     margin-bottom: 0.5rem;
   }
+  .ant-form-item-label {
+    font-weight: bold;
+  }
   .ant-form-item-label > label::after {
     display: none;
   }
+
   .imp-address-container {
     // 주소 입력 필드
     margin-bottom: 0.5rem;
