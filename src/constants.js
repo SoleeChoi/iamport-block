@@ -1,13 +1,13 @@
 const { __ } = wp.i18n;
 
 export const PAY_METHODS = {
-  'kakaopay': __('카카오페이', 'iamport-block'),
-  'samsung': __('삼성페이', 'iamport-block'),
-  'card': __('신용카드', 'iamport-block'),
-  'vbank': __('가상계좌', 'iamport-block'),
-  'trans': __('실시간 계좌이체', 'iamport-block'),
-  'phone': __('휴대폰 소액결제', 'iamport-block'),
-  'paypal': __('페이팔', 'iamport-block'),
+  kakaopay: __('카카오페이', 'iamport-block'),
+  samsung: __('삼성페이', 'iamport-block'),
+  card: __('신용카드', 'iamport-block'),
+  vbank: __('가상계좌', 'iamport-block'),
+  trans: __('실시간 계좌이체', 'iamport-block'),
+  phone: __('휴대폰 소액결제', 'iamport-block'),
+  paypal: __('페이팔', 'iamport-block'),
 };
 
 export const AMOUNT_TYPES = {
@@ -32,6 +32,8 @@ export const BASIC_KEYS = [
   'title',
   'description',
   'payMethods',
+  'pgs',
+  'pgMids',
   'amountType',
   'amountOptions',
   'cardQuota',
@@ -44,49 +46,37 @@ export const PGS_FOR_SAMSUNG = ['html5_inicis', 'kcp'];
 export const PGS_FOR_PHONE = ['html5_inicis', 'nice', 'mobilians', 'uplus', 'danal', 'jtnet'];
 export const PGS = ['html5_inicis', 'nice', 'mobilians', 'uplus', 'danal_tpay', 'jtnet'];
 
-export const DEFAULT_PAY_METHODS = {
-  kakaopay: {
-    pg: 'kakaopay',
-    pg_id: null,
-    checked: true,
-  },
-  samsung: {
-    pg: 'html5_inicis',
-    pg_id: null,
-    checked: true,
-  },
-  card: {
-    pg: 'html5_inicis',
-    pg_id: null,
-    checked: true,
-  },
-  vbank: {
-    pg: 'html5_inicis',
-    pg_id: null,
-    checked: true,
-  },
-  phone: {
-    pg: 'html5_inicis',
-    pg_id: null,
-    checked: true,
-  },
-  trans: {
-    pg: 'html5_inicis',
-    pg_id: null,
-    checked: true,
-  },
-  paypal: {
-    pg: 'paypal',
-    pg_id: null,
-    checked: true,
-  },
+export const DEFAULT_PGS = {
+  kakaopay: 'kakaopay',
+  samsung: 'html5_inicis',
+  card: 'html5_inicis',
+  vbank: 'html5_inicis',
+  trans: 'html5_inicis',
+  phone: 'html5_inicis',
+  paypal: 'paypal',
+};
+
+export const DEFAULT_PG_MIDS = {
+  kakaopay: null,
+  samsung: null,
+  card: null,
+  vbank: null,
+  trans: null,
+  phone: null,
+  paypal: null,
 };
 
 export const PAYMENT_DATA_KEYS = [
+  'amount',
   'buyer_name',
   'buyer_tel',
   'buyer_email',
-  'pg',
-  'display',
-  'vbank_due',
 ];
+
+export const DEFAULT_CUSTOM_FIELD = {
+  label: '',
+  type: 'text',
+  options: [''],
+  agreementOptions: { label: '', link: '' },
+  required: false,
+};

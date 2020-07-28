@@ -5,34 +5,22 @@ import BasicFields from './BasicFields';
 import PaymentAmount from './PaymentAmount';
 import CustomFields from './CustomFields';
 
-import { BASIC_KEYS, DEFAULT_AMOUNT_OPTIONS, DEFAULT_PAY_METHODS } from '../constants';
+import { getDefaultAttributes, getNewAttributes } from './utils';
+import { DEFAULT_AMOUNT_OPTIONS, DEFAULT_CUSTOM_FIELD } from '../constants';
 
 const { __ } = wp.i18n;
 
 export function PaymentSetting({ form, attributes, className, setAttributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue, getFieldValue } = form;
-  const {
-    buttonName, title, description, name, payMethods, cardQuota, vbankDue,
-  } = attributes;
-  const defaultAmountOption = DEFAULT_AMOUNT_OPTIONS;
+
   const [amountType, setAmountType] = useState(attributes.amountType || 'variable');
-  const [amountOptions, setAmountOptions] = useState(attributes.amountOptions || defaultAmountOption);
+  const [amountOptions, setAmountOptions] = useState(attributes.amountOptions || DEFAULT_AMOUNT_OPTIONS);
   const [customFields, setCustomFields] = useState(attributes.customFields || []);
 
   useEffect(() => {
     setTimeout(() => {
-      const newFieldsValue = {
-        buttonName: buttonName || __('결제하기', 'iamport-block'),
-        title: title || __('참가권 결제', 'iamport-block'),
-        description: description || __('아래 정보를 기입 후 결제를 진행해주세요.', 'iamport-block'),
-        name: name || __('아임포트 워드프레스 결제버튼 생성 플러그인 주문', 'iamport-block'),
-        amountType: amountType || 'variable',
-        amountOptions: amountOptions || defaultAmountOption,
-        payMethods: payMethods || DEFAULT_PAY_METHODS, 
-        cardQuota: cardQuota || 0,
-        vbankDue: vbankDue || 0,
-      };
-      setFieldsValue(newFieldsValue);
+      const defaultAttributes = getDefaultAttributes(attributes);
+      setFieldsValue(defaultAttributes);
     }, 0);
   }, []);
 
@@ -43,13 +31,8 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
           customFields,
           amountType,
           amountOptions,
+          ...getNewAttributes(values),
         };
-        Object.keys(values).forEach(key => {
-          const value = values[key];
-          if (BASIC_KEYS.indexOf(key) !== -1) {
-            newAttributes[key] = value;
-          }
-        });
         setAttributes(newAttributes);
         
         Modal.info({
@@ -72,7 +55,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
 
   function onAddAmountOptions() {
     // 금액 옵션 추가했을때
-    setAmountOptions(amountOptions.concat(defaultAmountOption));
+    setAmountOptions(amountOptions.concat(DEFAULT_AMOUNT_OPTIONS));
   }
 
   function onDeleteAmountOptions(index) {
@@ -82,14 +65,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
 
   function onAddCustomField() {
     // 필드 추가
-    const defaultField = {
-      label: '',
-      type: 'text',
-      options: [''],
-      agreementOptions: { label: '', link: '' },
-      required: false,
-    };
-    setCustomFields(customFields.concat(defaultField));
+    setCustomFields(customFields.concat(DEFAULT_CUSTOM_FIELD));
   }
 
   function onDeleteCustomField(index) {
@@ -155,7 +131,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         {/* 기본 입력 필드 */}
         <BasicFields
           getFieldDecorator={getFieldDecorator}
-          payMethods={getFieldValue('payMethods')}  
+          payMethods={getFieldValue('payMethods')}
         />
         {/* 결제 금액 필드 */}
         <PaymentAmount 

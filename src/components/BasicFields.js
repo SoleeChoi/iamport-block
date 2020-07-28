@@ -8,22 +8,11 @@ const { Item } = Form;
 const { Option } = Select;
 
 export function BasicFields({ getFieldDecorator, payMethods }) {
-  let isCardQuotaVisible = false;
-  let isVbankDueVisible = false;
-  if (payMethods) {
-    Object.keys(payMethods).forEach(method => {
-      const { checked } = payMethods[method];
-      if (method === 'card' && checked) {
-        isCardQuotaVisible = true;
-      }
-      if (method === 'vbank' && checked) {
-        isVbankDueVisible = true;
-      }
-    });
-  }
+  const isCardQuotaVisible = payMethods && payMethods.indexOf('card') !== -1;
+  const isVbankDueVisible = payMethods && payMethods.indexOf('vbank') !== -1;
 
   const PgSelector = ({ method }) =>
-    getFieldDecorator(`payMethods.${method}.pg`)(
+    getFieldDecorator(`pgs.${method}`)(
       <Select
         size="large"
         style={{ width: '150px' }}
@@ -59,29 +48,34 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
           rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
         })(<Input size="large" />)}
       </Item>
-      {Object.keys(PAY_METHODS).map((method, index) =>
-        <Row>
-          <Col span={8}>
-            <Item label={index === 0 && __('결제 수단', 'iamport-block')}>
-              {getFieldDecorator(`payMethods.${method}.checked`, {
-                valuePropName: 'checked',
-              })(
-                <Checkbox>{PAY_METHODS[method]}</Checkbox>
-              )}
-            </Item>
-          </Col>
-          <Col span={16}>
+      <Row>
+        <Col span={8}>
+          <Item label={__('결제 수단', 'iamport-block')}>
+            {getFieldDecorator('payMethods', {
+              rules: [{ required: true, message: __('필수 선택입니다', 'iamport-block') }],
+            })(
+              <Checkbox.Group className="imp-pay-methods-container">
+                {Object.keys(PAY_METHODS).map(method =>
+                  <Checkbox value={method}>{PAY_METHODS[method]}</Checkbox>
+                )}
+              </Checkbox.Group>
+            )}
+          </Item>
+        </Col>
+        <Col span={16}>
+          {Object.keys(PAY_METHODS).map((method, index) =>
             <Item label={index === 0 && __('PG사', 'iamport-block')}>
-              {getFieldDecorator(`payMethods.${method}.pgMid`)(
+              {getFieldDecorator(`pgMids.${method}`)(
                 <Input
                   size="large"
+                  placeholder={__('PG 상점아이디', 'iamport-block')}
                   addonBefore={<PgSelector method={method} />}
                 />
               )}
             </Item>
-          </Col>
-        </Row>
-      )}
+          )}
+        </Col>
+      </Row>
       <Item
         label={__('신용카드 할부 개월수','iamport-block')}
         style={{ display: isCardQuotaVisible ? 'block' : 'none' }}

@@ -2,8 +2,9 @@ import moment from 'moment';
 
 import { PAYMENT_DATA_KEYS } from '../constants';
 
-function getPg(payMethods, payMethod) {
-  const { pg, pgMid } = payMethods[payMethod];
+function getPg({ pgs, pgMids }, payMethod) {
+  const pg = pgs[payMethod];
+  const pgMid = pgMids[payMethod];
   if (pgMid) {
     return `${pg}.${pgMid}`;
   }
@@ -68,7 +69,6 @@ function getCustomValue(value, type) {
     if (zipcode) {
       fullAddress += zipcode;
     }
-    console.log(value, fullAddress);
     return fullAddress;
   }
   return value;
@@ -76,8 +76,8 @@ function getCustomValue(value, type) {
 
 export function getPaymentData(values, attributes) {
   const { pay_method } = values;
-  const { name, cardQuota, vbankDue, payMethods, customFields } = attributes;
-  const pg = getPg(payMethods, pay_method);
+  const { name, cardQuota, vbankDue, customFields } = attributes;
+  const pg = getPg(attributes, pay_method);
   const payMethod = getPayMethod(pay_method);
 
   const paymentData = {

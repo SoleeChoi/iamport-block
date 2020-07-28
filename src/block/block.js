@@ -65,6 +65,14 @@ export default registerBlockType( 'cgb/iamport-block', {
       selector: 'input',
     },
     payMethods: { // 결제 수단 정보
+      type: 'array',
+      selector: 'input',
+    },
+    pgs: { // 결제 수단 별 PG사 정보
+      type: 'object',
+      selector: 'input',
+    },
+    pgMids: { // 결제 수단 별 PG 상점아이디 정보
       type: 'object',
       selector: 'input',
     },

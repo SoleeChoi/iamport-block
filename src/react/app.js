@@ -33,7 +33,7 @@ function App({ form, attributes }) {
     setIsOpen(true);
 
     setTimeout(() => {
-      const [pay_method] = Object.keys(payMethods);
+      const [pay_method] = payMethods;
       const [{ value }] = amountOptions;
 
       const newFieldsValue = {
