@@ -88,6 +88,10 @@ export default registerBlockType( 'cgb/iamport-block', {
       type: 'number',
       selector: 'select',
     },
+    digital: { // 실물 컨텐츠 여부
+      type: 'boolean',
+      selector: 'input',
+    },
     customFields: { // 커스텀 입력 필드 정보
       type: 'array',
       selector: 'input',

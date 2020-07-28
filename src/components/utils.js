@@ -67,6 +67,7 @@ export function getDefaultAttributes(attributes) {
     pgMids,
     cardQuota,
     vbankDue,
+    digital,
   } = attributes;
 
   return {
@@ -82,6 +83,7 @@ export function getDefaultAttributes(attributes) {
     pgMids: pgMids || DEFAULT_PG_MIDS, 
     cardQuota: cardQuota || 0,
     vbankDue: vbankDue || 0,
+    digital,
   };
 }
 

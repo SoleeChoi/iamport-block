@@ -39,6 +39,7 @@ export const BASIC_KEYS = [
   'taxFreeAmount',
   'cardQuota',
   'vbankDue',
+  'digital',
 ];
 
 export const DEFAULT_AMOUNT_OPTIONS = [{ label: '', amount: 1000 }];
@@ -66,13 +67,6 @@ export const DEFAULT_PG_MIDS = {
   phone: null,
   paypal: null,
 };
-
-export const PAYMENT_DATA_KEYS = [
-  'amount',
-  'buyer_name',
-  'buyer_tel',
-  'buyer_email',
-];
 
 export const DEFAULT_CUSTOM_FIELD = {
   label: '',

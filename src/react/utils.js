@@ -1,7 +1,5 @@
 import moment from 'moment';
 
-import { PAYMENT_DATA_KEYS } from '../constants';
-
 // 모달 열었을때 셋팅되어있는 기본 값 계산
 export function getDefaultFieldValues() {
   const getDefaultFieldValues = {};
@@ -105,7 +103,7 @@ function getCustomValue(value, type) {
 // 유저가 입력한 값을 기반으로 결제 데이터 계산
 export function getPaymentData(values, attributes) {
   const { pay_method, amount, buyer_name, buyer_tel, buyer_email } = values;
-  const { name, taxFreeAmount, cardQuota, vbankDue, customFields } = attributes;
+  const { name, taxFreeAmount, cardQuota, vbankDue, digital, customFields } = attributes;
   const pg = getPg(attributes, pay_method);
   const payMethod = getPayMethod(pay_method);
 
@@ -121,11 +119,14 @@ export function getPaymentData(values, attributes) {
   };
 
   if (payMethod === 'card') {
+    // 신용카드 최대 할부 개월수
     paymentData.display = getDisplay(cardQuota);
   } else if (payMethod === 'vbank') {
+    // 가상계좌 입금기한
     paymentData.vbank_due = getVbankDue(pay_method, vbankDue);
   } else if (payMethod === 'phone') {
-    // paymentData.digital = ;
+    // 실물 컨텐츠 여부
+    paymentData.digital = digital;
   }
 
   const custom_data = {};

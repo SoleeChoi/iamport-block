@@ -1,4 +1,4 @@
-import { Form, Row, Col, Input, Checkbox, Select, Icon } from 'antd';
+import { Form, Row, Col, Input, Checkbox, Select, Switch, Icon } from 'antd';
 
 import { getPgLists, getPgLabel } from './utils';
 import { PAY_METHODS } from '../constants';
@@ -10,6 +10,7 @@ const { Option } = Select;
 export function BasicFields({ getFieldDecorator, payMethods }) {
   const isCardQuotaVisible = payMethods && payMethods.indexOf('card') !== -1;
   const isVbankDueVisible = payMethods && payMethods.indexOf('vbank') !== -1;
+  const isDigitalVisible = payMethods && payMethods.indexOf('phone') !== -1;
 
   const PgSelector = ({ method }) =>
     getFieldDecorator(`pgs.${method}`)(
@@ -125,6 +126,12 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
             })}
           </Select>,
         )}
+      </Item>
+      <Item
+        label={__('실물 컨텐츠 여부','iamport-block')}
+        style={{ display: isDigitalVisible ? 'block' : 'none' }}
+      >
+        {getFieldDecorator('digital', { valuePropName: 'checked' })(<Switch />)}
       </Item>
     </div>
   );
