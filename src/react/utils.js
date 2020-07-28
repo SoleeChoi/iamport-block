@@ -90,7 +90,10 @@ function getAmountInfo(attributes, amount) {
     if (targetOption) {
       // 고정형 또는 선택형이면, 선택된 라벨과 매칭되는 값을 찾아 number로 파싱해 리턴한다
       const { value, taxFreeAmount } = targetOption;
-      return { amount: parseInt(value, 10), taxFreeAmount: parseInt(taxFreeAmount, 10) };
+      return {
+        amount: parseInt(value, 10),
+        taxFreeAmount: taxFreeAmount ? parseInt(taxFreeAmount, 10) : 0,
+      };
     }
   }
   /**
