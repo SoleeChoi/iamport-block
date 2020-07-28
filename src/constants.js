@@ -44,7 +44,6 @@ export const BASIC_KEYS = [
   'amountType',
   'amountOptions',
   'currency',
-  'taxFreeAmount',
   'cardQuota',
   'vbankDue',
   'digital',

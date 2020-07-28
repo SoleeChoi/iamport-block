@@ -12,6 +12,7 @@
   margin: 0 auto;
   max-width: 740px;
   padding: 2rem;
+  padding-top: 0rem;
 
   .ant-form {
     .ant-form-item-children,
@@ -39,7 +40,8 @@
 
     h3 {
       // 기본 입력 필드, 결제 금액 필드, 커스텀 필드 타이틀
-      margin-bottom: 0;
+      margin-bottom: 0.5rem;
+      margin-top: 2rem;
     }
 
     h4 {

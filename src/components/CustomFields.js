@@ -190,7 +190,7 @@ export function CustomFields({
           />
         </div>
       }
-      <Divider />
+      <Divider dashed />
     </div>
   );
 }
