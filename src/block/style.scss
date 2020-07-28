@@ -4,10 +4,6 @@
  * CSS for both Frontend+Backend.
  */
 
-.imp-tr {
-  text-align: right;
-}
-
 /**
  * antd styling
  */
@@ -28,6 +24,10 @@
   .imp-agreement-container {
     // 약관 동의 입력 필드
     margin-bottom: 0;
+  }
+  .imp-agreement-link {
+    text-decoration: underline;
+    text-align: right;
   }
 }
 

@@ -86,7 +86,7 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
                   <Checkbox>{label}</Checkbox>,
                 )}
               </Col>
-              <Col span={4} className="imp-tr">
+              <Col span={4} className="imp-agreement-link">
                 <a
                   href={link}
                   key={link}
