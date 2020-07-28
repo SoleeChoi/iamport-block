@@ -69,6 +69,7 @@ export function getDefaultAttributes(attributes) {
     cardQuota,
     vbankDue,
     digital,
+    customFields,
   } = attributes;
 
   return {
@@ -85,6 +86,7 @@ export function getDefaultAttributes(attributes) {
     cardQuota: cardQuota || 0,
     vbankDue: vbankDue || 0,
     digital,
+    customFields: customFields || [],
   };
 }
 

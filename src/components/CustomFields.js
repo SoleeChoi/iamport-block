@@ -6,10 +6,11 @@ import { getDefaultOptions } from './utils';
 
 const { __ } = wp.i18n;
 
-export function CustomFields({ customFields, setCustomFields }) {
+export function CustomFields({ customFields, setCustomFields, getFieldDecorator, getFieldValue }) {
   function onAddOption(index, type = 'options') {
     // 입력 필드 옵션 추가
-    const newCustomFields = customFields.map((field, fieldIndex) => {
+    const currentCustomFields = getFieldValue('customFields');
+    const newCustomFields = currentCustomFields.map((field, fieldIndex) => {
       if (index === fieldIndex) {
         const defaultOptions = getDefaultOptions(type);
         return {
@@ -24,7 +25,8 @@ export function CustomFields({ customFields, setCustomFields }) {
 
   function onDeleteOption(index, optionIndex, type = 'options') {
     // 입력 필드 옵션 삭제
-    const newCustomFields = customFields.map((field, fieldIndex) => {
+    const currentCustomFields = getFieldValue('customFields');
+    const newCustomFields = currentCustomFields.map((field, fieldIndex) => {
       if (index === fieldIndex) {
         return {
           ...field,
@@ -38,7 +40,8 @@ export function CustomFields({ customFields, setCustomFields }) {
 
   function onChangeCustomFields(index, newCustomField) {
     // 입력 필드 옵션 수정
-    const newCustomFields = customFields.map((eachCustomField, eachIndex) => {
+    const currentCustomFields = getFieldValue('customFields');
+    const newCustomFields = currentCustomFields.map((eachCustomField, eachIndex) => {
       if (eachIndex === index) {
         return newCustomField;
       }
@@ -48,6 +51,7 @@ export function CustomFields({ customFields, setCustomFields }) {
   }
 
   function onDeleteCustomField(index) {
+    const currentCustomFields = getFieldValue('customFields');
     // customField 삭제
     Modal.confirm({
       centered: true,
@@ -57,7 +61,7 @@ export function CustomFields({ customFields, setCustomFields }) {
       okText: __('삭제하기', 'iamport-block'),
       cancelText: __('취소하기', 'iamport-block'),
       onOk() {
-        const newCustomFields = customFields.filter((field, fieldIndex) => fieldIndex !== index);
+        const newCustomFields = currentCustomFields.filter((field, fieldIndex) => fieldIndex !== index);
         setCustomFields(newCustomFields);
       },
     })
@@ -66,10 +70,12 @@ export function CustomFields({ customFields, setCustomFields }) {
   return (
     <div>
       <h3>{__('커스텀 필드', 'iamport-block')}</h3>
-      {customFields.length === 0 && <h4>{__('설정된 커스텀 필드가 없습니다.', 'iamport-block')}</h4>}
-      {customFields.map((field, index) =>
+      {customFields && customFields.length === 0 && <h4>{__('설정된 커스텀 필드가 없습니다.', 'iamport-block')}</h4>}
+      {customFields && customFields.map((field, index) =>
         <CustomField
           field={field}
+          index={index}
+          getFieldDecorator={getFieldDecorator}
           onAddOption={type => onAddOption(index, type)}
           onDeleteOption={(optionIndex, type) => onDeleteOption(index, optionIndex, type)}
           onChangeCustomFields={newCustomField => onChangeCustomFields(index, newCustomField)}

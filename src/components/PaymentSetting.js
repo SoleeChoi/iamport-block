@@ -24,11 +24,14 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
     }, 0);
   }, []);
 
+  useEffect(() => {
+    setFieldsValue({ customFields });
+  }, [customFields]);
+
   function onSubmit() {
     validateFields((error, values) => {
       if (!error) {
         const newAttributes = {
-          customFields,
           amountType,
           amountOptions,
           ...getNewAttributes(values),
@@ -65,7 +68,8 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
 
   function onAddCustomField() {
     // 필드 추가
-    setCustomFields(customFields.concat(DEFAULT_CUSTOM_FIELD));
+    const currentCustomFields = getFieldValue('customFields') || [];
+    setCustomFields(currentCustomFields.concat(DEFAULT_CUSTOM_FIELD));
   }
 
   return (
@@ -89,6 +93,8 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         {/* 커스텀 입력 필드 */}
         <CustomFields
           customFields={customFields}
+          getFieldDecorator={getFieldDecorator}
+          getFieldValue={getFieldValue}
           setCustomFields={setCustomFields}
         />
         <Button

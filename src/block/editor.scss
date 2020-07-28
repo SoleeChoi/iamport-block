@@ -27,7 +27,8 @@
     .ant-col.ant-col-3 {
       text-align: right;
     }
-    .ant-col.ant-col-10 {
+    .ant-col.ant-col-10,
+    .ant-form-explain {
       text-align: left;
       .ant-checkbox-wrapper {
         line-height: 40px;
@@ -61,6 +62,9 @@
     .imp-custom-fields-container {
       // 커스텀 입력 필드 컨테이너
       text-align: right;
+      .ant-col.ant-col-10 .ant-form-item-label-left {
+        text-align: right;
+      }
     }
 
     .imp-label-container {

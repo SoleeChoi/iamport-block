@@ -47,6 +47,7 @@ export const BASIC_KEYS = [
   'cardQuota',
   'vbankDue',
   'digital',
+  'customFields',
 ];
 
 export const DEFAULT_AMOUNT_OPTIONS = [{ label: '', amount: 1000, taxFreeAmount: 0 }];
