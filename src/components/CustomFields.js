@@ -66,16 +66,18 @@ export function CustomFields({
 
   return (
     <div className="imp-custom-fields-container">
-      <Button
-        type="danger"
-        onClick={onDeleteCustomField}
-      >{__('필드삭제', 'iamport-block')}</Button>
       <Row gutter={[8, 8]}>
         <Col span={7}>
-          <div class="imp-label-container">{__('입력 유형', 'iamport-block')}</div>
+          <div className="imp-label-container">{__('입력 유형', 'iamport-block')}</div>
         </Col>
-        <Col span={17}>
-          <div class="imp-label-container">{__('입력 라벨', 'iamport-block')}</div>
+        <Col span={7}>
+          <div className="imp-label-container">{__('입력 라벨', 'iamport-block')}</div>
+        </Col>
+        <Col span={10} className="imp-delete-field-container">
+          <Button
+            type="danger"
+            onClick={onDeleteCustomField}
+          >{__('필드삭제', 'iamport-block')}</Button>
         </Col>
       </Row>
       <Row gutter={[8, 8]}>

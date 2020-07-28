@@ -80,6 +80,12 @@
       }
     }
 
+    .ant-col.ant-col-10.imp-delete-field-container {
+      // 필드 삭제 버튼 컨테이너
+      text-align: right;
+      line-height: 40px;
+    }
+
     // override wordpress default css
     input[type="text"],
     input[type="number"] {
