@@ -79,11 +79,13 @@ export function PaymentAmount({
               <Col span={7}>
                 <Item>
                   {getFieldDecorator(`amountOptions[${index}].value`, {
-                    rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
+                    rules: [{
+                      required: true, message: __('필수 입력입니다', 'iamport-block'),
+                      pattern: /^\d+$/, message: __('결제 금액이 올바르지 않습니다', 'iamport-block'),
+                    }],
                   })(
                     <Input
                       size="large"
-                      type="number"
                       placeholder={__('예) 1000', 'iamport_block')}
                     />
                   )}
@@ -91,10 +93,21 @@ export function PaymentAmount({
               </Col>
               <Col span={7}>
                 <Item>
-                  {getFieldDecorator(`amountOptions[${index}].taxFreeAmount`)(
+                  {getFieldDecorator(`amountOptions[${index}].taxFreeAmount`, {
+                    rules: [{
+                      validator:(_, value) => {
+                        if (!value.match(/^\d+$/)) {
+                          return Promise.reject('면세 금액이 올바르지 않습니다');
+                        }
+                        if (value > amountOptions[index].value) {
+                          return Promise.reject('면세 금액이 결제 금액보다 큽니다');
+                        }
+                        return Promise.resolve();
+                      },
+                    }],
+                  })(
                     <Input
                       size="large"
-                      type="number"
                       placeholder={__('예) 0', 'iamport_block')}
                     />
                   )}
