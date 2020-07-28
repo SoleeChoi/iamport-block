@@ -29,6 +29,23 @@ function getPayMethod(method) {
   }
 }
 
+function getAmount(attributes, amount) {
+  const { amountType, amountOptions } = attributes;
+  if (amountType === 'fixed') {
+    const [targetOption] = amountOptions.filter(({ label }) => label === amount);
+    if (targetOption) {
+      // 고정형이면, 선택된 라벨과 매칭되는 값을 찾아 number로 파싱해 리턴한다
+      const { value } = targetOption;
+      return parseInt(value, 10);
+    }
+  }
+  /**
+   * 가변형 또는 선택형이면, 입력된 값을 number로 파싱해 리턴한다
+   * 고정형은 코드를 제대로 짰다면 여기에 도달할 수 없다
+   */
+  return parseInt(amount, 10);
+}
+
 function getCardQuota(cardQuota) {
   switch (cardQuota) {
     case 0:
@@ -87,7 +104,7 @@ function getCustomValue(value, type) {
 
 // 유저가 입력한 값을 기반으로 결제 데이터 계산
 export function getPaymentData(values, attributes) {
-  const { pay_method } = values;
+  const { pay_method, amount, buyer_name, buyer_tel, buyer_email } = values;
   const { name, taxFreeAmount, cardQuota, vbankDue, customFields } = attributes;
   const pg = getPg(attributes, pay_method);
   const payMethod = getPayMethod(pay_method);
@@ -96,34 +113,32 @@ export function getPaymentData(values, attributes) {
     name,
     pg,
     pay_method: payMethod,
+    tax_free: taxFreeAmount || 0,
+    buyer_name,
+    buyer_tel,
+    buyer_email,
+    amount: getAmount(attributes, amount),
   };
-
-  const custom_data = {};
 
   if (payMethod === 'card') {
     paymentData.display = getDisplay(cardQuota);
   } else if (payMethod === 'vbank') {
     paymentData.vbank_due = getVbankDue(pay_method, vbankDue);
+  } else if (payMethod === 'phone') {
+    // paymentData.digital = ;
   }
 
-  if (taxFreeAmount) {
-    paymentData.tax_free = taxFreeAmount;
-  }
-
+  const custom_data = {};
   Object.keys(values).forEach(key => {
     const value = values[key];
-    if (PAYMENT_DATA_KEYS.indexOf(key) !== -1 && value) {
-      paymentData[key] = value;
-    } else {
-      const [targetField] = customFields.filter(({ label }) => label === key);
-      if (targetField) {
-        // 커스텀 입력 필드
-        const { type } = targetField;
-        const customValue = getCustomValue(value, type);
-        if (customValue) {
-          // 값이 입력된 경우에만 집어 넣기
-          custom_data[key] = customValue;
-        }
+    const [targetField] = customFields.filter(({ label }) => label === key);
+    if (targetField) {
+      // 커스텀 입력 필드
+      const { type } = targetField;
+      const customValue = getCustomValue(value, type);
+      if (customValue) {
+        // 값이 입력된 경우에만 집어 넣기
+        custom_data[key] = customValue;
       }
     }
   });
@@ -131,6 +146,5 @@ export function getPaymentData(values, attributes) {
   if (Object.keys(custom_data).length !== 0) {
     paymentData.custom_data = custom_data;
   }
-
   return paymentData;
 }

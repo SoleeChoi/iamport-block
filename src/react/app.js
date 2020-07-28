@@ -11,7 +11,7 @@ import { getPaymentData } from './utils';
 function App({ form, attributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue } = form;
   const {
-    userCode, buttonName, title, description, amountOptions, payMethods, customFields
+    userCode, buttonName, title, description, amountType, amountOptions, payMethods, customFields
   } = attributes;
 
   const defaultFieldType = customFields.length === 0 ? 'basic' : 'custom';
@@ -34,10 +34,9 @@ function App({ form, attributes }) {
 
     setTimeout(() => {
       const [pay_method] = payMethods;
-      const [{ value }] = amountOptions;
+      const [{ label }] = amountOptions;
 
       const newFieldsValue = {
-        amount: value,
         pay_method,
         merchant_uid: `mid_${new Date().getTime()}`,
         // TODO: 테스트 편의를 위해 선언한 것으로 아래 내용은 향후 삭제되어야 함
@@ -45,6 +44,9 @@ function App({ form, attributes }) {
         buyer_tel: '01012341234',
         buyer_email: 'example@example.com',
       };
+      if (amountType !== 'variable') {
+        newFieldsValue.amount = label;
+      }
       customFields.forEach(({ label, type, options }) => {
         // default값을 갖을 수 있는 입력 필드의 경우, default값을 설정
         const [defaultValue] = options;
