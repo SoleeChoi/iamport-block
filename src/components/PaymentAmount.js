@@ -29,6 +29,18 @@ export function PaymentAmount({
             )}
           </Item>
         </Col>
+        <Col span={11}>
+          <Item label={__('면세 금액','iamport-block')}>
+            {getFieldDecorator('taxFreeAmount')(
+              <Input
+                size="large"
+                type="number"
+                style={{ width: '100%' }}
+                placeholder={__('예) 1000', 'iamport_block')}
+              />,
+            )}
+          </Item>
+        </Col>
       </Row>
       {
         amountType !== 'variable' && amountOptions &&

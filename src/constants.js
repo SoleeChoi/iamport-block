@@ -36,6 +36,7 @@ export const BASIC_KEYS = [
   'pgMids',
   'amountType',
   'amountOptions',
+  'taxFreeAmount',
   'cardQuota',
   'vbankDue',
 ];

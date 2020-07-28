@@ -2,10 +2,17 @@ import moment from 'moment';
 
 import { PAYMENT_DATA_KEYS } from '../constants';
 
+// 모달 열었을때 셋팅되어있는 기본 값 계산
+export function getDefaultFieldValues() {
+  const getDefaultFieldValues = {};
+  return getDefaultFieldValues;
+}
+
 function getPg({ pgs, pgMids }, payMethod) {
   const pg = pgs[payMethod];
   const pgMid = pgMids[payMethod];
   if (pgMid) {
+    // PG상점 아이디가 입력된 경우, PG.PG상점아이디 값을 리턴한다
     return `${pg}.${pgMid}`;
   }
   return pg;
@@ -15,6 +22,7 @@ function getPayMethod(method) {
   switch (method) {
     case 'kakaopay':
     case 'paypal':
+      // 카카오페이와 페이팔의 결제 수단은 신용카드로 한정한다
       return 'card';
     default:
       return method;
@@ -23,13 +31,14 @@ function getPayMethod(method) {
 
 function getCardQuota(cardQuota) {
   switch (cardQuota) {
-    case 0: {
+    case 0:
+      // PG사 기본 제공 값 사용
       return undefined;
-    }
-    case 1: {
+    case 1:
+      // 일시불만 가능 (할부 불가)
       return [];
-    }
     default: {
+      // 최대 X개월 할부
       const cardQuotaArr = [];
       for (let i = 2; i <= cardQuota; i++) {
         cardQuotaArr.push(i);
@@ -47,8 +56,10 @@ function getDisplay(cardQuota) {
 
 function getVbankDue(payMethod, vbankDue) {
   if (payMethod === 'vbank' && vbankDue !== -1) {
+    // X일 후 자정까지
     return moment().add(vbankDue, 'days').format('YYYYMMDD2359');
   }
+  // PG사 기본 제공 값 사용
   return undefined;
 }
 
@@ -74,9 +85,10 @@ function getCustomValue(value, type) {
   return value;
 }
 
+// 유저가 입력한 값을 기반으로 결제 데이터 계산
 export function getPaymentData(values, attributes) {
   const { pay_method } = values;
-  const { name, cardQuota, vbankDue, customFields } = attributes;
+  const { name, taxFreeAmount, cardQuota, vbankDue, customFields } = attributes;
   const pg = getPg(attributes, pay_method);
   const payMethod = getPayMethod(pay_method);
 
@@ -90,9 +102,12 @@ export function getPaymentData(values, attributes) {
 
   if (payMethod === 'card') {
     paymentData.display = getDisplay(cardQuota);
-  }
-  if (payMethod === 'vbank') {
+  } else if (payMethod === 'vbank') {
     paymentData.vbank_due = getVbankDue(pay_method, vbankDue);
+  }
+
+  if (taxFreeAmount) {
+    paymentData.tax_free = taxFreeAmount;
   }
 
   Object.keys(values).forEach(key => {
