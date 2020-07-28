@@ -7,7 +7,13 @@ const { Option } = Select;
 const { __ } = wp.i18n;
 
 export function PaymentAmount({
-  getFieldDecorator, amountType, amountOptions, currency, onChange, onAdd, onDelete
+  getFieldDecorator,
+  amountType,
+  amountOptions,
+  currency,
+  onChange,
+  onAdd,
+  onDelete,
 }) {
   return (
     <div>
@@ -96,10 +102,10 @@ export function PaymentAmount({
                   {getFieldDecorator(`amountOptions[${index}].taxFreeAmount`, {
                     rules: [{
                       validator:(_, value) => {
-                        if (!value.match(/^\d+$/)) {
+                        if (value && !value.match(/^\d+$/)) {
                           return Promise.reject('면세 금액이 올바르지 않습니다');
                         }
-                        if (value > amountOptions[index].value) {
+                        if (parseInt(value, 10) > parseInt(amountOptions[index].value, 10)) {
                           return Promise.reject('면세 금액이 결제 금액보다 큽니다');
                         }
                         return Promise.resolve();
