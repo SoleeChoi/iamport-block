@@ -103,7 +103,7 @@ function getCustomValue(value, type) {
 // 유저가 입력한 값을 기반으로 결제 데이터 계산
 export function getPaymentData(values, attributes) {
   const { pay_method, amount, buyer_name, buyer_tel, buyer_email } = values;
-  const { name, taxFreeAmount, cardQuota, vbankDue, digital, customFields } = attributes;
+  const { name, currency, taxFreeAmount, cardQuota, vbankDue, digital, customFields } = attributes;
   const pg = getPg(attributes, pay_method);
   const payMethod = getPayMethod(pay_method);
 
@@ -115,6 +115,7 @@ export function getPaymentData(values, attributes) {
     buyer_name,
     buyer_tel,
     buyer_email,
+    currency,
     amount: getAmount(attributes, amount),
   };
 

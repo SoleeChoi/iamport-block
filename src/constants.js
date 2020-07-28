@@ -26,6 +26,13 @@ export const OPTION_TYPES = {
   dropdown: __('단일선택 (드롭다운)', 'iamport-block'),
 };
 
+export const CURRENCY_OPTIONS = {
+  KRW: '₩',
+  USD: '$',
+  EUR: '€',
+  JPY: '¥',
+};
+
 export const BASIC_KEYS = [
   'name',
   'buttonName',
@@ -36,6 +43,7 @@ export const BASIC_KEYS = [
   'pgMids',
   'amountType',
   'amountOptions',
+  'currency',
   'taxFreeAmount',
   'cardQuota',
   'vbankDue',

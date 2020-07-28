@@ -1,13 +1,13 @@
 import { Form, Row, Col, Input, Select, Icon, Button } from 'antd';
 
-import { AMOUNT_TYPES } from '../constants';
+import { AMOUNT_TYPES, CURRENCY_OPTIONS } from '../constants';
 
 const { Item } = Form;
 const { Option } = Select;
 const { __ } = wp.i18n;
 
 export function PaymentAmount({
-  getFieldDecorator, amountType, amountOptions, onChange, onAdd, onDelete
+  getFieldDecorator, amountType, amountOptions, currency, onChange, onAdd, onDelete
 }) {
   return (
     <div>
@@ -30,6 +30,22 @@ export function PaymentAmount({
           </Item>
         </Col>
         <Col span={11}>
+          <Item label={__('화폐 단위','iamport-block')}>
+            {getFieldDecorator('currency')(
+              <Select
+                size="large"
+                style={{ width: '100%' }}
+                suffixIcon={<Icon type="caret-down" />}
+                onChange={onChange}
+              >
+                {Object.keys(CURRENCY_OPTIONS).map(eachType =>
+                  <Option value={eachType}>{CURRENCY_OPTIONS[eachType]}</Option>
+                )}
+              </Select>,
+            )}
+          </Item>
+        </Col>
+        {/* <Col span={11}>
           <Item label={__('면세 금액','iamport-block')}>
             {getFieldDecorator('taxFreeAmount')(
               <Input
@@ -40,7 +56,7 @@ export function PaymentAmount({
               />,
             )}
           </Item>
-        </Col>
+        </Col> */}
       </Row>
       {
         amountType !== 'variable' && amountOptions &&
@@ -66,7 +82,8 @@ export function PaymentAmount({
                     <Input
                       size="large"
                       style={{ width: '100%' }}
-                      placeholder={__('예) 1000원(어린이)', 'iamport_block')}
+                      addonBefore={CURRENCY_OPTIONS[currency]}
+                      placeholder={__('예) 1000(어린이)', 'iamport_block')}
                     />
                   )}
                 </Item>

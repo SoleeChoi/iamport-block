@@ -64,6 +64,10 @@ export default registerBlockType( 'cgb/iamport-block', {
       type: 'array',
       selector: 'input',
     },
+    currency: { // 화폐 단위
+      type: 'string',
+      selector: 'input',
+    },
     taxFreeAmount: { // 면세금액
       type: 'number',
       selector: 'input',

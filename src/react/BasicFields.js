@@ -1,13 +1,13 @@
 import { Form, Input, Select, Icon } from 'antd';
 
-import { PAY_METHODS } from '../constants';
+import { PAY_METHODS, CURRENCY_OPTIONS } from '../constants';
 
 const { __ } = wp.i18n;
 const { Item } = Form;
 const { Option } = Select;
 
 function BasicFields({ show, getFieldDecorator, attributes }) {
-  const { payMethods, amountType, amountOptions } = attributes;
+  const { payMethods, amountType, amountOptions, currency } = attributes;
 
   return (
     <div style={{ display: show ? 'block' : 'none' }}>
@@ -39,6 +39,7 @@ function BasicFields({ show, getFieldDecorator, attributes }) {
           })(
             <Input
               size="large"
+              addonBefore={CURRENCY_OPTIONS[currency]}
               disabled={amountType === 'fixed'}
             />,
           )}
