@@ -1,10 +1,10 @@
 <?php
-	wp_register_style('iamport-order-list-css', plugins_url('../../assets/css/order-list.css', __FILE__));
-	wp_enqueue_style('iamport-order-list-css');
+	wp_register_style('iamport-block-order-list-css', plugins_url('../../assets/css/iamport-block-order-list.css', __FILE__));
+	wp_enqueue_style('iamport-block-order-list-css');
 
 	ob_start();
 ?>
-	<table class="iamport-order-list">
+	<table class="iamport-block-order-list-container">
 		<thead>
 			<tr>
 				<th class="column-primary">주문명</th>
