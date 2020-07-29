@@ -92,6 +92,10 @@ export default registerBlockType( 'cgb/iamport-block', {
       type: 'boolean',
       selector: 'input',
     },
+    redirectAfter: { // 결제 후 이동될 URL
+      type: 'string',
+      selector: 'input',
+    },
     customFields: { // 커스텀 입력 필드 정보
       type: 'array',
       selector: 'input',

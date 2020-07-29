@@ -60,7 +60,7 @@ export function CustomFields({ customFields, setCustomFields }) {
         const newCustomFields = customFields.filter((field, fieldIndex) => fieldIndex !== index);
         setCustomFields(newCustomFields);
       },
-    })
+    });
   }
 
   return (

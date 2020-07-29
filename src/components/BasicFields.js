@@ -129,7 +129,15 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
         label={__('실물 컨텐츠 여부','iamport-block')}
         style={{ display: isDigitalVisible ? 'block' : 'none' }}
       >
-        {getFieldDecorator('digital', { valuePropName: 'checked' })(<Switch />)}
+        {getFieldDecorator('digital', {
+          valuePropName: 'checked',
+          initialValue: false,
+        })(<Switch />)}
+      </Item>
+      <Item label={__('결제 후 이동될 URL','iamport-block')}>
+        {getFieldDecorator('redirectAfter', {
+          rules: [{ type: 'url', message: __('URL이 올바르지 않습니다', 'iamport-block') }],
+        })(<Input size="large" />)}
       </Item>
     </div>
   );
