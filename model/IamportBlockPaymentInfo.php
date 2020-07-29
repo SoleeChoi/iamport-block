@@ -48,7 +48,7 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 			$history_page = get_page_by_slug('iamport_history');
 			if ( !empty($history_page) ) $history_page_url = get_page_link($history_page[0]->ID);
 
-			return require_once(dirname(__FILE__).'/../view/history/order-list.php');
+			return require_once(dirname(__FILE__).'/../view/history/IamportBlockOrderList');
 		}
 
 		public function get_order_view($order_uid) {
