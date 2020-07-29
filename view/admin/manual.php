@@ -1,10 +1,10 @@
 <?php
-	wp_register_style('iamport-shortcode-page-css', plugins_url('../../assets/css/iamport-shortcode-page.css', __FILE__), array(), "20180730");
-	wp_enqueue_style('iamport-shortcode-page-css');
+	wp_register_style('iamport-block-manual-css', plugins_url('../../assets/css/iamport-block-manual.css', __FILE__), array(), "20180730");
+	wp_enqueue_style('iamport-block-manual-css');
 
 	ob_start();
 ?>
-	<div class="wrap iamport-manual-page">
+	<div class="wrap iamport-block-manual-container">
 		<h2>아임포트 블록 메뉴얼</h
     2>
 		<h3>1. 아임포트 블록 추가</h3>

@@ -1,0 +1,55 @@
+.iamport-block-manual-container .shortcode-box {
+	color: #666;
+	padding: 30px;
+	line-height: 2;
+	font-size: 1.2em;
+	background: white;
+	margin-bottom: 2em;
+	border: 1px solid #cfcfcf;
+}
+
+.iamport-block-manual-container .attr-text {
+	float: left;
+	min-width: 65%;
+	margin-right: 2em;
+}
+
+.iamport-block-manual-container .attr-title {
+	margin: 0;
+	font-size: 20px;
+	font-weight: 600;
+	position: relative;
+}
+
+.iamport-block-manual-container .attr-explanation {
+	color: #888;
+	font-size: 14px;
+	margin-top: 0.3em;
+	margin-bottom: 2em;
+	line-height: 1.8em;
+}
+
+.iamport-block-manual-container .attr-detail {
+  color: #aaa;
+  display: block;
+  font-size: 13px;
+  padding-left: 10px;
+  border-left: 5px solid #eee;
+}
+
+.iamport-block-manual-container .attr-img {
+	float: left;
+	border:1px solid #eee;
+}
+
+.iamport-block-manual-container .attr-tag {
+	top: 5px;
+	margin-left: 10px;
+	position: absolute;
+}
+
+.iamport-block-manual-container .vir-div {
+	clear: both;
+	content: '';
+	display: block;
+}

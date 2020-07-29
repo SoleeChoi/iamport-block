@@ -1,7 +1,4 @@
 <?php
-	wp_register_style('iamport-shortcode-page-css', plugins_url('../../assets/css/iamport-shortcode-page.css', __FILE__), array(), "20180730");
-	wp_enqueue_style('iamport-shortcode-page-css');
-
 	/* ---------- 아임포트 설정에서 '저장하기' 버튼 눌렀을때 ---------- */
 	if ( isset($_POST['action']) && $_POST['action'] == "update_iamport_settings" ) {
 		if ( wp_verify_nonce($_POST['iamport-settings'], 'iamport-options') ) {
