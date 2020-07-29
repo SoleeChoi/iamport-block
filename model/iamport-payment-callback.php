@@ -1,12 +1,12 @@
 <?php
 
-if ( !class_exists('IamportPaymentCallback') ) {
+if ( !class_exists('IamportBlockPaymentCallback') ) {
 
   require_once(dirname(__FILE__).'/iamport.php');
   require_once(dirname(__FILE__).'/IamportBlockOrder.php');
   require_once(dirname(__FILE__).'/IamportBlockPaymentInfo.php');
 
-  class IamportPaymentCallback {
+  class IamportBlockPaymentCallback {
 
     const QUERY_CALLBACK = "iamport-button-callback";
 
