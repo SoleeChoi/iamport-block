@@ -7,6 +7,7 @@ import CustomField from './CustomField';
 import ButtonContainer from './ButtonContainer';
 
 import { getDefaultFieldValues, getCustomLabels, getPaymentData, getOrderData } from './utils';
+import { showLoginRequiredModal, showPaymentFailedModal } from '../utils';
 
 const { __ } = wp.i18n;
 
@@ -41,16 +42,8 @@ function App({ form, attributes }) {
 
   function openModal() {
     if (isLoginRequired) {
-      Modal.confirm({
-        centered: true,
-        title: __('로그인 필요', 'iamport-block'),
-        content: __('결제 기능을 이용하기 위해서는 로그인이 필요합니다', 'iamport-block'),
-        okType: 'danger',
-        okText: __('로그인하기', 'iamport-block'),
-        cancelText: __('닫기', 'iamport-block'),
-        onOk() {
-          window.location.href = loginUrl;
-        },
+      showLoginRequiredModal(() => {
+        window.location.href = loginUrl;
       });
     } else {
       setIsOpen(true);
@@ -103,13 +96,7 @@ function App({ form, attributes }) {
             if (success) {
               location.href = thankyou_url;
             } else {
-              Modal.error({
-                centered: true,
-                title: __('결제 실패', 'iamport-block'),
-                content: error_msg,
-                okType: 'danger',
-                okText: __('닫기', 'iamport-block'),
-              });
+              showPaymentFailedModal(error_msg);
             }
           });
         }).fail(({ responseText }) => {
