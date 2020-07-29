@@ -137,32 +137,46 @@ function getVbankDue(payMethod, vbankDue) {
   return undefined;
 }
 
-function getCustomValue(value, type) {
-  if (type === 'address') {
-    // 주소 입력 필드
-    let fullAddress = '';
-    const { address, extraAddress, detailAddress, zipcode } = value;
-    if (address) {
-      fullAddress += `${address} `;
+function getCustomValue(values, { label, type, agreementOptions }) {
+  const value = values[label];
+  switch (type) {
+    case 'address': {
+      // 주소 입력 필드
+      let fullAddress = '';
+      const { address, extraAddress, detailAddress, zipcode } = value;
+      if (address) {
+        fullAddress += `${address} `;
+      }
+      if (extraAddress) {
+        fullAddress += `${extraAddress} `;
+      }
+      if (detailAddress) {
+        fullAddress += `${detailAddress} `;
+      }
+      if (zipcode) {
+        fullAddress += zipcode;
+      }
+      return fullAddress;
     }
-    if (extraAddress) {
-      fullAddress += `${extraAddress} `;
+    case 'checkbox':
+      return value.join(', ');
+    case 'agreement': {
+      const agreedLabels = agreementOptions.map(({ label }) => {
+        if (values[label]) {
+          return label;
+        }
+      });
+      return agreedLabels.join(', ');
     }
-    if (detailAddress) {
-      fullAddress += `${detailAddress} `;
-    }
-    if (zipcode) {
-      fullAddress += zipcode;
-    }
-    return fullAddress;
+    default:
+      return value || '';
   }
-  return value;
 }
 
 // 유저가 입력한 값을 기반으로 결제 데이터 계산
 export function getPaymentData(values, attributes) {
   const { pay_method, amount, buyer_name, buyer_tel, buyer_email } = values;
-  const { name, currency, cardQuota, vbankDue, digital, customFields } = attributes;
+  const { bizNum, name, currency, redirectAfter, cardQuota, vbankDue, digital, customFields } = attributes;
   const pg = getPg(attributes, pay_method);
   const payMethod = getPayMethod(pay_method);
 
@@ -175,6 +189,7 @@ export function getPaymentData(values, attributes) {
     buyer_tel,
     buyer_email,
     currency,
+    redirectAfter,
     tax_free: amountInfo.taxFreeAmount,
     amount: amountInfo.amount,
   };
@@ -185,28 +200,66 @@ export function getPaymentData(values, attributes) {
   } else if (payMethod === 'vbank') {
     // 가상계좌 입금기한
     paymentData.vbank_due = getVbankDue(pay_method, vbankDue);
+    if (pg === 'danal') {
+      // [다날] 사업자 등록번호
+      paymentData.biz_num = bizNum;
+    }
   } else if (payMethod === 'phone') {
     // 실물 컨텐츠 여부
     paymentData.digital = digital;
   }
 
+  // 커스텀 입력 필드
   const custom_data = {};
-  Object.keys(values).forEach(key => {
-    const value = values[key];
-    const [targetField] = customFields.filter(({ label }) => label === key);
-    if (targetField) {
-      // 커스텀 입력 필드
-      const { type } = targetField;
-      const customValue = getCustomValue(value, type);
-      if (customValue) {
-        // 값이 입력된 경우에만 집어 넣기
-        custom_data[key] = customValue;
-      }
+  const file_data = {};
+  customFields.forEach(field => {
+    const { label, type } = field;
+    if (type === 'file') {
+      file_data[label] = values[label] || '';
+    } else {
+      custom_data[label] = getCustomValue(values, field);
     }
   });
 
   if (Object.keys(custom_data).length !== 0) {
     paymentData.custom_data = custom_data;
   }
+  paymentData.file_data = file_data;
+
   return paymentData;
+}
+
+export function getOrderData(paymentData) {
+  const orderData = new FormData();
+  const {
+    name,
+    amount,
+    pay_method,
+    currency,
+    tax_free,
+    buyer_name,
+    buyer_email,
+    buyer_tel,
+    custom_data,
+    file_data,
+    redirectAfter,
+  } = paymentData;
+
+  orderData.append('action', 'get_order_uid');
+  orderData.append('order_title', name);
+  orderData.append('pay_method', pay_method);
+  orderData.append('tax_free_amount', tax_free);
+  orderData.append('order_amount', amount);
+  orderData.append('currency', currency);
+  orderData.append('buyer_name', buyer_name);
+  orderData.append('buyer_email', buyer_email);
+  orderData.append('buyer_tel', buyer_tel);
+  orderData.append('extra_fields', JSON.stringify(custom_data));
+  orderData.append('redirect_after', redirectAfter);
+
+  Object.keys(file_data).forEach(key => {
+    orderData.append(key, file_data[key]);
+  });
+
+  return orderData;
 }

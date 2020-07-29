@@ -6,11 +6,13 @@ import BasicFields from './BasicFields';
 import CustomField from './CustomField';
 import ButtonContainer from './ButtonContainer';
 
-import { getDefaultFieldValues, getCustomLabels, getPaymentData } from './utils';
+import { getDefaultFieldValues, getCustomLabels, getPaymentData, getOrderData } from './utils';
+
+const { __ } = wp.i18n;
 
 function App({ form, attributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue } = form;
-  const { userCode, buttonName, title, description, customFields } = attributes;
+  const { userCode, adminUrl, buttonName, title, description, customFields } = attributes;
 
   const defaultFieldType = customFields.length === 0 ? 'basic' : 'custom';
   const customLabels = getCustomLabels(customFields);
@@ -54,13 +56,42 @@ function App({ form, attributes }) {
     validateFields((error, values) => {
       if (!error) {
         const paymentData = getPaymentData(values, attributes);
-        IMP.request_pay(paymentData, response => {
-          console.log(response);
-          setLoading(false);
+        const orderData = getOrderData(paymentData);
+
+        jQuery.ajax({
+          method: 'POST',
+          url: adminUrl,
+          contentType: false,
+          processData: false,
+          data: orderData,
+        }).done(({ order_uid, thankyou_url }) => {
           setIsOpen(false);
           setFieldType('basic');
+
+          const data = {
+            ...paymentData,
+            merchant_uid: order_uid,
+            m_redirect_url: thankyou_url,
+          };
+          console.log(data);
+          IMP.request_pay(data, response => {
+            console.log(response);
+            const { success, error_msg } = response;
+            if (success) {
+              location.href = thankyou_url;
+            } else {
+              Modal.error({
+                centered: true,
+                title: __('결제 실패', 'iamport-block'),
+                content: error_msg,
+                okType: 'danger',
+                okText: __('닫기', 'iamport-block'),
+              });
+            }
+          });
+        }).fail(({ responseText }) => {
+          alert(responseText);
         });
-        setLoading(true);
       }
     });
   }
@@ -72,6 +103,7 @@ function App({ form, attributes }) {
         isOpen &&
         <Modal
           visible
+          centered={true}
           title={<ModalTitle />}
           footer={null}
           onCancel={() => {
