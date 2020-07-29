@@ -4,10 +4,9 @@
 
 	ob_start();
 ?>
-	<div class="wrap iamport-block-manual-container">
-		<h2>아임포트 블록 메뉴얼</h
-    2>
-		<h3>1. 아임포트 블록 추가</h3>
+	<div class="iamport-block-manual-container">
+		<h1>아임포트 블록 메뉴얼</h1>
+		<h2>1. 아임포트 블록 추가</h2>
 		<div class="shortcode-box">
       페이지에서 + 버튼을 통해 아임포트 블록을 추가할 수 있습니다.
       <p class="attr-explanation">
@@ -18,7 +17,7 @@
       </p>
 		</div>
 
-		<h3>2. 기본 입력 필드</h3>
+		<h2>2. 기본 입력 필드</h2>
 		<h4></h4>
 		<div class="shortcode-box">
       <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/basic_fields.png" class="attr-img">
@@ -93,7 +92,7 @@
 			<div class="vir-div"></div>
 		</div>
 
-		<h3>3. 결제 금액 필드</h3>
+		<h2>3. 결제 금액 필드</h2>
 		<div class="shortcode-box">
       <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/amount_fields.png" class="attr-img">
       <div>
@@ -164,7 +163,7 @@
 			</div>
 		</div>
 
-		<h3>4. 커스텀 필드</h3>
+		<h2>4. 커스텀 필드</h2>
 		<div class="shortcode-box">
       <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/single_fields.png" class="attr-img">
 			<div class="attr-text">
@@ -197,7 +196,7 @@
 			<div class="vir-div"></div>
 		</div>
 
-    <h3>4-1. 약관 동의 필드</h3>
+    <h2>4-1. 약관 동의 필드</h2>
 		<div class="shortcode-box">
       <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/agreement_fields.png" class="attr-img">
 			<div class="attr-text">
@@ -222,7 +221,7 @@
 			<div class="vir-div"></div>
 		</div>
 
-    <h3>4-2. 복수 선택 / 단일 선택 필드</h3>
+    <h2>4-2. 복수 선택 / 단일 선택 필드</h2>
 		<div class="shortcode-box">
       <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/multiple_fields.png" class="attr-img">
 			<div class="attr-text">
@@ -237,7 +236,7 @@
 			<div class="vir-div"></div>
 		</div>
         
-		<h3>5. 주의사항</h3>
+		<h2>5. 주의사항</h2>
 		<div class="shortcode-box">
 			<p class="attr-explanation">- 입력 라벨은 중복될 수 없습니다.</p>
 			<p class="attr-explanation">- 복수 선택 / 단일 선택 필드에 대해, 입력 옵션은 중복될 수 없습니다.</p>

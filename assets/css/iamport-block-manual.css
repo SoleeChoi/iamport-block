@@ -1,3 +1,12 @@
+.iamport-block-manual-container {
+  padding: 2rem 1rem;
+}
+
+.iamport-block-manual-container h1 {
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
 .iamport-block-manual-container .shortcode-box {
 	color: #666;
 	padding: 30px;

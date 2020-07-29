@@ -31,11 +31,11 @@ if ( !class_exists('IamportBlock') ) {
 		public function iamport_admin_menu() {
 			add_submenu_page(
 				'edit.php?post_type=iamport_payment',
-				'아임포트 설정',
-				'아임포트 설정',
+				'아임포트 블록 설정',
+				'아임포트 블록 설정',
 				'administrator',
-				'iamport-config',
-				function() { echo require_once(dirname(__FILE__).'/../view/admin/setting.php'); }
+				'iamport-block-setting',
+				function() { echo require_once(dirname(__FILE__).'/../view/admin/IamportBlockSetting.php'); }
 			);
 
 			add_submenu_page(
@@ -43,8 +43,8 @@ if ( !class_exists('IamportBlock') ) {
 				'아임포트 블록 메뉴얼',
 				'아임포트 블록 메뉴얼',
 				'administrator',
-				'iamport-block',
-				function() { echo require_once(dirname(__FILE__).'/../view/admin/manual.php'); }
+				'iamport-block-manual',
+				function() { echo require_once(dirname(__FILE__).'/../view/admin/IamportBlockManual.php'); }
 			);
 		}
 
@@ -163,20 +163,17 @@ if ( !class_exists('IamportBlock') ) {
 		private function create_iamport_post_type() {
 			register_post_type( 'iamport_payment',
 				array(
-					'labels'		 		=> array(
-						'name' 				=> '아임포트 결제목록',
-						'singular_name' 	=> '아임포트 결제목록'
-					),
-					'menu_icon' 			=> plugin_dir_url( __FILE__ ) . '../assets/img/iamport.jpg',
-					'show_ui' 				=> true,
-					'show_in_nav_menus' 	=> false,
-					'show_in_admin_bar' 	=> true,
-					'public' 				=> true,
+					'labels'            => array('name' => '아임포트 결제내역', 'singular_name' => '아임포트 결제내역'),
+					'menu_icon' 			  => plugin_dir_url( __FILE__ ) . '../assets/img/iamport.jpg',
+					'show_ui' 				  => true,
+					'show_in_nav_menus' => false,
+					'show_in_admin_bar' => true,
+					'public' 				    => true,
 					'has_archive' 			=> false,
-					'rewrite' 				=> array('slug' => 'iamport_payment'),
+					'rewrite' 				  => array('slug' => 'iamport_payment'),
 					'map_meta_cap' 			=> true,
 					'capabilities' 			=> array(
-						'edit_post' 		=> true,
+						'edit_post' 		  => true,
 						'create_posts' 		=> false
 					)
 				)
@@ -335,7 +332,7 @@ if ( !class_exists('IamportBlock') ) {
 			$iamport_order = new IamportBlockOrder($post);
 			$order_status = $iamport_order->get_order_status(true);
 
-			echo require_once(dirname(__FILE__).'/../view/admin/edit-order.php');
+			echo require_once(dirname(__FILE__).'/../view/admin/IamportBlockOrderEdit.php');
 		}
 
 		public function iamport_order_history_metabox_callback($post) {
