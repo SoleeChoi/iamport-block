@@ -1,6 +1,6 @@
 <?php
-	wp_register_style('iamport-order-view-css', plugins_url('../../assets/css/order-view.css', __FILE__));
-	wp_enqueue_style('iamport-order-view-css');
+	wp_register_style('iamport-block-order-detail-css', plugins_url('../../assets/css/iamport-block-order-detail.css', __FILE__));
+	wp_enqueue_style('iamport-block-order-detail-css');
 
 	$buyer_name 	= $iamport_order->get_buyer_name();
 	$buyer_email 	= $iamport_order->get_buyer_email();
@@ -10,7 +10,7 @@
 	ob_start();
 ?>
 
-	<table class="iamport-order-view">
+	<table class="iamport-block-order-detail-container">
 		<tbody>
 			<tr>
 				<th>주문번호</th>

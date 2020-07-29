@@ -55,7 +55,7 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 			$iamport_order = IamportBlockOrder::find_by_order_uid($order_uid);
 
 			if ( $iamport_order ) {
-				return require_once(dirname(__FILE__).'/../view/history/order-view.php');
+				return require_once(dirname(__FILE__).'/../view/history/IamportBlockOrderDetail.php');
 			}
 
 			return '주문정보를 찾을 수 없습니다.';
