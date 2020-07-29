@@ -1,7 +1,7 @@
 <?php
-if ( !class_exists('IamportPaymentInfo') ) {
+if ( !class_exists('IamportBlockPaymentInfo') ) {
 
-	class IamportPaymentInfo {
+	class IamportBlockPaymentInfo {
 
 		private $user_code;
 		private $api_key;
