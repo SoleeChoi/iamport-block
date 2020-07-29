@@ -12,13 +12,22 @@ const { __ } = wp.i18n;
 
 function App({ form, attributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue } = form;
-  const { userCode, adminUrl, buttonName, title, description, customFields } = attributes;
+  const {
+    userCode,
+    adminUrl,
+    loginUrl,
+    isLoginRequired,
+    buttonName,
+    title,
+    description,
+    customFields,
+  } = attributes;
 
   const defaultFieldType = customFields.length === 0 ? 'basic' : 'custom';
   const customLabels = getCustomLabels(customFields);
   const [isOpen, setIsOpen] = useState(false);
   const [fieldType, setFieldType] = useState(defaultFieldType);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const ModalTitle = () => 
     <div>
@@ -31,12 +40,26 @@ function App({ form, attributes }) {
   }, []);
 
   function openModal() {
-    setIsOpen(true);
+    if (isLoginRequired) {
+      Modal.confirm({
+        centered: true,
+        title: __('로그인 필요', 'iamport-block'),
+        content: __('결제 기능을 이용하기 위해서는 로그인이 필요합니다', 'iamport-block'),
+        okType: 'danger',
+        okText: __('로그인하기', 'iamport-block'),
+        cancelText: __('닫기', 'iamport-block'),
+        onOk() {
+          window.location.href = loginUrl;
+        },
+      });
+    } else {
+      setIsOpen(true);
 
-    setTimeout(() => {
-      const defaultFieldValues = getDefaultFieldValues(attributes);
-      setFieldsValue(defaultFieldValues);
-    }, 0);
+      setTimeout(() => {
+        const defaultFieldValues = getDefaultFieldValues(attributes);
+        setFieldsValue(defaultFieldValues);
+      }, 0);
+    }
   }
 
   function onClickNext() {
@@ -129,7 +152,7 @@ function App({ form, attributes }) {
             />
           </Form>
           <ButtonContainer
-            loading={loading}
+            // loading={loading}
             fieldType={fieldType}
             defaultFieldType={defaultFieldType}
             onChangeFieldType={value => setFieldType(value)}
