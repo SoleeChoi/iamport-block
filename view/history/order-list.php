@@ -1,10 +1,9 @@
 <?php
-	wp_register_style( 'iamport-order-list-css', plugins_url('../../assets/css/order-list.css', __FILE__));
+	wp_register_style('iamport-order-list-css', plugins_url('../../assets/css/order-list.css', __FILE__));
 	wp_enqueue_style('iamport-order-list-css');
 
 	ob_start();
 ?>
-
 	<table class="iamport-order-list">
 		<thead>
 			<tr>
@@ -44,6 +43,5 @@
 			<?php endif; ?>
 		</tbody>
 	</table>
-	
 <?php
 	return ob_get_clean();

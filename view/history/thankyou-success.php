@@ -14,6 +14,5 @@
 	<script type="text/javascript">
 		location.href = '<?=$redirect_after ? $redirect_after : $order_view_url?>';
 	</script>
-	
 <?php
 	return ob_get_clean();

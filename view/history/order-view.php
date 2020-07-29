@@ -1,13 +1,11 @@
 <?php
-	wp_register_style( 'iamport-order-view-css', plugins_url('../../assets/css/order-view.css', __FILE__));
+	wp_register_style('iamport-order-view-css', plugins_url('../../assets/css/order-view.css', __FILE__));
 	wp_enqueue_style('iamport-order-view-css');
 
 	$buyer_name 	= $iamport_order->get_buyer_name();
 	$buyer_email 	= $iamport_order->get_buyer_email();
 	$buyer_tel 		= $iamport_order->get_buyer_tel();
-	$shipping_addr = $iamport_order->get_shipping_addr();
 	$extraFields 	= $iamport_order->get_extra_fields();
-	$fileFields 	= $iamport_order->get_attached_files();
 
 	ob_start();
 ?>
@@ -92,19 +90,6 @@
 				<td><?=$buyer_tel?></td>
 			</tr>
 			<?php endif; ?>
-			<?php if(!empty($shipping_addr)) : ?>
-			<tr>
-				<th>배송주소</th>
-				<td><?=$shipping_addr?></td>
-			</tr>
-			<?php endif; ?>
-			
-			<?php if(!empty($fileFields)) : foreach($fileFields as $file=>$fileData) : ?>
-				<tr>
-					<th><?=preg_replace('/%0D%0A/', '', $file)?></th>
-					<td><a href='<?=$fileData['location']?>' download><?=$fileData['name']?></a></td>
-				</tr>
-			<?php endforeach; endif;?>
 			<?php if( $extraFields) : foreach(json_decode($extraFields) as $name=>$field) : ?>
 				<tr>
 					<th><?=$name?></th>

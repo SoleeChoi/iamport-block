@@ -36,7 +36,7 @@
 	$iamportSetting = get_option('iamport_setting');
 ?>
     <style>
-        .iamport-mid-fill {width:100%}
+      .iamport-mid-fill { width:100% }
     </style>
 	<div class="wrap">
 		<h2>아임포트 결제설정 페이지</h2>
@@ -108,7 +108,5 @@
 		</p>
 	</div>
 <?php
-
 	$iamport_admin_html = ob_get_clean();
-
 	return $iamport_admin_html;
