@@ -8,7 +8,7 @@ const { Option } = Select;
 
 function CustomField({ field, getFieldDecorator, onChangeAddress }) {
   const { label, type, options, agreementOptions, required } = field;
-  const agreementLength = agreementOptions.length;
+  const agreementLength = agreementOptions && agreementOptions.length;
 
   switch(type) {
     case 'checkbox': {

@@ -19,14 +19,15 @@ export function getDefaultFieldValues(attributes) {
 
   customFields.forEach(({ label, type, options, agreementOptions }) => {
     // default값을 갖을 수 있는 입력 필드의 경우, default값을 설정
-    const [defaultValue] = options;
     switch (type) {
       case 'checkbox': {
+        const [defaultValue] = options;
         defaultFieldValues[label] = [defaultValue];
         break;
       }
       case 'dropdown':
       case 'radio': {
+        const [defaultValue] = options;
         defaultFieldValues[label] = defaultValue;
         break;  
       }
