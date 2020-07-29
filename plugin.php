@@ -91,7 +91,7 @@ add_action('enqueue_block_assets', 'iamport_scripts');
 require_once(dirname(__FILE__).'/model/IamportBlock.php');
 require_once(dirname(__FILE__).'/model/IamportBlockPaymentCallback.php');
 
-register_activation_hook( __FILE__, 'iamport_activated' );
+register_activation_hook(__FILE__, 'iamport_activated');
 
 function iamport_activated() {
 	create_history_page();
@@ -105,13 +105,13 @@ function create_history_page() {
 	$history_page = get_page_by_slug($slug);
 	if( empty($history_page) ) {
 		$page_data = array(
-			'post_status'		=> 'publish',
-			'post_type'			=> 'page',
-			'post_author'		=> 1,
-			'post_name'			=> $slug,
-			'post_title'		=> '결제내역 - 아임포트',
+			'post_status'		  => 'publish',
+			'post_type'			  => 'page',
+			'post_author'		  => 1,
+			'post_name'			  => $slug,
+			'post_title'		  => '결제내역 - 아임포트',
 			'post_content'		=> '[iamport_history_page]',
-			'post_parent'		=> 0,
+			'post_parent'		  => 0,
 			'comment_status'	=> 'closed'
 		);
 
@@ -120,19 +120,19 @@ function create_history_page() {
 }
 
 function create_thankyou_page() {
-	$slug = 'iamport_thankyou';
+	$slug = 'iamport_block_payment_result';
 
 	$thankyou_page = get_page_by_slug($slug);
 	if( empty($thankyou_page) ) {
 		$page_data = array(
-			'post_status'		=> 'publish',
-			'post_type'			=> 'page',
-			'post_author'		=> 1,
-			'post_name'			=> $slug,
-			'post_title'		=> '결제완료 - 아임포트',
-			'post_content'		=> '[iamport_thankyou_page]',
-			'post_parent'		=> 0,
-			'comment_status'	=> 'closed'
+			'post_status'		  => 'publish',
+			'post_type'			  => 'page',
+			'post_author'		  => 1,
+			'post_name'			  => $slug,
+			'post_title'		  => '결제완료 - 아임포트',
+			'post_content'	  => '[iamport_block_payment_result_page]',
+			'post_parent'		  => 0,
+			'comment_status'  => 'closed'
 		);
 
 		$page_id = wp_insert_post( $page_data );
@@ -150,8 +150,8 @@ function get_page_by_slug($slug) {
 }
 
 function add_endpoints() {
-	add_rewrite_endpoint( 'iamport-order-view', EP_PAGES );
-	add_rewrite_endpoint( 'iamport-order-received', EP_PERMALINK | EP_PAGES );
+	add_rewrite_endpoint('iamport-order-view', EP_PAGES);
+	add_rewrite_endpoint('iamport-order-received', EP_PERMALINK | EP_PAGES);
 
 	flush_rewrite_rules();
 }

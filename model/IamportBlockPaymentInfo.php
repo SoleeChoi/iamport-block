@@ -18,8 +18,8 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 		}
 
 		private function hook() {
-			add_shortcode( 'iamport_history_page', array($this, 'hook_history_page') );
-			add_shortcode( 'iamport_thankyou_page', array($this, 'hook_thankyou_page') );
+			add_shortcode('iamport_history_page', array($this, 'hook_history_page'));
+			add_shortcode('iamport_block_payment_result_page', array($this, 'hook_payment_result_page'));
 		}
 
 		public function hook_history_page($atts, $content = null) {
@@ -61,7 +61,7 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 			return '주문정보를 찾을 수 없습니다.';
 		}
 
-		public function hook_thankyou_page($atts, $content = null) {
+		public function hook_payment_result_page($atts, $content = null) {
 			global $wp;
 			if ( empty($wp->query_vars['iamport-order-received']) )	return '파라메터라 누락되었습니다. 관리자에게 문의해주세요.';
 
@@ -80,7 +80,7 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 				$history_page = get_page_by_slug('iamport_history');
 				if ( !empty($history_page) )	$order_view_url = add_query_arg( 'iamport-order-view', $order_uid, get_page_link($history_page[0]->ID) );
 
-				return require_once(dirname(__FILE__).'/../view/history/thankyou-success.php');
+				return require_once(dirname(__FILE__).'/../view/history/IamportBlockPaymentSuccess.php');
 			}
 
 			$iamport = new IamportBlockApi($this->api_key, $this->api_secret);
@@ -124,9 +124,9 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 				$history_page = get_page_by_slug('iamport_history');
 				if ( !empty($history_page) )	$order_view_url = add_query_arg( 'iamport-order-view', $order_uid, get_page_link($history_page[0]->ID) );
 
-				return require_once(dirname(__FILE__).'/../view/history/thankyou-success.php');
+				return require_once(dirname(__FILE__).'/../view/history/IamportBlockPaymentSuccess.php');
 			} else {
-				return require_once(dirname(__FILE__).'/../view/history/thankyou-fail.php');
+				return require_once(dirname(__FILE__).'/../view/history/IamportBlockPaymentFailure.php');
 			}
 		}
 
