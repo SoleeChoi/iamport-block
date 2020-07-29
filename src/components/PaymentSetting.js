@@ -79,9 +79,9 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         {/* 결제 금액 필드 */}
         <PaymentAmount 
           getFieldDecorator={getFieldDecorator}
+          getFieldValue={getFieldValue}
           amountType={amountType}
           amountOptions={amountOptions}
-          currency={getFieldValue('currency')}
           onChange={onChangeAmountType}
           onAdd={onAddAmountOptions}
           onDelete={onDeleteAmountOptions}

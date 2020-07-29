@@ -8,13 +8,15 @@ const { __ } = wp.i18n;
 
 export function PaymentAmount({
   getFieldDecorator,
+  getFieldValue,
   amountType,
   amountOptions,
-  currency,
   onChange,
   onAdd,
   onDelete,
 }) {
+  const currency = getFieldValue('currency');
+
   return (
     <div>
       <h3>{__('결제 금액 필드', 'iamport-block')}</h3>
@@ -40,7 +42,6 @@ export function PaymentAmount({
               <Select
                 size="large"
                 suffixIcon={<Icon type="caret-down" />}
-                onChange={onChange}
               >
                 {Object.keys(CURRENCY_OPTIONS).map(eachType =>
                   <Option value={eachType}>{CURRENCY_OPTIONS[eachType]}</Option>
@@ -51,8 +52,9 @@ export function PaymentAmount({
         </Col>
       </Row>
       {
-        amountType !== 'variable' && amountOptions &&
-        amountOptions.map((option, index) => 
+        amountType !== 'variable' &&
+        amountOptions &&
+        amountOptions.map((_, index) => 
           <div>
             {
               index === 0 &&
@@ -86,8 +88,19 @@ export function PaymentAmount({
                 <Item>
                   {getFieldDecorator(`amountOptions[${index}].value`, {
                     rules: [{
-                      required: true, message: __('필수 입력입니다', 'iamport-block'),
-                      pattern: /^\d+$/, message: __('결제 금액이 올바르지 않습니다', 'iamport-block'),
+                      validator:(_, value) => {
+                        if (!value) {
+                          return Promise.reject(__('필수 입력입니다', 'iamport-block'));
+                        }
+                        if (!value.match(/^\d+$/)) {
+                          return Promise.reject(__('결제 금액이 올바르지 않습니다', 'iamport-block'));
+                        }
+                        const taxFreeAmount = getFieldValue(`amountOptions[${index}].taxFreeAmount`);
+                        if (parseInt(value, 10) < parseInt(taxFreeAmount, 10)) {
+                          return Promise.reject(__('결제 금액은 면세 금액보다 큰 값이어야 합니다', 'iamport-block'));
+                        }
+                        return Promise.resolve();
+                      },
                     }],
                   })(
                     <Input
@@ -103,10 +116,11 @@ export function PaymentAmount({
                     rules: [{
                       validator:(_, value) => {
                         if (value && !value.match(/^\d+$/)) {
-                          return Promise.reject('면세 금액이 올바르지 않습니다');
+                          return Promise.reject(__('면세 금액이 올바르지 않습니다', 'iamport-block'));
                         }
-                        if (parseInt(value, 10) > parseInt(amountOptions[index].value, 10)) {
-                          return Promise.reject('면세 금액이 결제 금액보다 큽니다');
+                        const amount = getFieldValue(`amountOptions[${index}].value`);
+                        if (parseInt(value, 10) > parseInt(amount, 10)) {
+                          return Promise.reject(__('면세 금액은 결제 금액보다 작은 값이어야 합니다', 'iamport-block'));
                         }
                         return Promise.resolve();
                       },
