@@ -2,7 +2,7 @@
 
 if ( !class_exists('IamportBlock') ) {
 	require_once(dirname(__FILE__).'/iamport.php');
-	require_once(dirname(__FILE__).'/iamport-order.php');
+	require_once(dirname(__FILE__).'/IamportBlockOrder.php');
 	require_once(dirname(__FILE__).'/iamport-payment-info.php');
 
 	class IamportBlock {
