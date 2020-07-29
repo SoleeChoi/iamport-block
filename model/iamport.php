@@ -1,18 +1,4 @@
 <?php
-if ( !class_exists('IamportRequestException') ) {
-	class IamportRequestException extends Exception {
-
-		protected $response;
-
-		public function __construct($response) {
-			$this->response = $response;
-
-			parent::__construct($response->message, $response->code);
-		}
-
-	}
-}
-
 if ( !class_exists('IamportPayment') ) {
 	class IamportPayment {
 
@@ -42,6 +28,7 @@ if ( !class_exists('IamportPayment') ) {
 
 if ( !class_exists('Iamport') ) {
   require_once(dirname(__FILE__).'/IamportBlockPaymentAuthException.php');
+  require_once(dirname(__FILE__).'/IamportBlockPaymentRequestException.php');
   require_once(dirname(__FILE__).'/IamportBlockPaymentResult.php');
 
 	class Iamport {
@@ -72,7 +59,7 @@ if ( !class_exists('Iamport') ) {
 	      return new IamportBlockPaymentResult(true, $payment_data);
 			} catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
-      } catch(IamportRequestException $e) {
+      } catch(IamportBlockPaymentRequestException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
       } catch(Exception $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -86,7 +73,7 @@ if ( !class_exists('Iamport') ) {
         return new IamportBlockPaymentResult(true, $payment_data);
       } catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
-      } catch(IamportRequestException $e) {
+      } catch(IamportBlockPaymentRequestException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
       } catch(Exception $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -117,7 +104,7 @@ if ( !class_exists('Iamport') ) {
 				return new IamportBlockPaymentResult(true, $payment_data);
 			} catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
-      } catch(IamportRequestException $e) {
+      } catch(IamportBlockPaymentRequestException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
       } catch(Exception $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -141,7 +128,7 @@ if ( !class_exists('Iamport') ) {
 				return new IamportBlockPaymentResult(true, $payment_data);
 			} catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
-      } catch(IamportRequestException $e) {
+      } catch(IamportBlockPaymentRequestException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
       } catch(Exception $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -167,7 +154,7 @@ if ( !class_exists('Iamport') ) {
 
       if ( $error_code > 0 )	throw new Exception("Request Error(HTTP STATUS : ".$status_code.")", $error_code);
       if ( empty($r) )	throw new Exception("API서버로부터 응답이 올바르지 않습니다. ".$body, 1);
-      if ( $r->code !== 0 )	throw new IamportRequestException($r);
+      if ( $r->code !== 0 )	throw new IamportBlockPaymentRequestException($r);
 
       return $r->response;
 		}
@@ -194,7 +181,7 @@ if ( !class_exists('Iamport') ) {
 
       if ( $error_code > 0 )	throw new Exception("AccessCode Error(HTTP STATUS : ".$status_code.")", $error_code);
       if ( empty($r) )	throw new Exception("API서버로부터 응답이 올바르지 않습니다. ".$body, 1);
-      if ( $r->code !== 0 )	throw new IamportRequestException($r);
+      if ( $r->code !== 0 )	throw new IamportBlockPaymentRequestException($r);
 
       return $r->response;
 		}
