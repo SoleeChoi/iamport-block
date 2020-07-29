@@ -1,12 +1,4 @@
 <?php
-if ( !class_exists('IamportAuthException') ) {
-	class IamportAuthException extends Exception {
-		public function __construct($message, $code) {
-			parent::__construct($message, $code);
-		}
-	}
-}
-
 if ( !class_exists('IamportRequestException') ) {
 	class IamportRequestException extends Exception {
 
@@ -49,6 +41,7 @@ if ( !class_exists('IamportPayment') ) {
 }
 
 if ( !class_exists('Iamport') ) {
+  require_once(dirname(__FILE__).'/IamportBlockPaymentAuthException.php');
   require_once(dirname(__FILE__).'/IamportBlockPaymentResult.php');
 
 	class Iamport {
@@ -77,7 +70,7 @@ if ( !class_exists('Iamport') ) {
 				$response = $this->getResponse(self::GET_PAYMENT_URL.$imp_uid);
 	      $payment_data = new IamportPayment($response);
 	      return new IamportBlockPaymentResult(true, $payment_data);
-			} catch(IamportAuthException $e) {
+			} catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
       } catch(IamportRequestException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -91,7 +84,7 @@ if ( !class_exists('Iamport') ) {
         $response = $this->getResponse(self::FIND_PAYMENT_URL.$merchant_uid);  
         $payment_data = new IamportPayment($response);
         return new IamportBlockPaymentResult(true, $payment_data);
-      } catch(IamportAuthException $e) {
+      } catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
       } catch(IamportRequestException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -122,7 +115,7 @@ if ( !class_exists('Iamport') ) {
 
 				$payment_data = new IamportPayment($response);
 				return new IamportBlockPaymentResult(true, $payment_data);
-			} catch(IamportAuthException $e) {
+			} catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
       } catch(IamportRequestException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -146,7 +139,7 @@ if ( !class_exists('Iamport') ) {
 
 				$payment_data = new IamportPayment($response);
 				return new IamportBlockPaymentResult(true, $payment_data);
-			} catch(IamportAuthException $e) {
+			} catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
       } catch(IamportRequestException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -228,7 +221,7 @@ if ( !class_exists('Iamport') ) {
 
 				return $response->access_token;
 			} catch(Exception $e) {
-				throw new IamportAuthException('[API인증오류] '.$e->getMessage(), $e->getCode());
+				throw new IamportBlockPaymentAuthException('[API인증오류] '.$e->getMessage(), $e->getCode());
 			}
 		}
 	}
