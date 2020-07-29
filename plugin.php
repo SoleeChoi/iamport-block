@@ -88,7 +88,7 @@ function iamport_scripts()
 add_action('enqueue_block_assets', 'iamport_scripts');
 
 // Hook For PHP
-require_once(dirname(__FILE__).'/model/iamport-block.php');
+require_once(dirname(__FILE__).'/model/IamportBlock.php');
 require_once(dirname(__FILE__).'/model/IamportBlockPaymentCallback.php');
 
 register_activation_hook( __FILE__, 'iamport_activated' );
