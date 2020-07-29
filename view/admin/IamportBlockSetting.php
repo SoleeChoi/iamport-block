@@ -32,11 +32,8 @@
 	}
 	$iamportSetting = get_option('iamport_setting');
 ?>
-    <style>
-      .iamport-mid-fill { width:100% }
-    </style>
 	<div class="wrap">
-		<h2>아임포트 결제설정 페이지</h2>
+		<h2>아임포트 블록 설정</h2>
 		<p>
 			<h3>0. 가상계좌 입금통보 설정</h3>
 			<table class="form-table shortcode-box">
