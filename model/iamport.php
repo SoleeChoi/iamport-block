@@ -1,35 +1,9 @@
 <?php
-if ( !class_exists('IamportPayment') ) {
-	class IamportPayment {
-
-		protected $response;
-		protected $custom_data;
-
-		public function __construct($response) {
-			$this->response = $response;
-
-	        $this->custom_data = json_decode($response->custom_data);
-		}
-
-		public function __get($name) {
-			if (isset($this->response->{$name})) {
-				return $this->response->{$name};
-			}
-		}
-
-		public function getCustomData($name=null) {
-			if ( is_null($name) )	return $this->custom_data;
-
-			return $this->custom_data->{$name};
-		}
-
-	}
-}
-
 if ( !class_exists('Iamport') ) {
   require_once(dirname(__FILE__).'/IamportBlockPaymentAuthException.php');
   require_once(dirname(__FILE__).'/IamportBlockPaymentRequestException.php');
   require_once(dirname(__FILE__).'/IamportBlockPaymentResult.php');
+  require_once(dirname(__FILE__).'/IamportBlockPayment.php');
 
 	class Iamport {
 
@@ -55,7 +29,7 @@ if ( !class_exists('Iamport') ) {
 		public function findByImpUID($imp_uid) {
 			try {
 				$response = $this->getResponse(self::GET_PAYMENT_URL.$imp_uid);
-	      $payment_data = new IamportPayment($response);
+	      $payment_data = new IamportBlockPayment($response);
 	      return new IamportBlockPaymentResult(true, $payment_data);
 			} catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -69,7 +43,7 @@ if ( !class_exists('Iamport') ) {
 		public function findByMerchantUID($merchant_uid) {
       try {
         $response = $this->getResponse(self::FIND_PAYMENT_URL.$merchant_uid);  
-        $payment_data = new IamportPayment($response);
+        $payment_data = new IamportBlockPayment($response);
         return new IamportBlockPaymentResult(true, $payment_data);
       } catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -100,7 +74,7 @@ if ( !class_exists('Iamport') ) {
 					array(self::TOKEN_HEADER.': '.$access_token)
 				);
 
-				$payment_data = new IamportPayment($response);
+				$payment_data = new IamportBlockPayment($response);
 				return new IamportBlockPaymentResult(true, $payment_data);
 			} catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
@@ -124,7 +98,7 @@ if ( !class_exists('Iamport') ) {
 					array(self::TOKEN_HEADER.': '.$access_token)
 				);
 
-				$payment_data = new IamportPayment($response);
+				$payment_data = new IamportBlockPayment($response);
 				return new IamportBlockPaymentResult(true, $payment_data);
 			} catch(IamportBlockPaymentAuthException $e) {
         return new IamportBlockPaymentResult(false, null, array('code'=>$e->getCode(), 'message'=>$e->getMessage()));
