@@ -4,11 +4,11 @@ import {
   PGS_FOR_PHONE,
   BASIC_KEYS,
   DEFAULT_AMOUNT_OPTIONS,
-  PAY_METHODS,
   DEFAULT_PGS,
   DEFAULT_PG_MIDS,
   DEFAULT_AGREEMENT_OPTIONS,
-} from '../constants';
+} from './constants';
+import { PAY_METHODS } from '../constants';
 
 const { __ } = wp.i18n;
 

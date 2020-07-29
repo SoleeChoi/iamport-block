@@ -1,6 +1,7 @@
 import { Form, Row, Col, Input, Select, Icon, Button } from 'antd';
 
-import { AMOUNT_TYPES, CURRENCY_OPTIONS } from '../constants';
+import { AMOUNT_TYPES } from './constants';
+import { CURRENCY_OPTIONS } from '../constants';
 
 const { Item } = Form;
 const { Option } = Select;

@@ -6,7 +6,7 @@ import PaymentAmount from './PaymentAmount';
 import CustomFields from './CustomFields';
 
 import { getDefaultAttributes, getNewAttributes } from './utils';
-import { DEFAULT_AMOUNT_OPTIONS, DEFAULT_CUSTOM_FIELD } from '../constants';
+import { DEFAULT_AMOUNT_OPTIONS, DEFAULT_CUSTOM_FIELD } from './constants';
 
 const { __ } = wp.i18n;
 

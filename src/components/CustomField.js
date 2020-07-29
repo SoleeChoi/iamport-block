@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Row, Col, Select, Input, Checkbox, Icon, Button, Divider } from 'antd';
 
-import { OPTION_TYPES } from '../constants';
+import { OPTION_TYPES } from './constants';
 
 const { Option } = Select;
 const { __ } = wp.i18n;
