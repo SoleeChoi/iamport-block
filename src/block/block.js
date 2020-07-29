@@ -9,7 +9,7 @@
 import './editor.scss';
 import './style.scss';
 
-import PaymentSetting from '../components/PaymentSetting';
+import PaymentSetting from '../edit/PaymentSetting';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
