@@ -83,7 +83,7 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 				return require_once(dirname(__FILE__).'/../view/history/thankyou-success.php');
 			}
 
-			$iamport = new Iamport($this->api_key, $this->api_secret);
+			$iamport = new IamportBlockApi($this->api_key, $this->api_secret);
 			$iamport_result = $iamport->findByMerchantUID($order_uid);
 
 			if ( $iamport_result->success ) {

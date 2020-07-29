@@ -5,7 +5,7 @@ if ( !class_exists('Iamport') ) {
   require_once(dirname(__FILE__).'/IamportBlockPaymentResult.php');
   require_once(dirname(__FILE__).'/IamportBlockPayment.php');
 
-	class Iamport {
+	class IamportBlockApi {
 
 		const GET_TOKEN_URL = 'https://api.iamport.kr/users/getToken';
 		const GET_PAYMENT_URL = 'https://api.iamport.kr/payments/';

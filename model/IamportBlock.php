@@ -1,7 +1,7 @@
 <?php
 
 if ( !class_exists('IamportBlock') ) {
-	require_once(dirname(__FILE__).'/iamport.php');
+	require_once(dirname(__FILE__).'/IamportBlockApi.php');
 	require_once(dirname(__FILE__).'/IamportBlockOrder.php');
 	require_once(dirname(__FILE__).'/IamportBlockPaymentInfo.php');
 
@@ -367,7 +367,7 @@ if ( !class_exists('IamportBlock') ) {
 
 			$new_iamport_order_status = sanitize_text_field($_POST['new_iamport_order_status']);
 			if ( $new_iamport_order_status == 'cancelled' ) {
-				$iamport = new Iamport($this->api_key, $this->api_secret);
+				$iamport = new IamportBlockApi($this->api_key, $this->api_secret);
 				$iamport_result = $iamport->cancel(array(
 					'merchant_uid' 	=> $iamport_order->get_order_uid(),
 					'amount' 		=> $iamport_order->get_paid_amount(),

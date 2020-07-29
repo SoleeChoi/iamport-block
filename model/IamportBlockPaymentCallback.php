@@ -2,7 +2,7 @@
 
 if ( !class_exists('IamportBlockPaymentCallback') ) {
 
-  require_once(dirname(__FILE__).'/iamport.php');
+  require_once(dirname(__FILE__).'/IamportBlockApi.php');
   require_once(dirname(__FILE__).'/IamportBlockOrder.php');
   require_once(dirname(__FILE__).'/IamportBlockPaymentInfo.php');
 
@@ -35,7 +35,7 @@ if ( !class_exists('IamportBlockPaymentCallback') ) {
       $imp_uid = self::pop_post_param("imp_uid");
 
       //결제정보 확인 및 검증
-      $iamport = new Iamport($this->api_key, $this->api_secret);
+      $iamport = new IamportBlockApi($this->api_key, $this->api_secret);
       $iamport_result = $iamport->findByImpUID($imp_uid);
 
       if ( $iamport_result->success ) {
