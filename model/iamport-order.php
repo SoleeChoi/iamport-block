@@ -1,7 +1,7 @@
 <?php
-if ( !class_exists('IamportOrder') ) {
+if ( !class_exists('IamportBlockOrder') ) {
 
-	class IamportOrder {
+	class IamportBlockOrder {
 
 		private $post;
 		private $status;
@@ -250,7 +250,7 @@ if ( !class_exists('IamportOrder') ) {
 			}
 
 			$posts = get_posts( $args );
-			if ( !empty($posts) )		return new IamportOrder($posts[0]);
+			if ( !empty($posts) )		return new IamportBlockOrder($posts[0]);
 
 			return null;
 		}
@@ -260,7 +260,7 @@ if ( !class_exists('IamportOrder') ) {
 			$author_id = get_current_user_id();
 
 			if ( !current_user_can('administrator') && !current_user_can('editor') && $post->post_author != $author_id )	return null;
-			if ( !empty($post) )		return new IamportOrder($post);
+			if ( !empty($post) )		return new IamportBlockOrder($post);
 
 			return null;
 		}

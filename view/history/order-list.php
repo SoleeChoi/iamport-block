@@ -17,7 +17,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($posts as $p) : $iamport_order = new IamportOrder($p); ?>
+			<?php foreach($posts as $p) : $iamport_order = new IamportBlockOrder($p); ?>
 			<tr>
 				<td class="column-primary">
 					<?=$p->post_title?>

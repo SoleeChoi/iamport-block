@@ -41,7 +41,7 @@ if ( !class_exists('IamportPaymentCallback') ) {
       if ( $iamport_result->success ) {
         $payment_data = $iamport_result->data;
 
-        $iamport_order = IamportOrder::find_by_order_uid( $payment_data->merchant_uid );
+        $iamport_order = IamportBlockOrder::find_by_order_uid( $payment_data->merchant_uid );
         if ( empty($iamport_order) ) return '주문정보를 찾을 수 없습니다.';
 
         if ( floatval($payment_data->amount) != $iamport_order->get_order_amount() ) {

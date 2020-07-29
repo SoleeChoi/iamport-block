@@ -204,7 +204,7 @@ if ( !class_exists('IamportBlock') ) {
 		}
 
 		public function iamport_payment_custom_columns( $column, $post_id ) {
-			$iamport_order = IamportOrder::find_by_id($post_id);
+			$iamport_order = IamportBlockOrder::find_by_id($post_id);
 			if ( $iamport_order == null )	return;
 
 			switch ( $column ) {
@@ -325,21 +325,21 @@ if ( !class_exists('IamportBlock') ) {
 		}
 
 		public function iamport_order_metabox_callback($post) {
-			$iamport_order = new IamportOrder($post);
+			$iamport_order = new IamportBlockOrder($post);
 			echo $this->payment_info->get_order_view( $iamport_order->get_order_uid() );
 		}
 
 		public function iamport_order_action_metabox_callback($post) {
 			wp_nonce_field( 'iamport_metabox_nonce', 'iamport_metabox_nonce' );
 
-			$iamport_order = new IamportOrder($post);
+			$iamport_order = new IamportBlockOrder($post);
 			$order_status = $iamport_order->get_order_status(true);
 
 			echo require_once(dirname(__FILE__).'/../view/admin/edit-order.php');
 		}
 
 		public function iamport_order_history_metabox_callback($post) {
-			$iamport_order = new IamportOrder($post);
+			$iamport_order = new IamportBlockOrder($post);
 			$history = $iamport_order->get_failed_history();
 
 			echo '<div id="minor-publishing">';
@@ -350,7 +350,7 @@ if ( !class_exists('IamportBlock') ) {
 		}
 
 		public function save_iamport_order_metabox($post_id) {
-			$iamport_order = IamportOrder::find_by_id($post_id);
+			$iamport_order = IamportBlockOrder::find_by_id($post_id);
 
 			if ( empty($iamport_order) )															return;
 			if ( !isset( $_POST['iamport_metabox_nonce'] ) )										return;

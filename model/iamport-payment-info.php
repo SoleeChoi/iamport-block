@@ -52,7 +52,7 @@ if ( !class_exists('IamportPaymentInfo') ) {
 		}
 
 		public function get_order_view($order_uid) {
-			$iamport_order = IamportOrder::find_by_order_uid($order_uid);
+			$iamport_order = IamportBlockOrder::find_by_order_uid($order_uid);
 
 			if ( $iamport_order ) {
 				return require_once(dirname(__FILE__).'/../view/history/order-view.php');
@@ -68,7 +68,7 @@ if ( !class_exists('IamportPaymentInfo') ) {
 			$order_uid = $wp->query_vars['iamport-order-received'];
 			$redirect_after = $wp->query_vars['redirect-after'];
 
-			$iamport_order = IamportOrder::find_by_order_uid($order_uid);
+			$iamport_order = IamportBlockOrder::find_by_order_uid($order_uid);
 			if ( empty($iamport_order) ) return '주문정보를 찾을 수 없습니다.';
 
 			//무료 주문 처리
