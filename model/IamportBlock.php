@@ -316,8 +316,8 @@ if ( !class_exists('IamportBlock') ) {
 		public function iamport_order_metabox() {
 			remove_meta_box( 'submitdiv', 'iamport_payment', 'side' );
 
-			add_meta_box( 'iamport-order-info', '아임포트 결제상세정보', array($this, 'iamport_order_metabox_callback'), 'iamport_payment', 'normal' );
-			add_meta_box( 'iamport-order-action', '결제상태 변경', array($this, 'iamport_order_action_metabox_callback'), 'iamport_payment', 'side', 'high' );
+			add_meta_box( 'iamport-order-info', '아임포트 결제 상세내역', array($this, 'iamport_order_metabox_callback'), 'iamport_payment', 'normal' );
+			add_meta_box( 'iamport-order-action', '결제 상태 변경', array($this, 'iamport_order_action_metabox_callback'), 'iamport_payment', 'side', 'high' );
 			add_meta_box( 'iamport-order-fail-history', '결제 히스토리', array($this, 'iamport_order_history_metabox_callback'), 'iamport_payment', 'side', 'low');
 		}
 

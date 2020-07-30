@@ -1,4 +1,7 @@
 <?php
+  wp_register_style('iamport-block-setting-css', plugins_url('../../assets/css/iamport-block-setting.css', __FILE__), array(), "20180730");
+  wp_enqueue_style('iamport-block-setting-css');
+  
 	/* ---------- 아임포트 설정에서 '저장하기' 버튼 눌렀을때 ---------- */
 	if ( isset($_POST['action']) && $_POST['action'] == "update_iamport_settings" ) {
 		if ( wp_verify_nonce($_POST['iamport-settings'], 'iamport-options') ) {
@@ -32,74 +35,89 @@
 	}
 	$iamportSetting = get_option('iamport_setting');
 ?>
-	<div class="wrap">
-		<h2>아임포트 블록 설정</h2>
-		<p>
-			<h3>0. 가상계좌 입금통보 설정</h3>
-			<table class="form-table shortcode-box">
-				<tbody>
-					<tr valign="top">
-						<th scope="row" style="padding-left:10px;"><label for="iamport_notification_guide">가상계좌 입금통보 URL설정</label></th>
-						<td>
-							<input readonly class="large-text" name="notification_guide" type="text" id="iamport_notification_guide" value="<?=add_query_arg( 'iamport-button-callback', 'webhook', site_url() )?>" /><br>
-							<a target="_blank" href="https://admin.iamport.kr">https://admin.iamport.kr</a> 에 로그인 후, "시스템설정" > "PG설정(일반결제 및 정기결제)" 하단에 입력 및 저장하면 됩니다.
-						</td>
-					</tr>
-				</tbody>
-			</table>
+	<div class="iamport-block-setting-container">
+		<h1>아임포트 블록 설정</h1>
+    <form method="post" action="">
+      <div class="iamport-block-box">
+        <h2>아임포트 결제 정보</h2>
+        <p>
+          <a target="_blank" href="https://admin.iamport.kr">https://admin.iamport.kr</a>에 접속해 회원가입 후, 아래와 같이 "시스템설정" > "내정보" 탭에 설정된 가맹점 식별코드, REST API 키, REST API Secret 키 값을 복사해 입력해주세요.
+        </p>
+        <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/user-info.png" alt="아임포트 가맹점 정보" />
+        <table>
+          <tbody>
+            <tr>
+              <td>가맹점 식별코드</td>
+              <td>
+                <input name="user_code" type="text" id="iamport_user_code" value="<?=$iamportSetting['user_code']?>" /><br>
+              </td>
+            </tr>
+            <tr>
+              <td>REST API 키</td>
+              <td>
+                <input name="rest_key" type="text" id="iamport_rest_key" value="<?=$iamportSetting['rest_key']?>" /><br>
+              </td>
+            </tr>
+            <tr>
+              <td>REST API Secret</td>
+              <td>
+                <input name="rest_secret" type="text" id="iamport_rest_secret" value="<?=$iamportSetting['rest_secret']?>" /><br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-			<h3>1. 아임포트 결제정보 설정</h3>
-			<form method="post" action="">
-				<table class="form-table shortcode-box">
-					<tbody>
-						<tr valign="top">
-							<th scope="row" style="width:160px;padding-left:10px;"><label for="iamport_user_code">[아임포트] 가맹점 식별코드</label></th>
-							<td>
-								<input class="regular-text" name="user_code" type="text" id="iamport_user_code" value="<?=$iamportSetting['user_code']?>" /><br>
-								<a target="_blank" href="https://admin.iamport.kr">https://admin.iamport.kr</a> 에서 회원가입 후, "시스템설정" > "내정보"에서 확인하실 수 있습니다.
-							</td>
-						</tr>
-						<tr valign="top">
-							<th scope="row" style="width:160px;padding-left:10px;"><label for="iamport_rest_key">[아임포트] REST API 키</label></th>
-							<td>
-								<input class="regular-text" name="rest_key" type="text" id="iamport_rest_key" value="<?=$iamportSetting['rest_key']?>" /><br>
-								<a target="_blank" href="https://admin.iamport.kr">https://admin.iamport.kr</a> 에서 회원가입 후, "시스템설정" > "내정보"에서 확인하실 수 있습니다.
-							</td>
-						</tr>
-						<tr valign="top">
-							<th scope="row" style="width:160px;padding-left:10px;"><label for="iamport_rest_secret">[아임포트] REST API Secret</label></th>
-							<td>
-								<input class="regular-text" name="rest_secret" type="text" id="iamport_rest_secret" value="<?=$iamportSetting['rest_secret']?>" /><br>
-								<a target="_blank" href="https://admin.iamport.kr">https://admin.iamport.kr</a> 에서 회원가입 후, "시스템설정" > "내정보"에서 확인하실 수 있습니다.
-							</td>
-						</tr>
-						<tr valign="top">
-							<th scope="row" style="width:160px;padding-left:10px;"><label for="iamport_login_required">로그인 필요</label></th>
-							<td>
-								<label><input name="login_required" type="checkbox" id="iamport_login_required" value="Y" <?=$iamportSetting['login_required'] == 'Y' ? 'checked' : ''?>/>로그인 된 사용자에게만 구매 허용하시려면 체크하세요</label>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+      <div class="iamport-block-box">
+        <h2>가상계좌 입금 통보 URL</h2>
+        <p>
+          <a target="_blank" href="https://admin.iamport.kr">https://admin.iamport.kr</a> 에 로그인 후, "시스템설정" > "웹훅(Notification)설정" 탭에 아래 값을 입력하고 하단의 "웹훅설정 저장" 버튼을 눌러주세요.
+        </p>
+        <input
+          readonly
+          name="notification_guide"
+          type="text"
+          id="iamport_notification_guide"
+          value="<?=add_query_arg( 'iamport-button-callback', 'webhook', site_url() )?>"
+        />
+        <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/notification_url.png" alt="아임포트 가상계좌 입금 통보 URL" />
+      </div>
 
-				<h3>2. PG사별 추가 설정</h3>
-				<h4>다날 가상계좌 서비스를 이용하시려면 계약하신 사업자의 사업자등록번호 10자리(숫자만)를 기재해주셔야 정상동작합니다.</h4>
-				<table class="form-table shortcode-box">
-					<tbody>
-						<tr valign="top">
-							<th scope="row" style="width:160px;padding-left:10px;"><label for="iamport_biz_num">[다날] 사업자등록번호</label></th>
+      <div class="iamport-block-box">
+        <h2>사업자 등록번호</h2>
+        <p>다날 - 가상계좌 서비스를 이용하시려면, 계약하신 사업자의 등록번호 10자리(-제외)를 반드시 입력해주세요.</p>
+        <input name="biz_num" type="text" id="iamport_biz_num" value="<?=$iamportSetting['biz_num']?>" /><br>
+      </div>
+        
+      <div class="iamport-block-box">
+        <h2>기타 정보</h2>
+        <table>
+          <tbody>
+            <tr>
+              <td>로그인 필수 여부</td>
 							<td>
-								<input class="regular-text" name="biz_num" type="text" id="iamport_biz_num" value="<?=$iamportSetting['biz_num']?>" /><br>
+								<label>
+                  <input
+                    name="login_required"
+                    type="checkbox"
+                    id="iamport_login_required"
+                    value="Y"
+                    <?=$iamportSetting['login_required'] == 'Y' ? 'checked' : ''?>
+                  />
+                  로그인 한 사용자에게만 구매를 허용하시려면 체크하세요
+                </label>
 							</td>
 						</tr>
-					</tbody>
-				</table>
+          </tbody>
+        </table>
+      </div>
 
-				<?php wp_nonce_field('iamport-options', 'iamport-settings'); ?>
-				<input type="hidden" name="action" value="update_iamport_settings" />
-				<input class="button-primary" type="submit" name="iamport-options" value="저장하기" />
-			</form>
-		</p>
+      <?php wp_nonce_field('iamport-options', 'iamport-settings'); ?>
+      <input type="hidden" name="action" value="update_iamport_settings" />
+      <div class="iamport-button-container">
+        <input class="button-primary" type="submit" name="iamport-options" value="저장하기" />
+      </div>
+		</form>
 	</div>
 <?php
 	$iamport_admin_html = ob_get_clean();
