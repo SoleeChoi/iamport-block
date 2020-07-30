@@ -65,15 +65,15 @@ export function CustomField({
   }
 
   return (
-    <div className="imp-custom-fields-container">
+    <div className="iamport-custom-fields-container">
       <Row gutter={[8, 8]}>
         <Col span={7}>
-          <div className="imp-label-container">{__('입력 유형', 'iamport-block')}</div>
+          <div className="iamport-label-container">{__('입력 유형', 'iamport-block')}</div>
         </Col>
         <Col span={7}>
-          <div className="imp-label-container">{__('입력 라벨', 'iamport-block')}</div>
+          <div className="iamport-label-container">{__('입력 라벨', 'iamport-block')}</div>
         </Col>
-        <Col span={10} className="imp-delete-field-container">
+        <Col span={10} className="iamport-delete-field-container">
           <Button
             type="danger"
             onClick={onDeleteCustomField}
@@ -110,7 +110,7 @@ export function CustomField({
       {
         optionVisible &&
         <div>
-          <div class="imp-label-container">{__('입력 옵션', 'iamport_block')}</div>
+          <div class="iamport-label-container">{__('입력 옵션', 'iamport_block')}</div>
           {options.map((eachOption, optionIndex) =>
             <Row gutter={[8, 8]}>
               <Col span={21}>
@@ -146,10 +146,10 @@ export function CustomField({
         <div>
           <Row gutter={[8, 8]}>
             <Col span={7}>
-              <div class="imp-label-container">{__('약관 라벨', 'iamport_block')}</div>
+              <div class="iamport-label-container">{__('약관 라벨', 'iamport_block')}</div>
             </Col>
             <Col span={17}>
-              <div class="imp-label-container">{__('약관 링크', 'iamport_block')}</div>
+              <div class="iamport-label-container">{__('약관 링크', 'iamport_block')}</div>
             </Col>
           </Row>
           {agreementOptions.map(({ label, link }, optionIndex) =>

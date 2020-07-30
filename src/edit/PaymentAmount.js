@@ -61,13 +61,13 @@ export function PaymentAmount({
               index === 0 &&
               <Row gutter={[8, 0]}>
                 <Col span={7}>
-                  <div class="imp-label-container">{__('금액 라벨', 'iamport_block')}</div>
+                  <div class="iamport-label-container">{__('금액 라벨', 'iamport_block')}</div>
                 </Col>
                 <Col span={7}>
-                  <div class="imp-label-container">{__('결제 금액', 'iamport_block')}</div>
+                  <div class="iamport-label-container">{__('결제 금액', 'iamport_block')}</div>
                 </Col>
                 <Col span={10}>
-                  <div class="imp-label-container">{__('면세 금액', 'iamport_block')}</div>
+                  <div class="iamport-label-container">{__('면세 금액', 'iamport_block')}</div>
                 </Col>
               </Row>
             }

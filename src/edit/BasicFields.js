@@ -55,7 +55,7 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
             {getFieldDecorator('payMethods', {
               rules: [{ required: true, message: __('필수 선택입니다', 'iamport-block') }],
             })(
-              <Checkbox.Group className="imp-pay-methods-container">
+              <Checkbox.Group className="iamport-pay-methods-container">
                 {Object.keys(PAY_METHODS).map(method =>
                   <Checkbox value={method}>{PAY_METHODS[method]}</Checkbox>
                 )}

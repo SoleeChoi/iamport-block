@@ -13,7 +13,7 @@ export function ButtonContainer({
 }) {
   if (fieldType === 'custom') {
     return (
-      <div className="imp-btn-container">
+      <div className="iamport-btn-container">
         <Button
           size="large"
           onClick={onCloseModal}
@@ -28,7 +28,7 @@ export function ButtonContainer({
   }
 
   return (
-    <div className="imp-btn-container">
+    <div className="iamport-btn-container">
       {
         defaultFieldType === 'custom' ?
         <Button

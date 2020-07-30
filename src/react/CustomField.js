@@ -73,7 +73,7 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
         agreementOptions.map(({ label, link }, index) => 
           <Item
             label={index === 0 && field.label}
-            className={index !== agreementLength - 1 && 'imp-agreement-container'}
+            className={index !== agreementLength - 1 && 'iamport-agreement-container'}
           >
             <Row>
               <Col span={20}>
@@ -86,7 +86,7 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
                   <Checkbox>{label}</Checkbox>,
                 )}
               </Col>
-              <Col span={4} className="imp-agreement-link">
+              <Col span={4} className="iamport-agreement-link">
                 <a
                   href={link}
                   key={link}
