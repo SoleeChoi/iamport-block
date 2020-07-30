@@ -61,13 +61,13 @@ export function PaymentAmount({
               index === 0 &&
               <Row gutter={[8, 0]}>
                 <Col span={7}>
-                  <div class="iamport-label-container">{__('금액 라벨', 'iamport_block')}</div>
+                  <div class="iamport-label-container">{__('금액 라벨', 'iamport-block')}</div>
                 </Col>
                 <Col span={7}>
-                  <div class="iamport-label-container">{__('결제 금액', 'iamport_block')}</div>
+                  <div class="iamport-label-container">{__('결제 금액', 'iamport-block')}</div>
                 </Col>
                 <Col span={10}>
-                  <div class="iamport-label-container">{__('면세 금액', 'iamport_block')}</div>
+                  <div class="iamport-label-container">{__('면세 금액', 'iamport-block')}</div>
                 </Col>
               </Row>
             }
@@ -80,7 +80,7 @@ export function PaymentAmount({
                     <Input
                       size="large"
                       addonBefore={CURRENCY_OPTIONS[currency]}
-                      placeholder={__('예) 1000(어린이)', 'iamport_block')}
+                      placeholder={__('예) 1000(어린이)', 'iamport-block')}
                     />
                   )}
                 </Item>
@@ -106,7 +106,7 @@ export function PaymentAmount({
                   })(
                     <Input
                       size="large"
-                      placeholder={__('예) 1000', 'iamport_block')}
+                      placeholder={__('예) 1000', 'iamport-block')}
                     />
                   )}
                 </Item>
@@ -129,7 +129,7 @@ export function PaymentAmount({
                   })(
                     <Input
                       size="large"
-                      placeholder={__('예) 0', 'iamport_block')}
+                      placeholder={__('예) 0', 'iamport-block')}
                     />
                   )}
                 </Item>

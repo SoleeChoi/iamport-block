@@ -89,11 +89,11 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
             {Array(13).fill(1).map((value, index) => {
               let label;
               if (index === 0) {
-                label = __('PG사 기본 제공 옵션', 'iamport_block');
+                label = __('PG사 기본 제공 옵션', 'iamport-block');
               } else if (index === 1) {
-                label = __('일시불 (할부불가)', 'iamport_block');
+                label = __('일시불 (할부불가)', 'iamport-block');
               } else {
-                label = __(`최대 ${index}개월`, 'iamport_block');
+                label = __(`최대 ${index}개월`, 'iamport-block');
               }
 
               return <Option value={index} key={index}>{label}</Option>;
@@ -113,11 +113,11 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
             {Array(14).fill(1).map((value, index) => {
               let label;
               if (index === 0) {
-                label = __('PG사 기본 제공 옵션', 'iamport_block');
+                label = __('PG사 기본 제공 옵션', 'iamport-block');
               } else if (index === 1) {
-                label = __('당일 자정까지', 'iamport_block');
+                label = __('당일 자정까지', 'iamport-block');
               } else {
-                label = __(`${index - 1}일 뒤 자정까지`, 'iamport_block');
+                label = __(`${index - 1}일 뒤 자정까지`, 'iamport-block');
               }
 
               return <Option value={index -1} key={index}>{label}</Option>;

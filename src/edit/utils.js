@@ -31,24 +31,24 @@ export function getPgLists(payMethod) {
 export function getPgLabel(pg) {
   switch (pg) {
     case 'html5_inicis':
-      return __('KG이니시스', 'iamport_block');
+      return __('KG이니시스', 'iamport-block');
     case 'mobilians':
-      return __('모빌리언스', 'iamport_block');
+      return __('모빌리언스', 'iamport-block');
     case 'nice':
-      return __('나이스정보통신', 'iamport_block');
+      return __('나이스정보통신', 'iamport-block');
     case 'danal':
     case 'danal_tpay':
-      return __('다날', 'iamport_block');
+      return __('다날', 'iamport-block');
     case 'kakaopay':
-      return __('카카오페이', 'iamport_block');
+      return __('카카오페이', 'iamport-block');
     case 'paypal':
-      return __('페이팔', 'iamport_block');
+      return __('페이팔', 'iamport-block');
     case 'kcp':
-      return __('NHN KCP', 'iamport_block');
+      return __('NHN KCP', 'iamport-block');
     case 'uplus':
-      return __('LG U+', 'iamport_block');
+      return __('LG U+', 'iamport-block');
     case 'jtnet':
-        return __('JTNET', 'iamport_block');
+        return __('JTNET', 'iamport-block');
     default:
       return pg;
   }
