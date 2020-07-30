@@ -57,7 +57,7 @@ function App({ form, attributes }) {
 
   function onClickNext() {
     /**
-     * 기본 입력 필드로 넘어가기 전에,
+     * 기본 필드로 넘어가기 전에,
      * 커스텀 입력 필드에 대해 validation 체크를 한다
      */
     validateFields(customLabels, error => {

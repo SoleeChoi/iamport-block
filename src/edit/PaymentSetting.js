@@ -72,7 +72,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         labelAlign="left"
         className="iamport-block-form"
       >
-        {/* 기본 입력 필드 */}
+        {/* 기본 필드 */}
         <BasicFields
           getFieldDecorator={getFieldDecorator}
           payMethods={getFieldValue('payMethods')}

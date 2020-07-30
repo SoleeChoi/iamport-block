@@ -30,7 +30,7 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
 
   return (
     <div>
-      <h3>{__('기본 입력 필드', 'iamport-block')}</h3>
+      <h3>{__('기본 필드', 'iamport-block')}</h3>
       <Item label={__('결제 버튼 라벨','iamport-block')}>
         {getFieldDecorator('buttonName', {
           rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block')}],

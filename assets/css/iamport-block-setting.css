@@ -1,36 +1,7 @@
-.iamport-block-setting-container {
-  padding: 2rem 1rem;
-}
-
-.iamport-block-setting-container h1 {
-  margin: 0 0 2rem 0;
-  line-height: 1;
-}
-
-.iamport-block-setting-container .iamport-button-container {
-  text-align: center;
-}
-.iamport-block-setting-container input[type="submit"] {
+.iamport-block-container input[type="submit"] {
   width: 15rem;
   height: 3rem;
   font-size: 1rem;
-}
-
-.iamport-block-box {
-  background: white;
-  border-radius: 3px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,.13);
-}
-
-.iamport-block-box h2 {
-  margin: 0 0 1rem 0;
-}
-
-.iamport-block-box img {
-  max-width: 100%;
-  margin: 1rem 0;
 }
 
 .iamport-block-box table {

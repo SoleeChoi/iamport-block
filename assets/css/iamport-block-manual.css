@@ -1,64 +1,16 @@
-.iamport-block-manual-container {
-  padding: 2rem 1rem;
+.iamport-block-box h2 span {
+  color: #00d38a;
+  margin-right: 1rem;
 }
 
-.iamport-block-manual-container h1 {
-  line-height: 1;
-  margin-bottom: 2rem;
-}
-
-.iamport-block-manual-container .shortcode-box {
-	color: #666;
-	padding: 30px;
-	line-height: 2;
-	font-size: 1.2em;
-	background: white;
-	margin-bottom: 2em;
-	border: 1px solid #cfcfcf;
-}
-
-.iamport-block-manual-container .attr-text {
-	float: left;
-	min-width: 65%;
-	margin-right: 2em;
-}
-
-.iamport-block-manual-container .attr-title {
-	margin: 0;
-	font-size: 20px;
-	font-weight: 600;
-	position: relative;
-}
-
-.iamport-block-manual-container .attr-explanation {
-	color: #888;
-	font-size: 14px;
-	margin-top: 0.3em;
-	margin-bottom: 2em;
-	line-height: 1.8em;
-}
-
-.iamport-block-manual-container .attr-detail {
-  color: #aaa;
-  display: block;
-  font-size: 13px;
-  padding-left: 10px;
-  border-left: 5px solid #eee;
-}
-
-.iamport-block-manual-container .attr-img {
-	float: left;
-	border:1px solid #eee;
-}
-
-.iamport-block-manual-container .attr-tag {
-	top: 5px;
-	margin-left: 10px;
-	position: absolute;
-}
-
-.iamport-block-manual-container .vir-div {
-	clear: both;
-	content: '';
-	display: block;
+.iamport-block-box h3 span {
+  color: #fff;
+  background: #00bfff;
+  border-radius: 50%;
+  margin-right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  text-align: center;
+  line-height: 2rem;
 }
