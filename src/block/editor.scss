@@ -39,7 +39,7 @@
     }
 
     h3 {
-      // 기본 입력 필드, 결제 금액 필드, 커스텀 필드 타이틀
+      // 기본 필드, 결제 금액 필드, 커스텀 필드 타이틀
       margin-bottom: 0.5rem;
       margin-top: 2rem;
     }
@@ -51,23 +51,23 @@
       font-weight: normal;
     }
 
-    .imp-pay-methods-container .ant-checkbox-wrapper {
+    .iamport-pay-methods-container .ant-checkbox-wrapper {
       line-height: 40px;
       margin-bottom: 0.5rem;
       width: 100%;
       margin-left: 0;
     }
 
-    .imp-custom-fields-container {
+    .iamport-custom-fields-container {
       // 커스텀 입력 필드 컨테이너
       text-align: right;
     }
 
-    .imp-label-container {
+    .iamport-label-container {
       // 라벨 컨테이너
       width: 100%;
       text-align: left;
-      color: rgba(0, 0, 0, 0.85);
+      color: $black;
       display: inline-block;
       overflow: hidden;
       line-height: 39.9999px;
@@ -83,7 +83,7 @@
       }
     }
 
-    .ant-col.ant-col-10.imp-delete-field-container {
+    .ant-col.ant-col-10.iamport-delete-field-container {
       // 필드 삭제 버튼 컨테이너
       text-align: right;
       line-height: 40px;

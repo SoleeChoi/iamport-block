@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Row, Col, Select, Input, Checkbox, Icon, Button, Divider } from 'antd';
 
-import { OPTION_TYPES } from '../constants';
+import { OPTION_TYPES } from './constants';
 
 const { Option } = Select;
 const { __ } = wp.i18n;
@@ -65,15 +65,15 @@ export function CustomField({
   }
 
   return (
-    <div className="imp-custom-fields-container">
+    <div className="iamport-custom-fields-container">
       <Row gutter={[8, 8]}>
         <Col span={7}>
-          <div className="imp-label-container">{__('입력 유형', 'iamport-block')}</div>
+          <div className="iamport-label-container">{__('입력 유형', 'iamport-block')}</div>
         </Col>
         <Col span={7}>
-          <div className="imp-label-container">{__('입력 라벨', 'iamport-block')}</div>
+          <div className="iamport-label-container">{__('입력 라벨', 'iamport-block')}</div>
         </Col>
-        <Col span={10} className="imp-delete-field-container">
+        <Col span={10} className="iamport-delete-field-container">
           <Button
             type="danger"
             onClick={onDeleteCustomField}
@@ -110,7 +110,7 @@ export function CustomField({
       {
         optionVisible &&
         <div>
-          <div class="imp-label-container">{__('입력 옵션', 'iamport_block')}</div>
+          <div class="iamport-label-container">{__('입력 옵션', 'iamport-block')}</div>
           {options.map((eachOption, optionIndex) =>
             <Row gutter={[8, 8]}>
               <Col span={21}>
@@ -146,10 +146,10 @@ export function CustomField({
         <div>
           <Row gutter={[8, 8]}>
             <Col span={7}>
-              <div class="imp-label-container">{__('약관 라벨', 'iamport_block')}</div>
+              <div class="iamport-label-container">{__('약관 라벨', 'iamport-block')}</div>
             </Col>
             <Col span={17}>
-              <div class="imp-label-container">{__('약관 링크', 'iamport_block')}</div>
+              <div class="iamport-label-container">{__('약관 링크', 'iamport-block')}</div>
             </Col>
           </Row>
           {agreementOptions.map(({ label, link }, optionIndex) =>
@@ -157,7 +157,7 @@ export function CustomField({
               <Col span={7}>
                 <Input
                   size="large"
-                  placeholder={__('예) 개인정보 이용제공 동의', 'iamport_block')}
+                  placeholder={__('예) 개인정보 이용제공 동의', 'iamport-block')}
                   value={label}
                   onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'label')}
                 />
@@ -165,7 +165,7 @@ export function CustomField({
               <Col span={14}>
                 <Input
                   size="large"
-                  placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport_block')}
+                  placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport-block')}
                   value={link}
                   onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'link')}
                 />

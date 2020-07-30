@@ -30,7 +30,7 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
 
   return (
     <div>
-      <h3>{__('기본 입력 필드', 'iamport-block')}</h3>
+      <h3>{__('기본 필드', 'iamport-block')}</h3>
       <Item label={__('결제 버튼 라벨','iamport-block')}>
         {getFieldDecorator('buttonName', {
           rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block')}],
@@ -55,7 +55,7 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
             {getFieldDecorator('payMethods', {
               rules: [{ required: true, message: __('필수 선택입니다', 'iamport-block') }],
             })(
-              <Checkbox.Group className="imp-pay-methods-container">
+              <Checkbox.Group className="iamport-pay-methods-container">
                 {Object.keys(PAY_METHODS).map(method =>
                   <Checkbox value={method}>{PAY_METHODS[method]}</Checkbox>
                 )}
@@ -89,11 +89,11 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
             {Array(13).fill(1).map((value, index) => {
               let label;
               if (index === 0) {
-                label = __('PG사 기본 제공 옵션', 'iamport_block');
+                label = __('PG사 기본 제공 옵션', 'iamport-block');
               } else if (index === 1) {
-                label = __('일시불 (할부불가)', 'iamport_block');
+                label = __('일시불 (할부불가)', 'iamport-block');
               } else {
-                label = __(`최대 ${index}개월`, 'iamport_block');
+                label = __(`최대 ${index}개월`, 'iamport-block');
               }
 
               return <Option value={index} key={index}>{label}</Option>;
@@ -113,11 +113,11 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
             {Array(14).fill(1).map((value, index) => {
               let label;
               if (index === 0) {
-                label = __('PG사 기본 제공 옵션', 'iamport_block');
+                label = __('PG사 기본 제공 옵션', 'iamport-block');
               } else if (index === 1) {
-                label = __('당일 자정까지', 'iamport_block');
+                label = __('당일 자정까지', 'iamport-block');
               } else {
-                label = __(`${index - 1}일 뒤 자정까지`, 'iamport_block');
+                label = __(`${index - 1}일 뒤 자정까지`, 'iamport-block');
               }
 
               return <Option value={index -1} key={index}>{label}</Option>;
@@ -129,7 +129,15 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
         label={__('실물 컨텐츠 여부','iamport-block')}
         style={{ display: isDigitalVisible ? 'block' : 'none' }}
       >
-        {getFieldDecorator('digital', { valuePropName: 'checked' })(<Switch />)}
+        {getFieldDecorator('digital', {
+          valuePropName: 'checked',
+          initialValue: false,
+        })(<Switch />)}
+      </Item>
+      <Item label={__('결제 후 이동될 URL','iamport-block')}>
+        {getFieldDecorator('redirectAfter', {
+          rules: [{ type: 'url', message: __('URL이 올바르지 않습니다', 'iamport-block') }],
+        })(<Input size="large" />)}
       </Item>
     </div>
   );

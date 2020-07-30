@@ -1,0 +1,70 @@
+/* iamport block container */
+.iamport-block-container {
+  padding: 2rem 20px 0 0;
+}
+
+.iamport-block-container h1 {
+  margin: 0 0 2rem 0;
+  line-height: 1;
+}
+
+/* iamport block box */
+.iamport-block-box {
+  background: white;
+  border-radius: 3px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.13);
+}
+
+.iamport-block-box h2 {
+  margin: 0 0 2rem 0;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.iamport-block-box img {
+  max-width: 100%;
+  margin: 1rem 0;
+}
+
+.iamport-block-box p {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.iamport-block-box code {
+  font-weight: bold;
+}
+
+.iamport-block-box ul li {
+  font-size: 1rem;
+  line-height: 2;
+}
+
+/* iamport-block-left */
+.iamport-block-left {
+  float: left;
+  width: 50%;
+}
+.iamport-block-left img {
+  margin: 0 1rem;
+}
+
+.iamport-block-left p:first-child {
+  margin-top: 0;
+}
+
+.iamport-block-clear {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* iamport-text */
+.iamport-text-right {
+  text-align: right;
+}
+.iamport-text-center {
+  text-align: center;
+}

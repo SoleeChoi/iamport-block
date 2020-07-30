@@ -1,8 +1,7 @@
-import { Modal } from 'antd';
-
 import CustomField from './CustomField';
 
 import { getDefaultOptions } from './utils';
+import { showDeleteCustomFieldModal } from '../utils';
 
 const { __ } = wp.i18n;
 
@@ -49,18 +48,10 @@ export function CustomFields({ customFields, setCustomFields }) {
 
   function onDeleteCustomField(index) {
     // customField 삭제
-    Modal.confirm({
-      centered: true,
-      title: __('커스텀 입력필드 삭제', 'iamport-block'),
-      content: __('정말로 삭제하시겠습니까?', 'iamport-block'),
-      okType: 'danger',
-      okText: __('삭제하기', 'iamport-block'),
-      cancelText: __('취소하기', 'iamport-block'),
-      onOk() {
-        const newCustomFields = customFields.filter((field, fieldIndex) => fieldIndex !== index);
-        setCustomFields(newCustomFields);
-      },
-    })
+    showDeleteCustomFieldModal(() => {
+      const newCustomFields = customFields.filter((field, fieldIndex) => fieldIndex !== index);
+      setCustomFields(newCustomFields);
+    });
   }
 
   return (

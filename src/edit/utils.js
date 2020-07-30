@@ -4,11 +4,11 @@ import {
   PGS_FOR_PHONE,
   BASIC_KEYS,
   DEFAULT_AMOUNT_OPTIONS,
-  PAY_METHODS,
   DEFAULT_PGS,
   DEFAULT_PG_MIDS,
   DEFAULT_AGREEMENT_OPTIONS,
-} from '../constants';
+} from './constants';
+import { PAY_METHODS } from '../constants';
 
 const { __ } = wp.i18n;
 
@@ -31,24 +31,24 @@ export function getPgLists(payMethod) {
 export function getPgLabel(pg) {
   switch (pg) {
     case 'html5_inicis':
-      return __('KG이니시스', 'iamport_block');
+      return __('KG이니시스', 'iamport-block');
     case 'mobilians':
-      return __('모빌리언스', 'iamport_block');
+      return __('모빌리언스', 'iamport-block');
     case 'nice':
-      return __('나이스정보통신', 'iamport_block');
+      return __('나이스정보통신', 'iamport-block');
     case 'danal':
     case 'danal_tpay':
-      return __('다날', 'iamport_block');
+      return __('다날', 'iamport-block');
     case 'kakaopay':
-      return __('카카오페이', 'iamport_block');
+      return __('카카오페이', 'iamport-block');
     case 'paypal':
-      return __('페이팔', 'iamport_block');
+      return __('페이팔', 'iamport-block');
     case 'kcp':
-      return __('NHN KCP', 'iamport_block');
+      return __('NHN KCP', 'iamport-block');
     case 'uplus':
-      return __('LG U+', 'iamport_block');
+      return __('LG U+', 'iamport-block');
     case 'jtnet':
-        return __('JTNET', 'iamport_block');
+        return __('JTNET', 'iamport-block');
     default:
       return pg;
   }
@@ -69,13 +69,14 @@ export function getDefaultAttributes(attributes) {
     cardQuota,
     vbankDue,
     digital,
+    redirectAfter,
   } = attributes;
 
   return {
     buttonName: buttonName || __('결제하기', 'iamport-block'),
     title: title || __('참가권 결제', 'iamport-block'),
     description: description || __('아래 정보를 기입 후 결제를 진행해주세요.', 'iamport-block'),
-    name: name || __('아임포트 워드프레스 결제버튼 생성 플러그인 주문', 'iamport-block'),
+    name: name || __('아임포트 워드프레스 블록 플러그인 주문', 'iamport-block'),
     amountType: amountType || 'variable',
     amountOptions: amountOptions || DEFAULT_AMOUNT_OPTIONS,
     currency: currency || 'KRW',
@@ -85,6 +86,7 @@ export function getDefaultAttributes(attributes) {
     cardQuota: cardQuota || 0,
     vbankDue: vbankDue || 0,
     digital,
+    redirectAfter,
   };
 }
 

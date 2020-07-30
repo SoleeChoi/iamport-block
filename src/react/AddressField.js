@@ -97,7 +97,7 @@ export function AddressField({ label, required, getFieldDecorator, onChange }) {
   }
 
   return (
-    <div className="imp-address-container">
+    <div className="iamport-address-container">
       <Item label={label}>
         {getFieldDecorator(`${label}.zipcode`, {
           rules: [{ required, message: __('필수 입력입니다', 'iamport-block') }],

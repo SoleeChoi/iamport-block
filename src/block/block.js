@@ -9,7 +9,7 @@
 import './editor.scss';
 import './style.scss';
 
-import PaymentSetting from '../components/PaymentSetting';
+import PaymentSetting from '../edit/PaymentSetting';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
@@ -90,6 +90,10 @@ export default registerBlockType( 'cgb/iamport-block', {
     },
     digital: { // 실물 컨텐츠 여부
       type: 'boolean',
+      selector: 'input',
+    },
+    redirectAfter: { // 결제 후 이동될 URL
+      type: 'string',
       selector: 'input',
     },
     customFields: { // 커스텀 입력 필드 정보

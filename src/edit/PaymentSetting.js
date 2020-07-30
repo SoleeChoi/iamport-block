@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Form, Button, Modal } from 'antd';
+import { Form, Button } from 'antd';
 
 import BasicFields from './BasicFields';
 import PaymentAmount from './PaymentAmount';
 import CustomFields from './CustomFields';
 
 import { getDefaultAttributes, getNewAttributes } from './utils';
-import { DEFAULT_AMOUNT_OPTIONS, DEFAULT_CUSTOM_FIELD } from '../constants';
+import { showSetAttributesModal } from '../utils';
+
+import { DEFAULT_AMOUNT_OPTIONS, DEFAULT_CUSTOM_FIELD } from './constants';
 
 const { __ } = wp.i18n;
 
@@ -35,12 +37,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         };
         setAttributes(newAttributes);
         
-        Modal.info({
-          centered: true,
-          title: __('아임포트 블록 설정', 'iamport-block'),
-          content: __('아임포트 블록 설정 정보가 저장되었습니다. 우측 상단 업데이트 버튼을 눌러주세요.', 'iamport-block'),
-          okText: __('확인', 'iamport-block'),
-        });
+        showSetAttributesModal();
       }
     });
   }
@@ -70,8 +67,12 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
 
   return (
     <div className={className} onSubmit={onSubmit}>
-      <Form layout="horizontal" labelAlign="left">
-        {/* 기본 입력 필드 */}
+      <Form
+        layout="horizontal"
+        labelAlign="left"
+        className="iamport-block-form"
+      >
+        {/* 기본 필드 */}
         <BasicFields
           getFieldDecorator={getFieldDecorator}
           payMethods={getFieldValue('payMethods')}

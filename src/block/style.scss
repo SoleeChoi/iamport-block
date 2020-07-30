@@ -4,46 +4,7 @@
  * CSS for both Frontend+Backend.
  */
 
-/**
- * antd styling
- */
-.ant-form {
-  .ant-form-item {
-    margin-bottom: 0.5rem;
-  }
-  .ant-form-item-label {
-    font-weight: bold;
-  }
-  .ant-form-item-label > label::after {
-    display: none;
-  }
-
-  .imp-address-container {
-    // 주소 입력 필드
-    margin-bottom: 0.5rem;
-    .ant-form-item {
-      margin-bottom: 0;
-    }
-  }
-  .imp-agreement-container {
-    // 약관 동의 입력 필드
-    margin-bottom: 0;
-  }
-  .imp-agreement-link {
-    text-decoration: underline;
-    text-align: right;
-  }
-}
-
-.ant-form-item-control.has-error .ant-form-explain {
-  padding-left: 0.66rem;
-  margin-top: 0.5rem;
-}
-.ant-checkbox-group,
-.ant-radio-group {
-  width: 100%;
-}
-.imp-btn-container {
+.iamport-btn-container {
   text-align: center;
   margin-top: 1rem;
 
@@ -56,7 +17,10 @@
   }
 }
 
-.ant-modal {
+/**
+ * antd styling
+ */
+.iamport-block-modal.ant-modal {
  .ant-modal-header {
    padding: 1.5rem 24px;
    background-color: $primary;
@@ -73,29 +37,42 @@
       text-align: center;
     }
    }
- }
- .ant-modal-close-x svg {
-  color: white;
- }
-}
+  }
 
-/**
- * override wordpress default css
- */
-.ant-modal-content button.ant-modal-close:hover {
-  background: initial;
-}
-.ant-form-item-control:not(.has-error) input:focus {
-  border-color: #40a9ff;
-  outline: none;
-}
-.ant-modal {
-  input[type=text] {
-    border-color: #d9d9d9;  
-    border-radius: 4px;
-    &:focus {
-      border-color: #40a9ff;
-      outline: none;
+  .ant-modal-content {
+    button.ant-modal-close:hover {
+      background: initial;
+    }
+    .ant-modal-close-x svg {
+      color: white;
+     }
+  }
+
+  .ant-form {
+    // override wordpress default css
+    input[type=text] {
+      border-color: #d9d9d9;  
+      border-radius: 4px;
+      &:focus {
+        border-color: #40a9ff;
+        outline: none;
+      }
+    }
+
+    .iamport-address-container {
+    // 주소 입력 필드
+      margin-bottom: 0.5rem;
+      .ant-form-item {
+        margin-bottom: 0;
+      }
+    }
+    .iamport-agreement-container {
+      // 약관 동의 입력 필드
+      margin-bottom: 0;
+    }
+    .iamport-agreement-link {
+      text-decoration: underline;
+      text-align: right;
     }
   }
 }
