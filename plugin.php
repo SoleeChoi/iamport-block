@@ -100,7 +100,7 @@ function iamport_activated() {
 }
 
 function create_history_page() {
-	$slug = 'iamport_history';
+	$slug = 'iamport_block_order_list';
 
 	$history_page = get_page_by_slug($slug);
 	if( empty($history_page) ) {
@@ -110,7 +110,7 @@ function create_history_page() {
 			'post_author'		  => 1,
 			'post_name'			  => $slug,
 			'post_title'		  => '결제내역 - 아임포트',
-			'post_content'		=> '[iamport_history_page]',
+			'post_content'		=> '[iamport_block_order_list_page]',
 			'post_parent'		  => 0,
 			'comment_status'	=> 'closed'
 		);
