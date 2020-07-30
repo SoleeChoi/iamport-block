@@ -113,6 +113,7 @@ function App({ form, attributes }) {
         isOpen &&
         <Modal
           visible
+          className="iamport-block-modal"
           centered={true}
           title={<ModalTitle />}
           footer={null}
@@ -121,7 +122,11 @@ function App({ form, attributes }) {
             setFieldType(defaultFieldType);
           }}
         >
-          <Form layout="vertical" onSubmit={onClickPayment}>
+          <Form
+            layout="vertical"
+            className="iamport-block-form"
+            onSubmit={onClickPayment}
+          >
             <div style={{ display: fieldType === 'custom' ? 'block' : 'none' }}>
               {customFields.map(field =>
                 <CustomField

@@ -67,7 +67,11 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
 
   return (
     <div className={className} onSubmit={onSubmit}>
-      <Form layout="horizontal" labelAlign="left">
+      <Form
+        layout="horizontal"
+        labelAlign="left"
+        className="iamport-block-form"
+      >
         {/* 기본 입력 필드 */}
         <BasicFields
           getFieldDecorator={getFieldDecorator}

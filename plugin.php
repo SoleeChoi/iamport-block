@@ -31,18 +31,18 @@ function iamport_editor_scripts()
 
     // Enqueue the bundled block JS file
     wp_enqueue_script(
-        'iamport-blocks-js',
-        plugins_url( $blockPath, __FILE__ ),
-        [ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' ],
-        filemtime( plugin_dir_path(__FILE__) . $blockPath )
+      'iamport-blocks-js',
+      plugins_url( $blockPath, __FILE__ ),
+      [ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' ],
+      filemtime( plugin_dir_path(__FILE__) . $blockPath )
     );
 
     // Enqueue optional editor only styles
     wp_enqueue_style(
-        'iamport-blocks-editor-css',
-        plugins_url( $editorStylePath, __FILE__),
-        ['wp-components'],
-        filemtime( plugin_dir_path( __FILE__ ) . $editorStylePath )
+      'iamport-blocks-editor-css',
+      plugins_url( $editorStylePath, __FILE__),
+      ['wp-components'],
+      filemtime( plugin_dir_path( __FILE__ ) . $editorStylePath )
     );
 
 }

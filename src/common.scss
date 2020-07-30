@@ -6,10 +6,35 @@
 */
 
 // Colors.
-$black: rgb(41, 41, 41);
-$white: #f4f4f4;
-$gray: #dedede;
-$green: #bada55;
-$red: orangered;
+$black: rgba(0, 0, 0, 0.85);
 $primary: #344e81;
 $primary-bg: #eef1f5;
+
+.iamport-block-form.ant-form {
+  .ant-form-item {
+    margin-bottom: 0.5rem;
+  }
+  .ant-form-item-label {
+    font-weight: bold;
+  }
+  .ant-form-item-label > label::after {
+    display: none;
+  }
+
+  .ant-form-item-control.has-error .ant-form-explain {
+    padding-left: 0.66rem;
+    margin-top: 0.5rem;
+  }
+  .ant-checkbox-group,
+  .ant-radio-group {
+    width: 100%;
+  }
+
+  /**
+  * override wordpress default css
+  */
+  .ant-form-item-control:not(.has-error) input:focus {
+    border-color: #40a9ff;
+    outline: none;
+  }
+}
