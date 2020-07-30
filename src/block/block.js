@@ -48,6 +48,10 @@ export default registerBlockType( 'cgb/iamport-block', {
       type: 'string',
       selector: 'input',
     },
+    modalClassName: { // 결제 팝업 클래스 이름
+      type: 'string',
+      selector: 'input',
+    },
     title: { // 결제 모달 타이틀
       type: 'string',
       selector: 'input',

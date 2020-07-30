@@ -20,6 +20,7 @@ function App({ form, attributes }) {
     isLoginRequired,
     buttonName,
     buttonClassName,
+    modalClassName,
     title,
     description,
     customFields,
@@ -119,7 +120,7 @@ function App({ form, attributes }) {
         isOpen &&
         <Modal
           visible
-          className="iamport-block-modal"
+          className={`iamport-block-modal ${modalClassName}`}
           centered={true}
           title={<ModalTitle />}
           footer={null}

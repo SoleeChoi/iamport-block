@@ -20,6 +20,7 @@ export const BASIC_KEYS = [
   'name',
   'buttonName',
   'buttonClassName',
+  'modalClassName',
   'title',
   'description',
   'payMethods',
