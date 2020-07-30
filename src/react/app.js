@@ -28,7 +28,7 @@ function App({ form, attributes }) {
   const customLabels = getCustomLabels(customFields);
   const [isOpen, setIsOpen] = useState(false);
   const [fieldType, setFieldType] = useState(defaultFieldType);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const ModalTitle = () => 
     <div>
@@ -83,15 +83,15 @@ function App({ form, attributes }) {
         }).done(({ order_uid, thankyou_url }) => {
           setFieldType('custom');
           setIsOpen(false);
+          setLoading(true);
 
           const data = {
             ...paymentData,
             merchant_uid: order_uid,
             m_redirect_url: thankyou_url,
           };
-          console.log(data);
           IMP.request_pay(data, response => {
-            console.log(response);
+            setLoading(false);
             const { success, error_msg } = response;
             if (success) {
               location.href = thankyou_url;
@@ -144,7 +144,6 @@ function App({ form, attributes }) {
             />
           </Form>
           <ButtonContainer
-            // loading={loading}
             fieldType={fieldType}
             defaultFieldType={defaultFieldType}
             onChangeFieldType={value => setFieldType(value)}
@@ -154,6 +153,7 @@ function App({ form, attributes }) {
           />
         </Modal>
       }
+      {loading && <div className="iamport-dimmed-background"></div>}
     </div>
   );
 }
