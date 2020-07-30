@@ -100,7 +100,7 @@ function App({ form, attributes }) {
             }
           });
         }).fail(({ responseText }) => {
-          alert(responseText);
+          showPaymentFailedModal(responseText);
         });
       }
     });
