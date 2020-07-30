@@ -19,6 +19,7 @@ export const OPTION_TYPES = {
 export const BASIC_KEYS = [
   'name',
   'buttonName',
+  'buttonClassName',
   'title',
   'description',
   'payMethods',

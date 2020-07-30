@@ -19,6 +19,7 @@ function App({ form, attributes }) {
     loginUrl,
     isLoginRequired,
     buttonName,
+    buttonClassName,
     title,
     description,
     customFields,
@@ -108,7 +109,12 @@ function App({ form, attributes }) {
 
   return (
     <div>
-      <Button size="large" type="primary" onClick={openModal}>{buttonName}</Button>
+      <Button
+        size="large"
+        type="primary"
+        className={buttonClassName}
+        onClick={openModal}
+      >{buttonName}</Button>
       {
         isOpen &&
         <Modal

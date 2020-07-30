@@ -32,16 +32,22 @@
       <div class="iamport-block-left">
         <p>페이지에 렌더링되는 결제 버튼의 라벨을 결정합니다. 기본값은 <code>결제하기</code>입니다.</p>
       </div>
+      <div class="iamport-block-clear"></div>
+
+      <div class="iamport-block-left">
+        <h3><span>2</span>결제 버튼 클래스 이름</h3>
+        <p>결제 버튼 스타일을 커스터마이징 하기 위해 클래스 이름을 지정할 수 있습니다.</p>
+      </div>
       <div class="iamport-block-left iamport-text-center">
         <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/btn-payment.png" alt="결제하기 버튼"/>
       </div>
       <div class="iamport-block-clear"></div>
 
-      <h3><span>2</span>결제 팝업 타이틀</h3>
+      <h3><span>3</span>결제 팝업 타이틀</h3>
       <div class="iamport-block-left">
         <p>결제하기 버튼을 눌렀을때 렌더링되는 팝업의 타이틀을 결정합니다. 기본값은 <code>참가권 결제</code>입니다.</p>
 
-        <h3><span>3</span>결제 팝업 서브 타이틀</h3>
+        <h3><span>4</span>결제 팝업 서브 타이틀</h3>
         <p>결제하기 버튼을 눌렀을때 렌더링되는 팝업의 서브 타이틀을 결정합니다. 기본값은 <code>아래의 정보를 입력 후 결제버튼을 클릭해주세요</code>입니다.</p>
       </div>
       <div class="iamport-block-left iamport-text-center">
@@ -49,7 +55,7 @@
       </div>
       <div class="iamport-block-clear"></div>
 
-      <h3><span>4</span>결제 수단</h3>
+      <h3><span>5</span>결제 수단</h3>
       <div class="iamport-block-left">
         <p>
           사용자가 선택 가능한 결제 수단을 설정합니다. 선택 가능한 결제수단은 <code>카카오페이</code>, <code>삼성페이</code>, <code>신용카드</code>, <code>가상계좌</code>, <code>실시간 계좌이체</code>, <code>휴대폰 소액결제</code> 그리고 <code>페이팔</code>이며 적어도 한 개 이상을 선택해야 합니다. 결제수단 마다 지원하는 PG사가 상이합니다.
@@ -78,7 +84,7 @@
       </div>
       <div class="iamport-block-clear"></div>
 
-      <h3><span>5</span>주문명</h3>
+      <h3><span>6</span>주문명</h3>
       <div class="iamport-block-left">
         <p>해당 결제에 대한 주문명을 결정합니다. 기본값은 <code>아임포트 워드프레스 블록 플러그인 주문</code>입니다.</p>
       </div>
@@ -87,7 +93,7 @@
       </div>
       <div class="iamport-block-clear"></div>
 
-      <h3><span>6</span>신용카드 할부 개월수</h3>
+      <h3><span>7</span>신용카드 할부 개월수</h3>
       <div class="iamport-block-left">
         <p>신용카드 결제수단 선택시, 사용자에게 허용할 최대 할부 개월수를 설정합니다. 기본값은 <code>PG사 기본 제공 옵션</code>입니다.</p>
       </div>
@@ -96,7 +102,7 @@
       </div>
 			<div class="iamport-block-clear"></div>
 
-      <h3><span>7</span>가상계좌 입금 기한</h3>
+      <h3><span>8</span>가상계좌 입금 기한</h3>
       <div class="iamport-block-left">
         <p>가상계좌 결제수단 선택시, 가상계좌 입금 기한을 반드시 설정해야 합니다. 기본값은 <code>PG사 기본 제공 옵션</code>입니다.</p>
       </div>
@@ -105,7 +111,7 @@
       </div>
 			<div class="iamport-block-clear"></div>
 
-      <h3><span>8</span>실물 컨텐츠 여부</h3>
+      <h3><span>9</span>실물 컨텐츠 여부</h3>
       <div class="iamport-block-left">
         <p>휴대폰 소액결제 결제수단 선택시, 구매하는 상품의 실물 컨텐츠 여부를 반드시 설정해야 합니다. 기본값은 <code>false(비 실물)</code>입니다.</p>
       </div>
@@ -114,7 +120,7 @@
       </div>
 			<div class="iamport-block-clear"></div>
 
-      <h3><span>9</span>결제 후 이동 될 URL</h3>
+      <h3><span>10</span>결제 후 이동 될 URL</h3>
       <div class="iamport-block-left">
         <p>결제가 완료된 후 이동될 URL을 지정합니다. 유효한 URL만 입력 가능하며, 유효하지 않은 값을 입력했을 경우 아임포트가 기본으로 제공하는 페이지로 이동됩니다.</p>
       </div>

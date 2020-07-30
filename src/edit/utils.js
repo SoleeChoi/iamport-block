@@ -57,6 +57,7 @@ export function getPgLabel(pg) {
 export function getDefaultAttributes(attributes) {
   const {
     buttonName,
+    buttonClassName,
     title,
     description,
     name,
@@ -74,6 +75,7 @@ export function getDefaultAttributes(attributes) {
 
   return {
     buttonName: buttonName || __('결제하기', 'iamport-block'),
+    buttonClassName,
     title: title || __('참가권 결제', 'iamport-block'),
     description: description || __('아래 정보를 기입 후 결제를 진행해주세요.', 'iamport-block'),
     name: name || __('아임포트 워드프레스 블록 플러그인 주문', 'iamport-block'),

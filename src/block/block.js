@@ -44,6 +44,10 @@ export default registerBlockType( 'cgb/iamport-block', {
       type: 'string',
       selector: 'button',
     },
+    buttonClassName: { // 결제 버튼 클래스 이름
+      type: 'string',
+      selector: 'input',
+    },
     title: { // 결제 모달 타이틀
       type: 'string',
       selector: 'input',
