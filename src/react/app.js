@@ -81,8 +81,8 @@ function App({ form, attributes }) {
           processData: false,
           data: orderData,
         }).done(({ order_uid, thankyou_url }) => {
+          setFieldType('custom');
           setIsOpen(false);
-          setFieldType('basic');
 
           const data = {
             ...paymentData,
