@@ -37,7 +37,7 @@ function render_dynamic_block($attributes) {
   /* BEGIN HTML OUTPUT */
 ?>
   <div
-    id="iamport-block-wrapper"
+    class="iamport-block-wrapper"
     data-iamport-attributes="<?=$iamportAttributes?>"
   ></div>
 <?php
