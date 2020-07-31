@@ -16,6 +16,7 @@ export function CustomField({
   onChangeCustomFields,
 }) {
   const { label, type, required, options, agreementOptions } = field;
+  const labelHelp = errorField && errorField.label;
   const [optionVisible, setOptionVisible] = useState(getOptionVisible(type));
   const [agreementVisible, setAgreementVisible] = useState(getAgreementVisible(type));
 
@@ -96,7 +97,7 @@ export function CustomField({
           </Select>
         </Col>
         <Col span={7}>
-          <Item validateStatus={errorField.label && 'error'} help={errorField.label}>
+          <Item validateStatus={labelHelp && 'error'} help={labelHelp}>
             <Input
               size="large"
               value={label}
