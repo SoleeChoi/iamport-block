@@ -139,7 +139,7 @@ if ( !class_exists('IamportBlock') ) {
 			add_post_meta( $order_id, 'extra_fields', $extraFields, true);
 
 			$thankyou_url = '';
-			$thankyou_page = get_page_by_slug('iamport_block_payment_result');
+			$thankyou_page = get_iamport_block_page_by_slug('iamport_block_payment_result');
 			if ( !empty($thankyou_page) ) {
 				$thankyou_url = add_query_arg( array(
 					'iamport-order-received' => $order_uid,

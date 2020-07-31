@@ -95,15 +95,15 @@ require_once(dirname(__FILE__).'/model/IamportBlockPaymentCallback.php');
 register_activation_hook(__FILE__, 'iamport_block_activated');
 
 function iamport_block_activated() {
-	create_history_page();
-	create_thankyou_page();
-	add_endpoints();
+	create_iamport_block_order_list_page();
+	create_iamport_block_payment_result_page();
+	add_iamport_block_endpoints();
 }
 
-function create_history_page() {
+function create_iamport_block_order_list_page() {
 	$slug = 'iamport_block_order_list';
 
-	$history_page = get_page_by_slug($slug);
+	$history_page = get_iamport_block_page_by_slug($slug);
 	if( empty($history_page) ) {
 		$page_data = array(
 			'post_status'		  => 'publish',
@@ -120,10 +120,10 @@ function create_history_page() {
 	}
 }
 
-function create_thankyou_page() {
+function create_iamport_block_payment_result_page() {
 	$slug = 'iamport_block_payment_result';
 
-	$thankyou_page = get_page_by_slug($slug);
+	$thankyou_page = get_iamport_block_page_by_slug($slug);
 	if( empty($thankyou_page) ) {
 		$page_data = array(
 			'post_status'		  => 'publish',
@@ -140,7 +140,7 @@ function create_thankyou_page() {
 	}
 }
 
-function get_page_by_slug($slug) {
+function get_iamport_block_page_by_slug($slug) {
 	$args = array(
 		'name'        => $slug,
 		'post_type'   => 'page',
@@ -150,7 +150,7 @@ function get_page_by_slug($slug) {
 	return get_posts($args);
 }
 
-function add_endpoints() {
+function add_iamport_block_endpoints() {
 	add_rewrite_endpoint('iamport-order-view', EP_PAGES);
 	add_rewrite_endpoint('iamport-order-received', EP_PERMALINK | EP_PAGES);
 

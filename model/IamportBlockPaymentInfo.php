@@ -45,7 +45,7 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 			);
 			$posts = get_posts( $args );
 
-			$history_page = get_page_by_slug('iamport_block_order_list');
+			$history_page = get_iamport_block_page_by_slug('iamport_block_order_list');
 			if ( !empty($history_page) ) $history_page_url = get_page_link($history_page[0]->ID);
 
 			return require_once(dirname(__FILE__).'/../view/history/IamportBlockOrderList.php');
@@ -77,7 +77,7 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 				$iamport_order->set_paid_amount( 0 );
 				$iamport_order->set_paid_date( time() );
 
-				$history_page = get_page_by_slug('iamport_block_order_list');
+				$history_page = get_iamport_block_page_by_slug('iamport_block_order_list');
 				if ( !empty($history_page) )	$order_view_url = add_query_arg( 'iamport-order-view', $order_uid, get_page_link($history_page[0]->ID) );
 
 				return require_once(dirname(__FILE__).'/../view/history/IamportBlockPaymentSuccess.php');
@@ -121,7 +121,7 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 					}
 				}
 
-				$history_page = get_page_by_slug('iamport_block_order_list');
+				$history_page = get_iamport_block_page_by_slug('iamport_block_order_list');
 				if ( !empty($history_page) )	$order_view_url = add_query_arg( 'iamport-order-view', $order_uid, get_page_link($history_page[0]->ID) );
 
 				return require_once(dirname(__FILE__).'/../view/history/IamportBlockPaymentSuccess.php');
