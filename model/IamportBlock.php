@@ -31,8 +31,8 @@ if ( !class_exists('IamportBlock') ) {
 		public function iamport_admin_menu() {
 			add_submenu_page(
 				'edit.php?post_type=iamport_payment',
-				'아임포트 블록 설정',
-				'아임포트 블록 설정',
+				'아임포트 설정',
+				'아임포트 설정',
 				'administrator',
 				'iamport-block-setting',
 				function() { echo require_once(dirname(__FILE__).'/../view/admin/IamportBlockSetting.php'); }
