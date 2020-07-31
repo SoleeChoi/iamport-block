@@ -94,6 +94,21 @@ export function getDefaultAttributes(attributes) {
   };
 }
 
+export function getDefaultErrorFields(customFields) {
+  return customFields.map(({ type, options, agreementOptions }) => {
+    const errorField = { label: '' };
+    if (type === 'agreement') {
+      const lengthOfAgreementOptions = agreementOptions.length;
+      errorField.agreementOptions = Array(lengthOfAgreementOptions).fill({ label: '', link: '' });
+    }
+    if (type === 'radio' || type === 'checkbox' || type === 'dropdown') {
+      const lengthOfOptions = options.length;
+      errorField.options = Array(lengthOfOptions).fill('');
+    }
+    return errorField;
+  });
+}
+ 
 export function getNewAttributes(values) {
   const attributes = {};
   Object.keys(values).forEach(key => {

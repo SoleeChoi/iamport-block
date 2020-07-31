@@ -5,7 +5,8 @@ import BasicFields from './BasicFields';
 import PaymentAmount from './PaymentAmount';
 import CustomFields from './CustomFields';
 
-import { getDefaultAttributes, getNewAttributes } from './utils';
+import { getDefaultAttributes, getDefaultErrorFields, getNewAttributes } from './utils';
+import { validateCustomFields } from './validation';
 import { showSetAttributesModal } from '../utils';
 
 import { DEFAULT_AMOUNT_OPTIONS, DEFAULT_CUSTOM_FIELD } from './constants';
@@ -15,9 +16,13 @@ const { __ } = wp.i18n;
 export function PaymentSetting({ form, attributes, className, setAttributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue, getFieldValue } = form;
 
+  const defaultCustomFields = attributes.customFields || [];
+  const defaultErorFields = getDefaultErrorFields(defaultCustomFields);
+
   const [amountType, setAmountType] = useState(attributes.amountType || 'variable');
   const [amountOptions, setAmountOptions] = useState(attributes.amountOptions || DEFAULT_AMOUNT_OPTIONS);
-  const [customFields, setCustomFields] = useState(attributes.customFields || []);
+  const [customFields, setCustomFields] = useState(defaultCustomFields);
+  const [errorFields, setErrorFields] = useState(defaultErorFields);
 
   useEffect(() => {
     setTimeout(() => {
@@ -29,15 +34,20 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
   function onSubmit() {
     validateFields((error, values) => {
       if (!error) {
-        const newAttributes = {
-          customFields,
-          amountType,
-          amountOptions,
-          ...getNewAttributes(values),
-        };
-        setAttributes(newAttributes);
-        
-        showSetAttributesModal();
+        const { isValid, errorFields } = validateCustomFields(customFields);
+        setErrorFields(errorFields);
+
+        if (isValid) {
+          const newAttributes = {
+            customFields,
+            amountType,
+            amountOptions,
+            ...getNewAttributes(values),
+          };
+          setAttributes(newAttributes);
+          
+          showSetAttributesModal();
+        }
       }
     });
   }
@@ -90,6 +100,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
         {/* 커스텀 입력 필드 */}
         <CustomFields
           customFields={customFields}
+          errorFields={errorFields}
           setCustomFields={setCustomFields}
         />
         <Button

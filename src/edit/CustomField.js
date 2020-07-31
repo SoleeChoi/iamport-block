@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Select, Input, Checkbox, Icon, Button, Divider } from 'antd';
+import { Row, Col, Form, Select, Input, Checkbox, Icon, Button, Divider } from 'antd';
 
 import { OPTION_TYPES } from './constants';
 
+const { Item } = Form;
 const { Option } = Select;
 const { __ } = wp.i18n;
 
 export function CustomField({
   field,
+  errorField,
   onAddOption,
   onDeleteOption,
   onDeleteCustomField,
@@ -94,11 +96,13 @@ export function CustomField({
           </Select>
         </Col>
         <Col span={7}>
-          <Input
-            size="large"
-            value={label}
-            onChange={({ target : { value } }) => onChangeCustomFields({ ...field, label: value })}
-          />
+          <Item validateStatus={errorField.label && 'error'} help={errorField.label}>
+            <Input
+              size="large"
+              value={label}
+              onChange={({ target : { value } }) => onChangeCustomFields({ ...field, label: value })}
+            />
+          </Item>
         </Col>
         <Col span={10}>
           <Checkbox
@@ -111,32 +115,37 @@ export function CustomField({
         optionVisible &&
         <div>
           <div class="iamport-label-container">{__('입력 옵션', 'iamport-block')}</div>
-          {options.map((eachOption, optionIndex) =>
-            <Row gutter={[8, 8]}>
-              <Col span={21}>
-                <Input
-                  size="large"
-                  value={eachOption}
-                  onChange={({ target : { value } }) => onChangeOption(value, optionIndex)}
-                  placeholder={__('옵션 값을 입력해주세요', 'iamport-block')}
-                />
-              </Col>
-              <Col span={3}>
-                <Button
-                  size="large"
-                  icon="close"
-                  shape="circle"
-                  disabled={optionIndex === 0 && options.length === 1}
-                  onClick={() => onDeleteOption(optionIndex)}
-                />
-              </Col>
-            </Row>
-          )}
+          {options.map((eachOption, optionIndex) => {
+            const optionHelp = errorField.options[optionIndex];
+            return (
+              <Row gutter={[8, 0]}>
+                <Col span={21}>
+                  <Item validateStatus={optionHelp && 'error'} help={optionHelp}>
+                    <Input
+                      size="large"
+                      value={eachOption}
+                      onChange={({ target : { value } }) => onChangeOption(value, optionIndex)}
+                      placeholder={__('옵션 값을 입력해주세요', 'iamport-block')}
+                    />
+                  </Item>
+                </Col>
+                <Col span={3}>
+                  <Button
+                    size="large"
+                    icon="close"
+                    shape="circle"
+                    disabled={optionIndex === 0 && options.length === 1}
+                    onClick={() => onDeleteOption(optionIndex)}
+                  />
+                </Col>
+              </Row>
+            );
+          })}
           <Button
             size="large"
             type="dashed"
             icon="plus"
-            style={{ width: '100%', marginTop: '4px' }}
+            style={{ width: '100%' }}
             onClick={() => onAddOption('options')}
           />
         </div>
@@ -144,48 +153,74 @@ export function CustomField({
       {
         agreementVisible &&
         <div>
-          <Row gutter={[8, 8]}>
-            <Col span={7}>
-              <div class="iamport-label-container">{__('약관 라벨', 'iamport-block')}</div>
-            </Col>
-            <Col span={17}>
-              <div class="iamport-label-container">{__('약관 링크', 'iamport-block')}</div>
-            </Col>
-          </Row>
-          {agreementOptions.map(({ label, link }, optionIndex) =>
-            <Row gutter={[8, 8]}>
-              <Col span={7}>
-                <Input
-                  size="large"
-                  placeholder={__('예) 개인정보 이용제공 동의', 'iamport-block')}
-                  value={label}
-                  onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'label')}
-                />
-              </Col>
-              <Col span={14}>
-                <Input
-                  size="large"
-                  placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport-block')}
-                  value={link}
-                  onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'link')}
-                />
-              </Col>
-              <Col span={3}>
-                <Button
-                  size="large"
-                  icon="close"
-                  shape="circle"
-                  disabled={optionIndex === 0 && agreementOptions.length === 1}
-                  onClick={() => onDeleteOption(optionIndex, 'agreementOptions')}
-                />
-              </Col>
-            </Row>
-          )}
+          <Row></Row>
+          {agreementOptions.map(({ label, link }, optionIndex) => {
+            const agreementError = errorField.agreementOptions[optionIndex];
+            let labelHelp = '';
+            let linkHelp = '';
+            if (agreementError) {
+              const { label, link } = agreementError;
+              labelHelp = label;
+              linkHelp = link;
+            }
+            return (
+              <div>
+                {
+                  optionIndex === 0 &&
+                  <Row gutter={[8, 0]}>
+                    <Col span={7}>
+                      <div class="iamport-label-container">{__('약관 라벨', 'iamport-block')}</div>
+                    </Col>
+                    <Col span={17}>
+                      <div class="iamport-label-container">{__('약관 링크', 'iamport-block')}</div>
+                    </Col>
+                  </Row>
+                }
+                <Row gutter={[8, 0]}>
+                  <Col span={7}>
+                    <Item
+                      validateStatus={labelHelp && 'error'}
+                      help={labelHelp}
+                    >
+                      <Input
+                        size="large"
+                        placeholder={__('예) 개인정보 이용제공 동의', 'iamport-block')}
+                        value={label}
+                        onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'label')}
+                      />
+                    </Item>
+                  </Col>
+                  <Col span={14}>
+                    <Item
+                      validateStatus={linkHelp && 'error'}
+                      help={linkHelp}
+                    >
+                      <Input
+                        size="large"
+                        placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport-block')}
+                        value={link}
+                        onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'link')}
+                      />
+                    </Item>
+                  </Col>
+                  <Col span={3}>
+                    <Button
+                      size="large"
+                      icon="close"
+                      shape="circle"
+                      disabled={optionIndex === 0 && agreementOptions.length === 1}
+                      onClick={() => onDeleteOption(optionIndex, 'agreementOptions')}
+                    />
+                  </Col>
+                </Row>
+              </div>
+            );
+          })}
           <Button
             size="large"
             type="dashed"
             icon="plus"
-            style={{ width: '100%', marginTop: '4px' }}
+            style={{ width: '100%' }}
             onClick={() => onAddOption('agreementOptions')}
           />
         </div>

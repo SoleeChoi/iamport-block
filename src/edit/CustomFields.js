@@ -5,7 +5,7 @@ import { showDeleteCustomFieldModal } from '../utils';
 
 const { __ } = wp.i18n;
 
-export function CustomFields({ customFields, setCustomFields }) {
+export function CustomFields({ customFields, errorFields, setCustomFields }) {
   function onAddOption(index, type = 'options') {
     // 입력 필드 옵션 추가
     const newCustomFields = customFields.map((field, fieldIndex) => {
@@ -61,6 +61,7 @@ export function CustomFields({ customFields, setCustomFields }) {
       {customFields.map((field, index) =>
         <CustomField
           field={field}
+          errorField={errorFields[index]}
           onAddOption={type => onAddOption(index, type)}
           onDeleteOption={(optionIndex, type) => onDeleteOption(index, optionIndex, type)}
           onChangeCustomFields={newCustomField => onChangeCustomFields(index, newCustomField)}
