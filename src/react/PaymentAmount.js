@@ -58,7 +58,7 @@ function PaymentAmount({ getFieldDecorator, attributes }) {
             rules: [{
               required: true, message: __('필수 입력입니다', 'iamport-block')
             }, {
-              pattern: /^\d+$/, message: __('결제 금액이 올바르지 않습니다', 'iamport-block'),
+              pattern: /^(?:[1-9]\d*|0)?(?:\.\d+)?$/, message: __('결제 금액이 올바르지 않습니다', 'iamport-block'),
             }],
           })(
             <Input
