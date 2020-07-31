@@ -239,7 +239,7 @@ if ( !class_exists('IamportBlockOrder') ) {
 				'meta_key' => 'order_uid',
 				'meta_value' => $order_uid,
 				'posts_per_page' => 1,
-				'post_type' => 'iamport_payment',
+				'post_type' => 'iamport_block',
 				'post_status' => 'any',
 				'orderby' => 'ID',
 				'order' => 'DESC'

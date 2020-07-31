@@ -37,7 +37,7 @@ if ( !class_exists('IamportBlockPaymentInfo') ) {
 		public function get_order_list( $user_id ) {
 			$args = array(
 				'posts_per_page' => 20,
-				'post_type' => 'iamport_payment',
+				'post_type' => 'iamport_block',
 				'post_status' => 'any',
 				'author' => $user_id,
 				'orderby' => 'ID',

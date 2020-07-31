@@ -30,7 +30,7 @@ if ( !class_exists('IamportBlock') ) {
 
 		public function iamport_admin_menu() {
 			add_submenu_page(
-				'edit.php?post_type=iamport_payment',
+				'edit.php?post_type=iamport_block',
 				'아임포트 설정',
 				'아임포트 설정',
 				'administrator',
@@ -39,7 +39,7 @@ if ( !class_exists('IamportBlock') ) {
 			);
 
 			add_submenu_page(
-				'edit.php?post_type=iamport_payment',
+				'edit.php?post_type=iamport_block',
 				'아임포트 블록 메뉴얼',
 				'아임포트 블록 메뉴얼',
 				'administrator',
@@ -115,7 +115,7 @@ if ( !class_exists('IamportBlock') ) {
 
 			$order_data = array(
 				'post_status'		=> 'publish',
-				'post_type'			=> 'iamport_payment',
+				'post_type'			=> 'iamport_block',
 				'post_title'		=> $order_title,
 				'post_parent'		=> 0,
 				'comment_status'	=> 'closed'
@@ -161,7 +161,7 @@ if ( !class_exists('IamportBlock') ) {
 		}
 
 		private function create_iamport_post_type() {
-			register_post_type( 'iamport_payment',
+			register_post_type( 'iamport_block',
 				array(
 					'labels'            => array('name' => '아임포트 결제내역', 'singular_name' => '아임포트 결제내역'),
 					'menu_icon' 			  => plugin_dir_url( __FILE__ ) . '../assets/img/iamport.jpg',
@@ -170,7 +170,7 @@ if ( !class_exists('IamportBlock') ) {
 					'show_in_admin_bar' => true,
 					'public' 				    => true,
 					'has_archive' 			=> false,
-					'rewrite' 				  => array('slug' => 'iamport_payment'),
+					'rewrite' 				  => array('slug' => 'iamport_block'),
 					'map_meta_cap' 			=> true,
 					'capabilities' 			=> array(
 						'edit_post' 		  => true,
@@ -179,13 +179,13 @@ if ( !class_exists('IamportBlock') ) {
 				)
 			);
 
-			remove_post_type_support( 'iamport_payment', 'editor' );
+			remove_post_type_support( 'iamport_block', 'editor' );
 
-			add_filter( 'manage_iamport_payment_posts_columns', array($this, 'iamport_payment_columns') );
-			add_action( 'manage_iamport_payment_posts_custom_column' , array($this, 'iamport_payment_custom_columns'), 10, 2 );
+			add_filter( 'manage_iamport_block_posts_columns', array($this, 'iamport_block_columns') );
+			add_action( 'manage_iamport_block_posts_custom_column' , array($this, 'iamport_block_custom_columns'), 10, 2 );
 		}
 
-		public function iamport_payment_columns($columns) {
+		public function iamport_block_columns($columns) {
 			$columns['title_uid'] 			= '주문명<br>주문번호';
 			$columns['order_status'] 		= '주문상태';
 			$columns['order_paid_amount']	= '요청금액 (면세금액)<br>결제금액';
@@ -200,7 +200,7 @@ if ( !class_exists('IamportBlock') ) {
 			return $columns;
 		}
 
-		public function iamport_payment_custom_columns( $column, $post_id ) {
+		public function iamport_block_custom_columns( $column, $post_id ) {
 			$iamport_order = IamportBlockOrder::find_by_id($post_id);
 			if ( $iamport_order == null )	return;
 
@@ -314,11 +314,11 @@ if ( !class_exists('IamportBlock') ) {
 		}
 
 		public function iamport_order_metabox() {
-			remove_meta_box( 'submitdiv', 'iamport_payment', 'side' );
+			remove_meta_box( 'submitdiv', 'iamport_block', 'side' );
 
-			add_meta_box( 'iamport-order-info', '아임포트 결제 상세내역', array($this, 'iamport_order_metabox_callback'), 'iamport_payment', 'normal' );
-			add_meta_box( 'iamport-order-action', '결제 상태 변경', array($this, 'iamport_order_action_metabox_callback'), 'iamport_payment', 'side', 'high' );
-			add_meta_box( 'iamport-order-fail-history', '결제 히스토리', array($this, 'iamport_order_history_metabox_callback'), 'iamport_payment', 'side', 'low');
+			add_meta_box( 'iamport-order-info', '아임포트 결제 상세내역', array($this, 'iamport_order_metabox_callback'), 'iamport_block', 'normal' );
+			add_meta_box( 'iamport-order-action', '결제 상태 변경', array($this, 'iamport_order_action_metabox_callback'), 'iamport_block', 'side', 'high' );
+			add_meta_box( 'iamport-order-fail-history', '결제 히스토리', array($this, 'iamport_order_history_metabox_callback'), 'iamport_block', 'side', 'low');
 		}
 
 		public function iamport_order_metabox_callback($post) {
@@ -354,7 +354,7 @@ if ( !class_exists('IamportBlock') ) {
 			if ( !wp_verify_nonce( $_POST['iamport_metabox_nonce'], 'iamport_metabox_nonce' ) )		return;
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )									return;
 
-			if ( isset( $_POST['post_type'] ) && 'iamport_payment' == $_POST['post_type'] ) {
+			if ( isset( $_POST['post_type'] ) && 'iamport_block' == $_POST['post_type'] ) {
 				if ( !current_user_can('administrator') && !current_user_can('editor') )		return;
 			} else {
 				return;
