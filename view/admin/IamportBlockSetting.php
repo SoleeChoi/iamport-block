@@ -6,9 +6,9 @@
   wp_enqueue_style('iamport-block-common-css');
   
 	/* ---------- 아임포트 설정에서 '저장하기' 버튼 눌렀을때 ---------- */
-	if ( isset($_POST['action']) && $_POST['action'] == "update_iamport_settings" ) {
+	if ( isset($_POST['action']) && $_POST['action'] == "update_iamport_block_setting" ) {
 		if ( wp_verify_nonce($_POST['iamport-settings'], 'iamport-options') ) {
-      $iamportSetting = get_option('iamport_setting');
+      $iamportSetting = get_option('iamport_block_setting');
 
 			$iamportSetting['user_code'] = $_POST['user_code'];
 			$iamportSetting['rest_key'] = $_POST['rest_key'];
@@ -16,7 +16,7 @@
 			$iamportSetting['login_required'] = $_POST['login_required'];
       $iamportSetting['biz_num'] = $_POST['biz_num'];
 
-      update_option('iamport_setting', $iamportSetting);
+      update_option('iamport_block_setting', $iamportSetting);
 
 		} else {
 			?><div class="error">update failed</div><?php
@@ -25,7 +25,7 @@
 
 	ob_start();
 
-	$settings = get_option('iamport_setting');
+	$settings = get_option('iamport_block_setting');
 	if ( empty($settings) ) {
 		/* -------------------- 설정파일 백업으로부터 복원 -------------------- */
 		$iamportSetting['user_code'] = get_option('iamport_user_code');
@@ -34,9 +34,9 @@
 		$iamportSetting['login_required'] = get_option('iamport_login_required');
 		$iamportSetting['biz_num'] = get_option('iamport_biz_num');
 
-		update_option('iamport_setting', $iamportSetting);
+		update_option('iamport_block_setting', $iamportSetting);
 	}
-	$iamportSetting = get_option('iamport_setting');
+	$iamportSetting = get_option('iamport_block_setting');
 ?>
 	<div class="iamport-block-container">
 		<h1>아임포트 블록 설정</h1>
@@ -116,7 +116,7 @@
       </div>
 
       <?php wp_nonce_field('iamport-options', 'iamport-settings'); ?>
-      <input type="hidden" name="action" value="update_iamport_settings" />
+      <input type="hidden" name="action" value="update_iamport_block_setting" />
       <div class="iamport-text-center">
         <input class="button-primary" type="submit" name="iamport-options" value="저장하기" />
       </div>

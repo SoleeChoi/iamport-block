@@ -16,7 +16,7 @@ function register_dynamic_block() {
 }
 
 function render_dynamic_block($attributes) {
-  $iamportSettings = get_option('iamport_setting');
+  $iamportSettings = get_option('iamport_block_setting');
 
   // 아임포트 설정 페이지에서 설정 값 불러오기
   $attributes['userCode'] = $iamportSettings['user_code'];

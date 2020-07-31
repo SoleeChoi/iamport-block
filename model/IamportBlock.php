@@ -49,7 +49,7 @@ if ( !class_exists('IamportBlock') ) {
 		}
 
 		public function init() {
-			$settings = get_option('iamport_setting');
+			$settings = get_option('iamport_block_setting');
 			if ( empty($settings) ) {
 				/* -------------------- 설정파일 백업으로부터 복원 -------------------- */
 				$iamportSetting['user_code'] = get_option('iamport_user_code');
@@ -58,10 +58,10 @@ if ( !class_exists('IamportBlock') ) {
 				$iamportSetting['login_required'] = get_option('iamport_login_required');
 				$iamportSetting['biz_num'] = get_option('iamport_biz_num');
 
-				update_option('iamport_setting', $iamportSetting);
+				update_option('iamport_block_setting', $iamportSetting);
 			}
 
-			$iamportSetting = get_option('iamport_setting');
+			$iamportSetting = get_option('iamport_block_setting');
 			$this->user_code 		= $iamportSetting['user_code'];
 			$this->api_key 			= $iamportSetting['rest_key'];
 			$this->api_secret 		= $iamportSetting['rest_secret'];
