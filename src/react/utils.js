@@ -6,13 +6,7 @@ export function getDefaultFieldValues(attributes) {
   const [pay_method] = payMethods;
   const [{ label }] = amountOptions;
 
-  const defaultFieldValues = {
-    pay_method,
-    // TODO: 테스트 편의를 위해 선언한 것으로 아래 내용은 향후 삭제되어야 함
-    buyer_name: '홍길동',
-    buyer_tel: '01012341234',
-    buyer_email: 'example@example.com',
-  };
+  const defaultFieldValues = { pay_method };
   if (amountType !== 'variable') {
     defaultFieldValues.amount = label;
   }
@@ -255,7 +249,9 @@ export function getOrderData(paymentData) {
   orderData.append('buyer_email', buyer_email);
   orderData.append('buyer_tel', buyer_tel);
   orderData.append('extra_fields', JSON.stringify(custom_data));
-  orderData.append('redirect_after', redirectAfter);
+  if (redirectAfter) {
+    orderData.append('redirect_after', redirectAfter);
+  }
 
   Object.keys(file_data).forEach(key => {
     orderData.append(key, file_data[key]);
