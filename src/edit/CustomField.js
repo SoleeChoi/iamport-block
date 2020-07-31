@@ -117,7 +117,7 @@ export function CustomField({
         <div>
           <div class="iamport-label-container">{__('입력 옵션', 'iamport-block')}</div>
           {options.map((eachOption, optionIndex) => {
-            const optionHelp = errorField.options[optionIndex];
+            const optionHelp = errorField && errorField.options[optionIndex];
             return (
               <Row gutter={[8, 0]}>
                 <Col span={21}>
@@ -156,7 +156,7 @@ export function CustomField({
         <div>
           <Row></Row>
           {agreementOptions.map(({ label, link }, optionIndex) => {
-            const agreementError = errorField.agreementOptions[optionIndex];
+            const agreementError = errorField && errorField.agreementOptions[optionIndex];
             let labelHelp = '';
             let linkHelp = '';
             if (agreementError) {
