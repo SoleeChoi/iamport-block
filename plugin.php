@@ -92,9 +92,9 @@ add_action('enqueue_block_assets', 'iamport_scripts');
 require_once(dirname(__FILE__).'/model/IamportBlock.php');
 require_once(dirname(__FILE__).'/model/IamportBlockPaymentCallback.php');
 
-register_activation_hook(__FILE__, 'iamport_activated');
+register_activation_hook(__FILE__, 'iamport_block_activated');
 
-function iamport_activated() {
+function iamport_block_activated() {
 	create_history_page();
 	create_thankyou_page();
 	add_endpoints();
