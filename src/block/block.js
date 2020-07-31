@@ -33,7 +33,7 @@ export default registerBlockType( 'cgb/iamport-block', {
 	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( '아임포트 블록 — CGB Block', 'iamport-block' ),
+		__( '아임포트 블록', 'iamport-block' ),
     __( '아임포트', 'iamport-block' ),
     __( '결제', 'iamport-block' ),
     __( '일반결제', 'iamport-block' ),
