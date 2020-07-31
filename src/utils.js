@@ -17,14 +17,25 @@ export function showDeleteCustomFieldModal(onOk) {
   });
 }
 
-export function showSetAttributesModal() {
-  // [edit] 아임포트 블록 설정 정보 저장
-  Modal.info({
-    centered: true,
-    title: __('아임포트 블록 설정', 'iamport-block'),
-    content: __('아임포트 블록 설정 정보가 저장되었습니다. 우측 상단 업데이트 버튼을 눌러주세요.', 'iamport-block'),
-    okText: __('확인', 'iamport-block'),
-  });
+export function showSetAttributesModal(isAvailable) {
+  if (isAvailable) {
+    // [edit] 아임포트 블록 설정 정보 저장 성공
+    Modal.info({
+      centered: true,
+      title: __('아임포트 블록 설정 완료', 'iamport-block'),
+      content: __('아임포트 블록 설정 정보가 저장되었습니다. 우측 상단 업데이트 버튼을 눌러주세요.', 'iamport-block'),
+      okText: __('확인', 'iamport-block'),
+    });
+  } else {
+    // [edit] 아임포트 블록 설정 정보 저장 실패
+    Modal.error({
+      centered: true,
+      title: __('아임포트 블록 설정 실패', 'iamport-block'),
+      content: __('입력 하신 값이 유효하지 않습니다. 수정 후 다시 시도해주세요.', 'iamport-block'),
+      okType: 'danger',
+      okText: __('닫기', 'iamport-block'),
+    });
+  }
 }
 
 export function showLoginRequiredModal(onOk) {

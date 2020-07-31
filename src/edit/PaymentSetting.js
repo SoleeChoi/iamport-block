@@ -33,22 +33,24 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
 
   function onSubmit() {
     validateFields((error, values) => {
+      let isAvailable = false;
       if (!error) {
         const { isValid, errorFields } = validateCustomFields(customFields);
+        isAvailable = isValid;
         setErrorFields(errorFields);
-
-        if (isValid) {
-          const newAttributes = {
-            customFields,
-            amountType,
-            amountOptions,
-            ...getNewAttributes(values),
-          };
-          setAttributes(newAttributes);
-          
-          showSetAttributesModal();
-        }
       }
+
+      if (isAvailable) {
+        const newAttributes = {
+          customFields,
+          amountType,
+          amountOptions,
+          ...getNewAttributes(values),
+        };
+        setAttributes(newAttributes);
+      }
+
+      showSetAttributesModal(isAvailable);
     });
   }
 
