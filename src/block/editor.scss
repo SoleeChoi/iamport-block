@@ -6,10 +6,103 @@
  */
 
 .wp-block-cgb-iamport-block  {
-  background: $green;
-  border: 0.2rem solid $black;
+  background: $primary-bg;
+  border: 0.2rem solid $primary;
   color: $black;
   margin: 0 auto;
   max-width: 740px;
   padding: 2rem;
+  padding-top: 0rem;
+
+  .ant-form {
+    .ant-form-item-children,
+    .ant-checkbox-group,
+    .ant-radio-group,
+    .ant-form-item-label,
+    .ant-input,
+    .ant-select {
+      width: 100%;
+    }
+
+    .ant-col.ant-col-3 {
+      text-align: right;
+    }
+    .ant-col.ant-col-10 {
+      text-align: left;
+      .ant-checkbox-wrapper {
+        line-height: 40px;
+      }
+    }
+
+    .ant-divider {
+      background-color: #344e81;
+    }
+
+    h3 {
+      // 기본 필드, 결제 금액 필드, 커스텀 필드 타이틀
+      margin-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    h4 {
+      // 설정된 커스텀 입력 필드가 없습니다
+      text-align: center;
+      color: #888;
+      font-weight: normal;
+    }
+
+    .iamport-pay-methods-container .ant-checkbox-wrapper {
+      line-height: 40px;
+      margin-bottom: 0.5rem;
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .iamport-custom-fields-container {
+      // 커스텀 입력 필드 컨테이너
+      text-align: right;
+    }
+
+    .iamport-label-container {
+      // 라벨 컨테이너
+      width: 100%;
+      text-align: left;
+      color: $black;
+      display: inline-block;
+      overflow: hidden;
+      line-height: 39.9999px;
+      white-space: nowrap;
+      vertical-align: middle;
+      position: relative;
+      min-height: 1px;
+      font-weight: bold;
+
+      // 필수입력 여부
+      .ant-checkbox-wrapper {
+        margin-left: 1rem;
+      }
+    }
+
+    .ant-col.ant-col-10.iamport-delete-field-container {
+      // 필드 삭제 버튼 컨테이너
+      text-align: right;
+      line-height: 40px;
+    }
+
+    // override wordpress default css
+    input[type="text"],
+    input[type="number"] {
+      border-color: #d9d9d9;
+      font-size: 16px;
+    }
+    .has-error {
+      input[type="text"]:focus,
+      input[type="number"]:focus {
+        box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
+      }
+    }
+    .ant-btn-background-ghost {
+      background-color: #fff!important;
+    }
+  }
 }

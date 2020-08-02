@@ -4,32 +4,10 @@
  * CSS for both Frontend+Backend.
  */
 
-.wp-block-cgb-iamport-block  {
-  background: $primary-bg;
-  border: 0.2rem solid $primary;
-  color: $black;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem;
-}
-
-/**
- * antd styling
- */
-.ant-form {
-  .ant-form-item {
-    margin-bottom: 0.5rem;
-  }
-  .ant-form-item-label > label::after {
-    display: none;
-  }
-}
-.has-error .ant-form-explain {
-  padding-left: 0.66rem;
-}
-.imp-btn-container {
+.iamport-btn-container {
   text-align: center;
   margin-top: 1rem;
+
   button {
     width: 4rem;
     text-align: center;
@@ -39,13 +17,73 @@
   }
 }
 
-/**
- * override wordpress default css
- */
-.ant-modal-content button.ant-modal-close:hover {
-  background: initial;
+.iamport-dimmed-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
 }
-.ant-form-item-control:not(.has-error) input:focus {
-  border-color: #40a9ff;
-  outline: none;
+
+/**
+ * antd styling
+ */
+.iamport-block-modal.ant-modal {
+ .ant-modal-header {
+   padding: 1.5rem 24px;
+   background-color: $primary;
+   .ant-modal-title {
+    h3 {
+      margin-bottom: 0;
+    }
+    h5 {
+      margin-bottom: 0;
+      margin-top: 0.2rem;
+    }
+    * {
+      color: #fff;
+      text-align: center;
+    }
+   }
+  }
+
+  .ant-modal-content {
+    button.ant-modal-close:hover {
+      background: initial;
+    }
+    .ant-modal-close-x svg {
+      color: white;
+     }
+  }
+
+  .ant-form {
+    // override wordpress default css
+    input[type=text] {
+      border-color: #d9d9d9;  
+      // border-radius: 4px;
+      &:focus {
+        border-color: #40a9ff;
+        outline: none;
+      }
+    }
+
+    .iamport-address-container {
+    // 주소 입력 필드
+      margin-bottom: 0.5rem;
+      .ant-form-item {
+        margin-bottom: 0;
+      }
+    }
+    .iamport-agreement-container {
+      // 약관 동의 입력 필드
+      margin-bottom: 0;
+    }
+    .iamport-agreement-link {
+      text-decoration: underline;
+      text-align: right;
+    }
+  }
 }

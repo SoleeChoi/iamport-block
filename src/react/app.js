@@ -1,22 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Form, Input, Select, Button } from 'antd';
+import { Modal, Form, Button } from 'antd';
 import 'antd/dist/antd.css';
 
-import { PAY_METHODS } from '../constants';
+import BasicFields from './BasicFields';
+import CustomField from './CustomField';
+import ButtonContainer from './ButtonContainer';
+
+import { getDefaultFieldValues, getCustomLabels, getPaymentData, getOrderData } from './utils';
+import { showLoginRequiredModal, showPaymentFailedModal } from '../utils';
 
 const { __ } = wp.i18n;
-const { Item } = Form;
-const { Option } = Select;
 
 function App({ form, attributes }) {
-  console.log(attributes);
   const { validateFields, getFieldDecorator, setFieldsValue } = form;
   const {
-    userCode, buttonName, title, description, name, mode, amount, payMethods,
+    userCode,
+    adminUrl,
+    loginUrl,
+    isLoginRequired,
+    buttonName,
+    buttonClassName,
+    modalClassName,
+    title,
+    description,
+    customFields,
   } = attributes;
 
+  const defaultFieldType = customFields.length === 0 ? 'basic' : 'custom';
+  const customLabels = getCustomLabels(customFields);
   const [isOpen, setIsOpen] = useState(false);
+  const [fieldType, setFieldType] = useState(defaultFieldType);
   const [loading, setLoading] = useState(false);
+
   const ModalTitle = () => 
     <div>
       <h3>{title}</h3>
@@ -28,106 +43,124 @@ function App({ form, attributes }) {
   }, []);
 
   function openModal() {
-    setIsOpen(true);
+    if (isLoginRequired) {
+      showLoginRequiredModal(() => {
+        window.location.href = loginUrl;
+      });
+    } else {
+      setIsOpen(true);
 
-    setTimeout(() => {
-      const [pay_method] = payMethods;
-      setFieldsValue({ amount, pay_method });
-    }, 0);
+      setTimeout(() => {
+        const defaultFieldValues = getDefaultFieldValues(attributes);
+        setFieldsValue(defaultFieldValues);
+      }, 0);
+    }
+  }
+
+  function onClickNext() {
+    /**
+     * 기본 필드로 넘어가기 전에,
+     * 커스텀 입력 필드에 대해 validation 체크를 한다
+     */
+    validateFields(customLabels, error => {
+      if (error) {
+        return false;
+      }
+      setFieldType('basic');
+    });
   }
 
   function onClickPayment() {
     validateFields((error, values) => {
       if (!error) {
-        console.log(values);
-        IMP.request_pay({
-          name,
-          ...values,
-        }, response => alert(JSON.stringify(response)));
-        setLoading(true);
+        const paymentData = getPaymentData(values, attributes);
+        const orderData = getOrderData(paymentData);
+
+        jQuery.ajax({
+          method: 'POST',
+          url: adminUrl,
+          contentType: false,
+          processData: false,
+          data: orderData,
+        }).done(({ order_uid, thankyou_url }) => {
+          setFieldType('custom');
+          setIsOpen(false);
+          setLoading(true);
+
+          const data = {
+            ...paymentData,
+            merchant_uid: order_uid,
+            m_redirect_url: thankyou_url,
+          };
+          IMP.request_pay(data, response => {
+            setLoading(false);
+            const { success, error_msg } = response;
+            if (success) {
+              location.href = thankyou_url;
+            } else {
+              showPaymentFailedModal(error_msg);
+            }
+          });
+        }).fail(({ responseText }) => {
+          showPaymentFailedModal(responseText);
+        });
       }
     });
   }
 
   return (
     <div>
-      <Button size="large" type="primary" onClick={openModal}>{buttonName}</Button>
+      <Button
+        size="large"
+        type="primary"
+        className={buttonClassName}
+        onClick={openModal}
+      >{buttonName}</Button>
       {
         isOpen &&
         <Modal
           visible
+          className={`iamport-block-modal ${modalClassName}`}
+          centered={true}
           title={<ModalTitle />}
           footer={null}
-          onCancel={() => setIsOpen(false)}
+          onCancel={() => {
+            setIsOpen(false);
+            setFieldType(defaultFieldType);
+          }}
         >
-          <Form layout="vertical" onSubmit={onClickPayment}>
-            <Item label={__('결제수단','iamport-block')}>
-              {getFieldDecorator('pay_method')(
-                <Select size="large">
-                  {payMethods.map(method =>
-                    <Option value={method}>{PAY_METHODS[method]}</Option>  
-                  )}
-                </Select>,
+          <Form
+            layout="vertical"
+            className="iamport-block-form"
+            onSubmit={onClickPayment}
+          >
+            <div style={{ display: fieldType === 'custom' ? 'block' : 'none' }}>
+              {customFields.map(field =>
+                <CustomField
+                  key={field.label}
+                  field={field}
+                  getFieldDecorator={getFieldDecorator}
+                  onChangeAddress={addressObj => setFieldsValue(addressObj)}
+                />
               )}
-            </Item>
-            <Item label={__('결제금액','iamport-block')}>
-              {getFieldDecorator('amount', {
-                rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],
-              })(
-                <Input
-                  size="large"
-                  placeholder={__('결제금액','iamport-block')}
-                  disabled={mode === 'fixed'}
-                />,
-              )}
-            </Item>
-            <Item label={__('결제자 이름','iamport-block')}>
-              {getFieldDecorator('buyer_name', {
-                rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],
-              })(
-                <Input
-                  size="large"
-                  placeholder={__('결제자 이름','iamport-block')}
-                />,
-              )}
-            </Item>
-            <Item label={__('결제자 이메일','iamport-block')}>
-              {getFieldDecorator('buyer_email', {
-                rules: [{
-                  required: true, message: __('필수입력입니다', 'iamport-block'),
-                  type: 'email', message: __('이메일 주소가 올바르지 않습니다', 'iamport-block'),
-                }],
-              })(
-                <Input
-                  size="large"
-                  placeholder={__('결제자 이메일','iamport-block')}
-                />,
-              )}
-            </Item>
-            <Item label={__('결제자 전화번호','iamport-block')}>
-              {getFieldDecorator('buyer_tel', {
-                rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],
-              })(
-                <Input
-                  size="large"
-                  type="number"
-                  placeholder={__('결제자 전화번호','iamport-block')}
-                />,
-              )}
-            </Item>
+            </div>
+            <BasicFields
+              getFieldDecorator={getFieldDecorator}
+              attributes={attributes} 
+              show={fieldType === 'basic'}
+            />
           </Form>
-          <div className="imp-btn-container">
-            <Button size="large" onClick={() => setIsOpen(false)}>닫기</Button>
-            <Button
-              type="primary"
-              size="large"
-              htmlType="submit"
-              loading={loading}
-              onClick={onClickPayment}
-            >결제하기</Button>
-          </div>
+          <ButtonContainer
+            fieldType={fieldType}
+            defaultFieldType={defaultFieldType}
+            onChangeFieldType={value => setFieldType(value)}
+            onCloseModal={() => setIsOpen(false)}
+            onClickNext={onClickNext}
+            onPayment={onClickPayment}
+          />
         </Modal>
       }
+      {loading && <div className="iamport-dimmed-background"></div>}
     </div>
   );
 }

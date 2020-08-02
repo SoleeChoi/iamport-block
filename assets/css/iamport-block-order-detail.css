@@ -1,0 +1,22 @@
+
+.iamport-block-order-detail-container {
+	width: 100%; 
+	border: 1px solid #efefef; 
+	padding: 4px;
+}
+
+.iamport-block-order-detail-container th, .iamport-block-order-detail-container td {
+	padding: 4px 8px;
+	border-bottom: 1px solid #efefef;
+}
+
+.iamport-block-order-detail-container th {
+	font-weight: bold;
+}
+
+.iamport-block-order-detail-container td a.view-order {
+	display: inline-block; 
+	background-color: #efefef; 
+	color: #333;
+	padding: 4px 8px;
+}
