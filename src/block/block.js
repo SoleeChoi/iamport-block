@@ -29,8 +29,8 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
  */
 export default registerBlockType( 'cgb/iamport-block', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( '아임포트 블록', 'iamport-block' ), // Block title.
-	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
+	title: __( '아임포트 일반결제', 'iamport-block' ), // Block title.
+	icon: 'cart', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		__( '아임포트 블록', 'iamport-block' ),
