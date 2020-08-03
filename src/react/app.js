@@ -11,7 +11,7 @@ import { showLoginRequiredModal, showPaymentFailedModal } from '../utils';
 
 const { __ } = wp.i18n;
 
-function App({ form, attributes }) {
+function App({ form, type, attributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue } = form;
   const {
     userCode,

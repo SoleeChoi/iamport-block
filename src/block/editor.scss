@@ -5,7 +5,8 @@
  * which makes it higher in priority.
  */
 
-.wp-block-cgb-iamport-payment  {
+.wp-block-cgb-iamport-payment,
+.wp-block-cgb-iamport-subscription  {
   background: $primary-bg;
   border: 0.2rem solid $primary;
   color: $black;

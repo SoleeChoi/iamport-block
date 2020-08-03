@@ -9,4 +9,10 @@
  * Webpack is compiling as the input file.
  */
 
-import './block/block.js';
+ // Import CSS.
+import './block/editor.scss';
+import './block/style.scss';
+
+// Iamport Blocks.
+import './block/payment.js';
+import './block/subscription.js';

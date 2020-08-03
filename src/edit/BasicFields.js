@@ -1,17 +1,17 @@
 import { Form, Row, Col, Input, Checkbox, Select, Switch, Icon } from 'antd';
 
-import { getPgLists, getPgLabel } from './utils';
-import { PAY_METHODS } from '../constants';
+import { getPgLists, getPgLabel, getPayMethods } from './utils';
 
 const { __ } = wp.i18n;
 const { Item } = Form;
 const { Option } = Select;
 
-export function BasicFields({ getFieldDecorator, payMethods }) {
+export function BasicFields({ type, payMethods, getFieldDecorator }) {
   const isCardQuotaVisible = payMethods && payMethods.indexOf('card') !== -1;
   const isVbankDueVisible = payMethods && payMethods.indexOf('vbank') !== -1;
   const isDigitalVisible = payMethods && payMethods.indexOf('phone') !== -1;
 
+  const AllPayMethods = getPayMethods(type);
   const PgSelector = ({ method }) =>
     getFieldDecorator(`pgs.${method}`)(
       <Select
@@ -20,11 +20,9 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
         disabled={method === 'kakaopay' || method === 'paypal'}
         suffixIcon={<Icon type="caret-down" />}
       >
-        {getPgLists(method).map(pg => {
-          return (
-            <Option key={pg}>{getPgLabel(pg)}</Option>
-          );
-        })}
+        {getPgLists(method, type).map(pg =>
+          <Option key={pg}>{getPgLabel(pg)}</Option>
+        )}
       </Select>
     );
 
@@ -62,15 +60,15 @@ export function BasicFields({ getFieldDecorator, payMethods }) {
               rules: [{ required: true, message: __('필수 선택입니다', 'iamport-block') }],
             })(
               <Checkbox.Group className="iamport-pay-methods-container">
-                {Object.keys(PAY_METHODS).map(method =>
-                  <Checkbox value={method}>{PAY_METHODS[method]}</Checkbox>
+                {Object.keys(AllPayMethods).map(method =>
+                  <Checkbox value={method}>{AllPayMethods[method]}</Checkbox>
                 )}
               </Checkbox.Group>
             )}
           </Item>
         </Col>
         <Col span={17}>
-          {Object.keys(PAY_METHODS).map((method, index) =>
+          {Object.keys(AllPayMethods).map((method, index) =>
             <Item label={index === 0 && __('PG사', 'iamport-block')}>
               {getFieldDecorator(`pgMids.${method}`)(
                 <Input

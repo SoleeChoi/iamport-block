@@ -13,7 +13,7 @@ import { DEFAULT_AMOUNT_OPTIONS, DEFAULT_CUSTOM_FIELD } from './constants';
 
 const { __ } = wp.i18n;
 
-export function PaymentSetting({ form, attributes, className, setAttributes }) {
+export function PaymentSetting({ form, attributes, type, className, setAttributes }) {
   const { validateFields, getFieldDecorator, setFieldsValue, getFieldValue } = form;
 
   const defaultCustomFields = attributes.customFields || [];
@@ -26,7 +26,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
 
   useEffect(() => {
     setTimeout(() => {
-      const defaultAttributes = getDefaultAttributes(attributes);
+      const defaultAttributes = getDefaultAttributes(type, attributes);
       setFieldsValue(defaultAttributes);
     }, 0);
   }, []);
@@ -86,6 +86,7 @@ export function PaymentSetting({ form, attributes, className, setAttributes }) {
       >
         {/* 기본 필드 */}
         <BasicFields
+          type={type}
           getFieldDecorator={getFieldDecorator}
           payMethods={getFieldValue('payMethods')}
         />

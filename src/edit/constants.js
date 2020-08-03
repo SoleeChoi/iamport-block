@@ -38,9 +38,13 @@ export const BASIC_KEYS = [
 export const DEFAULT_AMOUNT_OPTIONS = [{ label: '', value: 1000, taxFreeAmount: 0 }];
 export const DEFAULT_AGREEMENT_OPTIONS = [{ label: '', link: '' }];
 
+// 일반결제용 PG사
 export const PGS_FOR_SAMSUNG = ['html5_inicis', 'kcp'];
 export const PGS_FOR_PHONE = ['html5_inicis', 'nice', 'mobilians', 'uplus', 'danal', 'jtnet'];
 export const PGS = ['html5_inicis', 'nice', 'mobilians', 'uplus', 'danal_tpay', 'jtnet'];
+// 정기결제용 PG사
+export const PGS_FOR_SUBSCRIPTION_BY_CARD = ['jtnet', 'nice', 'html5_inicis', 'danal_tpay', 'mobilians'];
+export const PGS_FOR_SUBSCRIPTION_BY_PHONE = ['danal'];
 
 export const DEFAULT_PGS = {
   kakaopay: 'kakaopay',
@@ -48,7 +52,7 @@ export const DEFAULT_PGS = {
   card: 'html5_inicis',
   vbank: 'html5_inicis',
   trans: 'html5_inicis',
-  phone: 'html5_inicis',
+  phone: 'danal',
   paypal: 'paypal',
 };
 
