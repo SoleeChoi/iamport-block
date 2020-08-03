@@ -10,12 +10,12 @@ function register_dynamic_block() {
 
   // Hook server side rendering into render callback
   // Make sure name matches registerBlockType in ./index.js
-  register_block_type('cgb/iamport-block', array(
-    'render_callback' => __NAMESPACE__ . '\render_dynamic_block'
+  register_block_type('cgb/iamport-payment', array(
+    'render_callback' => __NAMESPACE__ . '\render_iamport_payment_block'
   ));
 }
 
-function render_dynamic_block($attributes) {
+function render_iamport_payment_block($attributes) {
   $iamportSettings = get_option('iamport_block_setting');
 
   // 아임포트 설정 페이지에서 설정 값 불러오기
