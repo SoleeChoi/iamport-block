@@ -176,6 +176,10 @@ export function CustomField({
               labelHelp = label;
               valueHelp = value;
             }
+            const valuePlaceholder = type === 'link' ?
+              __('예) https://admin.iamport.kr/pages/terms', 'iamport-block') :
+              __('예) 본 약관은 사업자회원(이하 “회원")이 주식회사 시옷(이하 “회사")가 제공하는 아임포트 결제연동 및 결제데이터 분석 등 솔루션(이하 “솔루션")의 이용에 관한 기본적인 사항을 정함으로써 상호 간에 권리/의무 관계를 명확히 하는 것을 목적으로 합니다.', 'iamport-block');
+
             return (
               <div>
                 {
@@ -210,7 +214,7 @@ export function CustomField({
                     >
                       <Input
                         size="large"
-                        placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport-block')}
+                        placeholder={valuePlaceholder}
                         value={value}
                         addonBefore={<AgreementTypeSelector optionIndex={optionIndex} value={type} />}
                         onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'value')}
