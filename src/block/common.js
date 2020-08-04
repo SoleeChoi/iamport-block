@@ -17,6 +17,10 @@ export const COMMON_ATTRIBUTES = {
     type: 'string',
     selector: 'input',
   },
+  buttonStyle: { // 결제 버튼 스타일
+    type: 'string',
+    selector: 'input',
+  },
   modalClassName: { // 결제 팝업 클래스 이름
     type: 'string',
     selector: 'input',

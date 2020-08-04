@@ -5,9 +5,10 @@ import AddressField from './AddressField';
 const { __ } = wp.i18n;
 const { Item } = Form;
 const { Option } = Select;
+const { TextArea } = Input;
 
 function CustomField({ field, getFieldDecorator, onChangeAddress }) {
-  const { label, type, options, agreementOptions, required } = field;
+  const { label, type, placeholder, options, agreementOptions, required } = field;
   const agreementLength = agreementOptions.length;
 
   switch(type) {
@@ -70,14 +71,14 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
     }
     case 'agreement': {
       return (
-        agreementOptions.map(({ label, link }, index) => 
+        agreementOptions.map(({ label, value, type }, index) => 
           <Item
             label={index === 0 && field.label}
             className={index !== agreementLength - 1 && 'iamport-agreement-container'}
           >
             <Row>
               <Col span={20}>
-                {getFieldDecorator(label, {
+                {getFieldDecorator(`${field.label}.${label}`, {
                   valuePropName: 'checked',
                   rules: [{
                     validator:(_, value) => required && !value ? Promise.reject('약관 동의는 필수입니다') : Promise.resolve(),
@@ -87,13 +88,22 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
                 )}
               </Col>
               <Col span={4} className="iamport-agreement-link">
-                <a
-                  href={link}
-                  key={link}
-                  target="_blank"
-                >{__('약관 보기', 'iamport-block')}</a>
+                {
+                  type === 'link' &&
+                  <a
+                    href={value}
+                    key={value}
+                    target="_blank"
+                  >{__('약관 보기', 'iamport-block')}</a>
+                }
               </Col>
             </Row>
+            {
+              type === 'content' &&
+              <Row gutter={[8, 8]}>
+                <Col span={24}><TextArea value={value} /></Col>
+              </Row>
+            }
           </Item>
         )
       );
@@ -130,7 +140,7 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
           {getFieldDecorator(label, {
             rules: [{ required, message: __('필수 입력입니다', 'iamport-block') }],
           })(
-            <Input size="large" />,
+            <Input size="large" placeholder={placeholder} />,
           )}
         </Item>
       );

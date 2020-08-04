@@ -37,6 +37,9 @@ export function BasicFields({ type, payMethods, getFieldDecorator }) {
       <Item label={__('결제 버튼 클래스 이름','iamport-block')}>
         {getFieldDecorator('buttonClassName')(<Input size="large" />)}
       </Item>
+      <Item label={__('결제 버튼 스타일 속성','iamport-block')}>
+        {getFieldDecorator('buttonStyle')(<Input size="large" />)}
+      </Item>
       <Item label={__('결제 팝업 클래스 이름','iamport-block')}>
         {getFieldDecorator('modalClassName')(<Input size="large" />)}
       </Item>

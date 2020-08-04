@@ -1,5 +1,18 @@
 import moment from 'moment';
 
+// css string을 object로 변환
+export function getButtonStyle(buttonStyle) {
+  const buttonStyleObj = {};
+  buttonStyle.split(';').forEach(eachStyle => {
+    const[key, value] = eachStyle.split(':');
+    if (key) {
+      const keyToCamelCase = key.trim().replace(/([-][a-z])/ig, $1 => $1.toUpperCase().replace('-', ''));
+      buttonStyleObj[keyToCamelCase] = value.trim();
+    }
+  });
+  return buttonStyleObj;
+}
+
 // 모달 열었을때 셋팅되어있는 기본 값 계산
 export function getDefaultFieldValues(attributes) {
   const { payMethods, amountType, amountOptions, customFields } = attributes;
@@ -76,6 +89,11 @@ function getPayMethod(method) {
 
 function getAmountInfo(attributes, amount) {
   const { amountType, amountOptions } = attributes;
+  if (amountType === 'free') {
+    // 무료형은 걸제 금액과 면세 금액이 모두 0원이다
+    return { amount: 0, taxFreeAmount: 0 };
+  }
+
   if (amountType === 'fixed' || amountType === 'selection') {
     const [targetOption] = amountOptions.filter(({ label, value }) =>
       // 고정형은 라벨과 비교하고, 선택형은 값과 비교한다
@@ -155,8 +173,8 @@ function getCustomValue(values, { label, type, agreementOptions }) {
     case 'checkbox':
       return value.join(', ');
     case 'agreement': {
-      const agreedLabels = agreementOptions.map(({ label }) => {
-        if (values[label]) {
+      const agreedLabels = agreementOptions.map(option => {
+        if (values[label][option.label]) {
           return label;
         }
       });
@@ -242,14 +260,20 @@ export function getOrderData(paymentData) {
 
   orderData.append('action', 'get_order_uid');
   orderData.append('order_title', name);
-  orderData.append('pay_method', pay_method);
   orderData.append('tax_free_amount', tax_free);
   orderData.append('order_amount', amount);
-  orderData.append('currency', currency);
   orderData.append('buyer_name', buyer_name);
   orderData.append('buyer_email', buyer_email);
   orderData.append('buyer_tel', buyer_tel);
-  orderData.append('extra_fields', JSON.stringify(custom_data));
+  if (currency) {
+    orderData.append('currency', currency || 'KRW');
+  }
+  if (pay_method) {
+    orderData.append('pay_method', pay_method);
+  }
+  if (custom_data) {
+    orderData.append('extra_fields', JSON.stringify(custom_data));
+  }
   if (redirectAfter) {
     orderData.append('redirect_after', redirectAfter);
   }

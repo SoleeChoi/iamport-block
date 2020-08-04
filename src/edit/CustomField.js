@@ -15,18 +15,36 @@ export function CustomField({
   onDeleteCustomField,
   onChangeCustomFields,
 }) {
-  const { label, type, required, options, agreementOptions } = field;
+  const { label, type, placeholder, required, options, agreementOptions } = field;
   const labelHelp = errorField && errorField.label;
+
+  const [placeholderVisible, setPlaceholderVisible] = useState(getPlaceholderVisible(type));
   const [optionVisible, setOptionVisible] = useState(getOptionVisible(type));
   const [agreementVisible, setAgreementVisible] = useState(getAgreementVisible(type));
 
+  const AgreementTypeSelector = ({ optionIndex, value }) =>
+    <Select
+      size="large"
+      style={{ width: '100px' }}
+      suffixIcon={<Icon type="caret-down" />}
+      value={value}
+      onChange={value => onChangeAgreementOptions(value, optionIndex, 'type')}
+    >
+      <Option key="link">링크</Option>
+      <Option key="content">전문</Option>
+    </Select>
+
   useEffect(() => {
+    setOptionVisible(getPlaceholderVisible(type));
     setOptionVisible(getOptionVisible(type));
     setAgreementVisible(getAgreementVisible(type))
   }, [field]);
 
   function onChangeType(value) {
     // 입력 유형 변경되었을때
+    const newPlaceholderVisible = getPlaceholderVisible(value);
+    setPlaceholderVisible(newPlaceholderVisible);
+
     const newOptionVisible = getOptionVisible(value);
     setOptionVisible(newOptionVisible);
 
@@ -57,6 +75,10 @@ export function CustomField({
       return eachOption;
     });
     onChangeCustomFields({ ...field, agreementOptions: newAgreementOptions });
+  }
+
+  function getPlaceholderVisible(value) {
+    return value === 'text';
   }
 
   function getOptionVisible(value) {
@@ -107,11 +129,21 @@ export function CustomField({
         </Col>
         <Col span={10}>
           <Checkbox
-              checked={required}
-              onChange={({ target: { checked } }) => onChangeCustomFields({ ...field, required: checked })}
+            checked={required}
+            onChange={({ target: { checked } }) => onChangeCustomFields({ ...field, required: checked })}
             >{__('필수 입력/선택 여부', 'iamport-block')}</Checkbox>
         </Col>
       </Row>
+      {
+        placeholderVisible &&
+        <Item label={__('입력 힌트', 'iamport-block')}>
+          <Input
+            size="large"
+            value={placeholder}
+            onChange={({ target: { value } }) => onChangeCustomFields({ ...field, placeholder: value })}  
+          />
+        </Item>
+      }
       {
         optionVisible &&
         <div>
@@ -155,15 +187,19 @@ export function CustomField({
         agreementVisible &&
         <div>
           <Row></Row>
-          {agreementOptions.map(({ label, link }, optionIndex) => {
+          {agreementOptions.map(({ label, value, type }, optionIndex) => {
             const agreementError = errorField && errorField.agreementOptions[optionIndex];
             let labelHelp = '';
-            let linkHelp = '';
+            let valueHelp = '';
             if (agreementError) {
-              const { label, link } = agreementError;
+              const { label, value } = agreementError;
               labelHelp = label;
-              linkHelp = link;
+              valueHelp = value;
             }
+            const valuePlaceholder = type === 'link' ?
+              __('예) https://admin.iamport.kr/pages/terms', 'iamport-block') :
+              __('예) 본 약관은 사업자회원(이하 “회원")이 주식회사 시옷(이하 “회사")가 제공하는 아임포트 결제연동 및 결제데이터 분석 등 솔루션(이하 “솔루션")의 이용에 관한 기본적인 사항을 정함으로써 상호 간에 권리/의무 관계를 명확히 하는 것을 목적으로 합니다.', 'iamport-block');
+
             return (
               <div>
                 {
@@ -173,7 +209,7 @@ export function CustomField({
                       <div class="iamport-label-container">{__('약관 라벨', 'iamport-block')}</div>
                     </Col>
                     <Col span={17}>
-                      <div class="iamport-label-container">{__('약관 링크', 'iamport-block')}</div>
+                      <div class="iamport-label-container">{__('약관 내용', 'iamport-block')}</div>
                     </Col>
                   </Row>
                 }
@@ -193,14 +229,15 @@ export function CustomField({
                   </Col>
                   <Col span={14}>
                     <Item
-                      validateStatus={linkHelp && 'error'}
-                      help={linkHelp}
+                      validateStatus={valueHelp && 'error'}
+                      help={valueHelp}
                     >
                       <Input
                         size="large"
-                        placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport-block')}
-                        value={link}
-                        onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'link')}
+                        placeholder={valuePlaceholder}
+                        value={value}
+                        addonBefore={<AgreementTypeSelector optionIndex={optionIndex} value={type} />}
+                        onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'value')}
                       />
                     </Item>
                   </Col>

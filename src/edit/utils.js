@@ -75,6 +75,7 @@ export function getDefaultAttributes(type, attributes) {
   const {
     buttonName,
     buttonClassName,
+    buttonStyle,
     modalClassName,
     title,
     description,
@@ -94,6 +95,7 @@ export function getDefaultAttributes(type, attributes) {
   return {
     buttonName: buttonName || __('결제하기', 'iamport-block'),
     buttonClassName,
+    buttonStyle,
     modalClassName,
     title: title || __('참가권 결제', 'iamport-block'),
     description,
@@ -116,7 +118,7 @@ export function getDefaultErrorFields(customFields) {
     const errorField = { label: '' };
     if (type === 'agreement') {
       const lengthOfAgreementOptions = agreementOptions.length;
-      errorField.agreementOptions = Array(lengthOfAgreementOptions).fill({ label: '', link: '' });
+      errorField.agreementOptions = Array(lengthOfAgreementOptions).fill({ label: '', value: '' });
     }
     if (type === 'radio' || type === 'checkbox' || type === 'dropdown') {
       const lengthOfOptions = options.length;

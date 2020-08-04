@@ -4,6 +4,7 @@ export const AMOUNT_TYPES = {
   variable: __('가변형', 'iamport-block'),
   fixed: __('고정형', 'iamport-block'),
   selection: __('선택형', 'iamport-block'),
+  free: __('무료형', 'iamport-block'),
 };
 
 export const OPTION_TYPES = {
@@ -20,6 +21,7 @@ export const BASIC_KEYS = [
   'name',
   'buttonName',
   'buttonClassName',
+  'buttonStyle',
   'modalClassName',
   'title',
   'description',
@@ -36,7 +38,7 @@ export const BASIC_KEYS = [
 ];
 
 export const DEFAULT_AMOUNT_OPTIONS = [{ label: '', value: 1000, taxFreeAmount: 0 }];
-export const DEFAULT_AGREEMENT_OPTIONS = [{ label: '', link: '' }];
+export const DEFAULT_AGREEMENT_OPTIONS = [{ label: '', value: '', type: 'link' }];
 
 // 일반결제용 PG사
 export const PGS_FOR_SAMSUNG = ['html5_inicis', 'kcp'];
@@ -69,6 +71,7 @@ export const DEFAULT_PG_MIDS = {
 export const DEFAULT_CUSTOM_FIELD = {
   label: '',
   type: 'text',
+  placeholder: '',
   options: [''],
   agreementOptions: DEFAULT_AGREEMENT_OPTIONS,
   required: false,
