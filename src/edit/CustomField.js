@@ -15,8 +15,10 @@ export function CustomField({
   onDeleteCustomField,
   onChangeCustomFields,
 }) {
-  const { label, type, required, options, agreementOptions } = field;
+  const { label, type, placeholder, required, options, agreementOptions } = field;
   const labelHelp = errorField && errorField.label;
+
+  const [placeholderVisible, setPlaceholderVisible] = useState(getPlaceholderVisible(type));
   const [optionVisible, setOptionVisible] = useState(getOptionVisible(type));
   const [agreementVisible, setAgreementVisible] = useState(getAgreementVisible(type));
 
@@ -33,12 +35,16 @@ export function CustomField({
     </Select>
 
   useEffect(() => {
+    setOptionVisible(getPlaceholderVisible(type));
     setOptionVisible(getOptionVisible(type));
     setAgreementVisible(getAgreementVisible(type))
   }, [field]);
 
   function onChangeType(value) {
     // 입력 유형 변경되었을때
+    const newPlaceholderVisible = getPlaceholderVisible(value);
+    setPlaceholderVisible(newPlaceholderVisible);
+
     const newOptionVisible = getOptionVisible(value);
     setOptionVisible(newOptionVisible);
 
@@ -69,6 +75,10 @@ export function CustomField({
       return eachOption;
     });
     onChangeCustomFields({ ...field, agreementOptions: newAgreementOptions });
+  }
+
+  function getPlaceholderVisible(value) {
+    return value === 'text';
   }
 
   function getOptionVisible(value) {
@@ -119,11 +129,17 @@ export function CustomField({
         </Col>
         <Col span={10}>
           <Checkbox
-              checked={required}
-              onChange={({ target: { checked } }) => onChangeCustomFields({ ...field, required: checked })}
+            checked={required}
+            onChange={({ target: { checked } }) => onChangeCustomFields({ ...field, required: checked })}
             >{__('필수 입력/선택 여부', 'iamport-block')}</Checkbox>
         </Col>
       </Row>
+      {
+        placeholderVisible &&
+        <Item label={__('입력 힌트', 'iamport-block')}>
+          <Input size="large" value={placeholder} onChange={({ target: { value } }) => onChangeCustomFields({ ...field, placeholder: value })} />
+        </Item>
+      }
       {
         optionVisible &&
         <div>

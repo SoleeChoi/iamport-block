@@ -70,6 +70,7 @@ export const DEFAULT_PG_MIDS = {
 export const DEFAULT_CUSTOM_FIELD = {
   label: '',
   type: 'text',
+  placeholder: '',
   options: [''],
   agreementOptions: DEFAULT_AGREEMENT_OPTIONS,
   required: false,

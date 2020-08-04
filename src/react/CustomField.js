@@ -8,7 +8,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 function CustomField({ field, getFieldDecorator, onChangeAddress }) {
-  const { label, type, options, agreementOptions, required } = field;
+  const { label, type, placeholder, options, agreementOptions, required } = field;
   const agreementLength = agreementOptions.length;
 
   switch(type) {
@@ -140,7 +140,7 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
           {getFieldDecorator(label, {
             rules: [{ required, message: __('필수 입력입니다', 'iamport-block') }],
           })(
-            <Input size="large" />,
+            <Input size="large" placeholder={placeholder} />,
           )}
         </Item>
       );
