@@ -2,7 +2,7 @@ import { Form, Input, Select, Icon } from 'antd';
 
 import PaymentAmount from './PaymentAmount';
 
-import { PAY_METHODS_PAYMENT } from '../constants';
+import { PAY_METHODS_FOR_PAYMENT } from '../constants';
 
 const { __ } = wp.i18n;
 const { Item } = Form;
@@ -17,7 +17,7 @@ function BasicFields({ show, getFieldDecorator, attributes }) {
         {getFieldDecorator('pay_method')(
           <Select size="large" suffixIcon={<Icon type="caret-down" />}>
             {payMethods.map(method =>
-              <Option value={method}>{PAY_METHODS_PAYMENT[method]}</Option>  
+              <Option value={method}>{PAY_METHODS_FOR_PAYMENT[method]}</Option>  
             )}
           </Select>,
         )}

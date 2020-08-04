@@ -2,14 +2,14 @@
 
 if ( !class_exists('IamportBlock') ) {
 	require_once(dirname(__FILE__).'/IamportBlockApi.php');
-	require_once(dirname(__FILE__).'/IamportBlockOrder.php');
+  require_once(dirname(__FILE__).'/IamportBlockOrder.php');
 	require_once(dirname(__FILE__).'/IamportBlockPaymentInfo.php');
 
 	class IamportBlock {
 
 		private $user_code;
 		private $api_key;
-		private $api_secret;
+    private $api_secret;
 		private $payment_info;
 		private $callback;
 
@@ -124,8 +124,10 @@ if ( !class_exists('IamportBlock') ) {
 			$order_id = wp_insert_post( $order_data );
 
 			//TODO : model setter 활용하기
-			$order_uid = $this->get_order_uid();
-			add_post_meta( $order_id, 'order_uid', $order_uid, true);
+      $order_uid = $this->get_order_uid();
+      $customer_uid = $this->get_customer_uid();
+      add_post_meta( $order_id, 'order_uid', $order_uid, true);
+      add_post_meta( $order_id, 'customer_uid', $customer_uid, true);
 			add_post_meta( $order_id, 'pay_method', $pay_method, true);
 			add_post_meta( $order_id, 'buyer_name', $buyer_name, true);
 			add_post_meta( $order_id, 'buyer_email', $buyer_email, true);
@@ -148,9 +150,10 @@ if ( !class_exists('IamportBlock') ) {
 			}
 
 			$response = array(
-        'order_id'=>$order_id,
-        'order_uid'=>$order_uid,
-        'thankyou_url'=>$thankyou_url,
+        'order_id'      => $order_id,
+        'order_uid'     => $order_uid,
+        'customer_uid'  => $customer_uid,
+        'thankyou_url'  => $thankyou_url,
       );
 
 			wp_send_json($response);
@@ -158,7 +161,11 @@ if ( !class_exists('IamportBlock') ) {
 
 		private function get_order_uid() {
 			return uniqid(date('mdis_'));
-		}
+    }
+    
+    private function get_customer_uid() {
+      return uniqid(date('cuid_'));
+    }
 
 		private function create_iamport_post_type() {
 			register_post_type( 'iamport_block',

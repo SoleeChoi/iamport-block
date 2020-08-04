@@ -26,7 +26,7 @@ function App({ form, type, attributes }) {
     customFields,
   } = attributes;
 
-  const defaultFieldType = customFields.length === 0 ? 'basic' : 'custom';
+  const defaultFieldType = customFields && customFields.length === 0 ? 'basic' : 'custom';
   const customLabels = getCustomLabels(customFields);
   const [isOpen, setIsOpen] = useState(false);
   const [fieldType, setFieldType] = useState(defaultFieldType);
@@ -73,7 +73,7 @@ function App({ form, type, attributes }) {
   function onClickPayment() {
     validateFields((error, values) => {
       if (!error) {
-        const paymentData = getPaymentData(values, attributes);
+        const paymentData = getPaymentData(values, attributes, type);
         const orderData = getOrderData(paymentData);
 
         jQuery.ajax({
@@ -82,7 +82,7 @@ function App({ form, type, attributes }) {
           contentType: false,
           processData: false,
           data: orderData,
-        }).done(({ order_uid, thankyou_url }) => {
+        }).done(({ order_uid, thankyou_url, customer_uid }) => {
           setFieldType('custom');
           setIsOpen(false);
           setLoading(true);
@@ -92,6 +92,10 @@ function App({ form, type, attributes }) {
             merchant_uid: order_uid,
             m_redirect_url: thankyou_url,
           };
+          if (type === 'subscription') {
+            // 정기결제의 경우 customer_uid를 추가한다
+            data.customer_uid = customer_uid;
+          }
           IMP.request_pay(data, response => {
             setLoading(false);
             const { success, error_msg } = response;
