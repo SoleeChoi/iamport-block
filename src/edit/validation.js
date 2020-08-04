@@ -25,7 +25,7 @@ export function validateCustomFields(customFields) {
     isValid = isValid && !labelMessage;
 
     if (type === 'agreement') {
-      agreementOptions.forEach(({ label, link }) => {
+      agreementOptions.forEach(({ label, value, type }) => {
         let labelMessage = '';
         if (!label) {
           // 라벨 값이 입력됐는지 검사한다
@@ -37,18 +37,18 @@ export function validateCustomFields(customFields) {
             labelMessage = __('약관이 중복됩니다', 'iamport-block');
           }
         }
-        let linkMessage = '';
-        if (!link) {
+        let valueMessage = '';
+        if (!value) {
           // 링크 값이 입력됐는지 검사한다
-          linkMessage = __('필수 입력입니다', 'iamport-block');
-        } else if (!patternForLink.test(link)) {
+          valueMessage = __('필수 입력입니다', 'iamport-block');
+        } else if (type === 'link' && !patternForLink.test(value)) {
           // 링크 값이 유효한지 검사한다
-          linkMessage = __('링크가 유효하지 않습니다', 'iamport-block');
+          valueMessage = __('링크가 유효하지 않습니다', 'iamport-block');
         }
-        agreementOptionsErrors.push({ label: labelMessage, link: linkMessage });
+        agreementOptionsErrors.push({ label: labelMessage, value: valueMessage });
 
         // 라벨이나 링크 둘 다 에러가 없는 경우
-        isValid = isValid && !labelMessage && !linkMessage;
+        isValid = isValid && !labelMessage && !valueMessage;
       });
     }
     if (type === 'radio' || type === 'checkbox' || type === 'dropdown') {

@@ -37,7 +37,7 @@ export const BASIC_KEYS = [
 ];
 
 export const DEFAULT_AMOUNT_OPTIONS = [{ label: '', value: 1000, taxFreeAmount: 0 }];
-export const DEFAULT_AGREEMENT_OPTIONS = [{ label: '', link: '' }];
+export const DEFAULT_AGREEMENT_OPTIONS = [{ label: '', value: '', type: 'link' }];
 
 // 일반결제용 PG사
 export const PGS_FOR_SAMSUNG = ['html5_inicis', 'kcp'];

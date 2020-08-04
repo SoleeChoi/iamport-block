@@ -20,6 +20,18 @@ export function CustomField({
   const [optionVisible, setOptionVisible] = useState(getOptionVisible(type));
   const [agreementVisible, setAgreementVisible] = useState(getAgreementVisible(type));
 
+  const AgreementTypeSelector = ({ optionIndex, value }) =>
+    <Select
+      size="large"
+      style={{ width: '100px' }}
+      suffixIcon={<Icon type="caret-down" />}
+      value={value}
+      onChange={value => onChangeAgreementOptions(value, optionIndex, 'type')}
+    >
+      <Option key="link">링크</Option>
+      <Option key="content">전문</Option>
+    </Select>
+
   useEffect(() => {
     setOptionVisible(getOptionVisible(type));
     setAgreementVisible(getAgreementVisible(type))
@@ -155,14 +167,14 @@ export function CustomField({
         agreementVisible &&
         <div>
           <Row></Row>
-          {agreementOptions.map(({ label, link }, optionIndex) => {
+          {agreementOptions.map(({ label, value, type }, optionIndex) => {
             const agreementError = errorField && errorField.agreementOptions[optionIndex];
             let labelHelp = '';
-            let linkHelp = '';
+            let valueHelp = '';
             if (agreementError) {
-              const { label, link } = agreementError;
+              const { label, value } = agreementError;
               labelHelp = label;
-              linkHelp = link;
+              valueHelp = value;
             }
             return (
               <div>
@@ -173,7 +185,7 @@ export function CustomField({
                       <div class="iamport-label-container">{__('약관 라벨', 'iamport-block')}</div>
                     </Col>
                     <Col span={17}>
-                      <div class="iamport-label-container">{__('약관 링크', 'iamport-block')}</div>
+                      <div class="iamport-label-container">{__('약관 내용', 'iamport-block')}</div>
                     </Col>
                   </Row>
                 }
@@ -193,14 +205,15 @@ export function CustomField({
                   </Col>
                   <Col span={14}>
                     <Item
-                      validateStatus={linkHelp && 'error'}
-                      help={linkHelp}
+                      validateStatus={valueHelp && 'error'}
+                      help={valueHelp}
                     >
                       <Input
                         size="large"
                         placeholder={__('예) https://admin.iamport.kr/pages/terms', 'iamport-block')}
-                        value={link}
-                        onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'link')}
+                        value={value}
+                        addonBefore={<AgreementTypeSelector optionIndex={optionIndex} value={type} />}
+                        onChange={({ target : { value } }) => onChangeAgreementOptions(value, optionIndex, 'value')}
                       />
                     </Item>
                   </Col>

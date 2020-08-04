@@ -168,8 +168,8 @@ function getCustomValue(values, { label, type, agreementOptions }) {
     case 'checkbox':
       return value.join(', ');
     case 'agreement': {
-      const agreedLabels = agreementOptions.map(({ label }) => {
-        if (values[label]) {
+      const agreedLabels = agreementOptions.map(option => {
+        if (values[label][option.label]) {
           return label;
         }
       });

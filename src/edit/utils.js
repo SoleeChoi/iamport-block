@@ -118,7 +118,7 @@ export function getDefaultErrorFields(customFields) {
     const errorField = { label: '' };
     if (type === 'agreement') {
       const lengthOfAgreementOptions = agreementOptions.length;
-      errorField.agreementOptions = Array(lengthOfAgreementOptions).fill({ label: '', link: '' });
+      errorField.agreementOptions = Array(lengthOfAgreementOptions).fill({ label: '', value: '' });
     }
     if (type === 'radio' || type === 'checkbox' || type === 'dropdown') {
       const lengthOfOptions = options.length;
