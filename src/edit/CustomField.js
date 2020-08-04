@@ -137,7 +137,11 @@ export function CustomField({
       {
         placeholderVisible &&
         <Item label={__('입력 힌트', 'iamport-block')}>
-          <Input size="large" value={placeholder} onChange={({ target: { value } }) => onChangeCustomFields({ ...field, placeholder: value })} />
+          <Input
+            size="large"
+            value={placeholder}
+            onChange={({ target: { value } }) => onChangeCustomFields({ ...field, placeholder: value })}  
+          />
         </Item>
       }
       {

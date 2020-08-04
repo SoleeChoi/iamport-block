@@ -24,6 +24,7 @@ function App({ form, type, attributes }) {
     modalClassName,
     title,
     description,
+    amountType,
     customFields,
   } = attributes;
 
@@ -76,6 +77,7 @@ function App({ form, type, attributes }) {
       if (!error) {
         const paymentData = getPaymentData(values, attributes, type);
         const orderData = getOrderData(paymentData);
+        console.log(paymentData, orderData);
 
         jQuery.ajax({
           method: 'POST',
@@ -86,8 +88,14 @@ function App({ form, type, attributes }) {
         }).done(({ order_uid, thankyou_url, customer_uid }) => {
           setFieldType('custom');
           setIsOpen(false);
-          setLoading(true);
 
+          // 일반결제의 결제금액이 0원인 경우, 결제창 호출하지 않고 종료
+          if (amountType === 'free') {
+            location.href = thankyou_url;
+            return true;
+          }
+
+          setLoading(true);
           const data = {
             ...paymentData,
             merchant_uid: order_uid,

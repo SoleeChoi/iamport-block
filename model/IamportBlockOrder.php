@@ -85,7 +85,11 @@ if ( !class_exists('IamportBlockOrder') ) {
 				return 'Paypal';
 			}
 
-			return $method;
+      if ($method) {
+        return $method;
+      }
+      // 무료형 결제의 경우, 결제수단이 지정되지 않음
+      return '-';
 		}
 
 		public function get_buyer_name() {

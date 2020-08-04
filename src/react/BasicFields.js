@@ -9,23 +9,28 @@ const { Item } = Form;
 const { Option } = Select;
 
 function BasicFields({ show, getFieldDecorator, attributes }) {
-  const { payMethods } = attributes;
+  const { amountType, payMethods } = attributes;
 
   return (
     <div style={{ display: show ? 'block' : 'none' }}>
-      <Item label={__('결제수단','iamport-block')}>
-        {getFieldDecorator('pay_method')(
-          <Select size="large" suffixIcon={<Icon type="caret-down" />}>
-            {payMethods.map(method =>
-              <Option value={method}>{PAY_METHODS_FOR_PAYMENT[method]}</Option>  
+      {
+        amountType !== 'free' &&
+        <div>
+          <Item label={__('결제수단','iamport-block')}>
+            {getFieldDecorator('pay_method')(
+              <Select size="large" suffixIcon={<Icon type="caret-down" />}>
+                {payMethods.map(method =>
+                  <Option value={method}>{PAY_METHODS_FOR_PAYMENT[method]}</Option>  
+                )}
+              </Select>,
             )}
-          </Select>,
-        )}
-      </Item>
-      <PaymentAmount
-        getFieldDecorator={getFieldDecorator}
-        attributes={attributes}
-      />
+          </Item>
+          <PaymentAmount
+            getFieldDecorator={getFieldDecorator}
+            attributes={attributes}
+          />
+        </div>
+      }
       <Item label={__('이름','iamport-block')}>
         {getFieldDecorator('buyer_name', {
           rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],

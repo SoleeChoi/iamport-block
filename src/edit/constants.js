@@ -4,6 +4,7 @@ export const AMOUNT_TYPES = {
   variable: __('가변형', 'iamport-block'),
   fixed: __('고정형', 'iamport-block'),
   selection: __('선택형', 'iamport-block'),
+  free: __('무료형', 'iamport-block'),
 };
 
 export const OPTION_TYPES = {

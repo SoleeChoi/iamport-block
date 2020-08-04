@@ -37,23 +37,27 @@ export function PaymentAmount({
             )}
           </Item>
         </Col>
-        <Col span={7}>
-          <Item label={__('화폐 단위','iamport-block')}>
-            {getFieldDecorator('currency')(
-              <Select
-                size="large"
-                suffixIcon={<Icon type="caret-down" />}
-              >
-                {Object.keys(CURRENCY_OPTIONS).map(eachType =>
-                  <Option value={eachType}>{CURRENCY_OPTIONS[eachType]}</Option>
-                )}
-              </Select>,
-            )}
-          </Item>
-        </Col>
+        {
+          amountType !== 'free' &&
+          <Col span={7}>
+            <Item label={__('화폐 단위','iamport-block')}>
+              {getFieldDecorator('currency')(
+                <Select
+                  size="large"
+                  suffixIcon={<Icon type="caret-down" />}
+                >
+                  {Object.keys(CURRENCY_OPTIONS).map(eachType =>
+                    <Option value={eachType}>{CURRENCY_OPTIONS[eachType]}</Option>
+                  )}
+                </Select>,
+              )}
+            </Item>
+          </Col>
+        }
       </Row>
       {
         amountType !== 'variable' &&
+        amountType !== 'free' &&
         amountOptions &&
         amountOptions.map((_, index) => 
           <div>
