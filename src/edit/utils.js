@@ -2,30 +2,40 @@ import {
   PGS,
   PGS_FOR_SAMSUNG,
   PGS_FOR_PHONE,
+  PGS_FOR_SUBSCRIPTION_BY_CARD,
+  PGS_FOR_SUBSCRIPTION_BY_PHONE,
   BASIC_KEYS,
   DEFAULT_AMOUNT_OPTIONS,
   DEFAULT_PGS,
   DEFAULT_PG_MIDS,
   DEFAULT_AGREEMENT_OPTIONS,
 } from './constants';
-import { PAY_METHODS } from '../constants';
+import { PAY_METHODS_FOR_PAYMENT, PAY_METHODS_FOR_SUBSCRIPTIONS } from '../constants';
 
 const { __ } = wp.i18n;
 
-export function getPgLists(payMethod) {
-  switch (payMethod) {
-    case 'kakaopay':
-      return ['kakaopay'];
-    case 'paypal':
-      return ['paypal'];
-    case 'samsung':
-      return PGS_FOR_SAMSUNG;
-    case 'phone':
-      return PGS_FOR_PHONE;
-    default: {
-      return PGS;
+export function getPgLists(payMethod, type) {
+  // 일반결제용 PG사
+  if (type === 'payment') {
+    switch (payMethod) {
+      case 'kakaopay':
+        return ['kakaopay'];
+      case 'paypal':
+        return ['paypal'];
+      case 'samsung':
+        return PGS_FOR_SAMSUNG;
+      case 'phone':
+        return PGS_FOR_PHONE;
+      default: {
+        return PGS;
+      }
     }
   }
+  // 정기결제용 PG사
+  if (payMethod === 'card') {
+    return PGS_FOR_SUBSCRIPTION_BY_CARD;
+  }
+  return PGS_FOR_SUBSCRIPTION_BY_PHONE;
 }
 
 export function getPgLabel(pg) {
@@ -54,7 +64,14 @@ export function getPgLabel(pg) {
   }
 }
 
-export function getDefaultAttributes(attributes) {
+export function getPayMethods(type = 'payment') {
+  if (type === 'payment') {
+    return PAY_METHODS_FOR_PAYMENT;
+  }
+  return PAY_METHODS_FOR_SUBSCRIPTIONS;
+}
+
+export function getDefaultAttributes(type, attributes) {
   const {
     buttonName,
     buttonClassName,
@@ -84,7 +101,7 @@ export function getDefaultAttributes(attributes) {
     amountType: amountType || 'variable',
     amountOptions: amountOptions || DEFAULT_AMOUNT_OPTIONS,
     currency: currency || 'KRW',
-    payMethods: payMethods || Object.keys(PAY_METHODS),
+    payMethods: payMethods || Object.keys(getPayMethods(type)),
     pgs: pgs || DEFAULT_PGS, 
     pgMids: pgMids || DEFAULT_PG_MIDS, 
     cardQuota: cardQuota || 0,

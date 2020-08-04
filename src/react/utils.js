@@ -168,7 +168,7 @@ function getCustomValue(values, { label, type, agreementOptions }) {
 }
 
 // 유저가 입력한 값을 기반으로 결제 데이터 계산
-export function getPaymentData(values, attributes) {
+export function getPaymentData(values, attributes, type) {
   const { pay_method, amount, buyer_name, buyer_tel, buyer_email } = values;
   const { bizNum, name, currency, redirectAfter, cardQuota, vbankDue, digital, customFields } = attributes;
   const pg = getPg(attributes, pay_method);
@@ -185,7 +185,8 @@ export function getPaymentData(values, attributes) {
     currency,
     redirectAfter,
     tax_free: amountInfo.taxFreeAmount,
-    amount: amountInfo.amount,
+    // 정기결제의 경우 결제 금액을 0으로 설정한다
+    amount: type === 'payment' ? amountInfo.amount : 0,
   };
 
   if (payMethod === 'card') {
