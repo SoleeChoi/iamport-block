@@ -1,5 +1,18 @@
 import moment from 'moment';
 
+// css string을 object로 변환
+export function getButtonStyle(buttonStyle) {
+  const buttonStyleObj = {};
+  buttonStyle.split(';').forEach(eachStyle => {
+    const[key, value] = eachStyle.split(':');
+    if (key) {
+      const keyToCamelCase = key.trim().replace(/([-][a-z])/ig, $1 => $1.toUpperCase().replace('-', ''));
+      buttonStyleObj[keyToCamelCase] = value.trim();
+    }
+  });
+  return buttonStyleObj;
+}
+
 // 모달 열었을때 셋팅되어있는 기본 값 계산
 export function getDefaultFieldValues(attributes) {
   const { payMethods, amountType, amountOptions, customFields } = attributes;

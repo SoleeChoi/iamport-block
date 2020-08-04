@@ -6,7 +6,7 @@ import BasicFields from './BasicFields';
 import CustomField from './CustomField';
 import ButtonContainer from './ButtonContainer';
 
-import { getDefaultFieldValues, getCustomLabels, getPaymentData, getOrderData } from './utils';
+import { getButtonStyle, getDefaultFieldValues, getCustomLabels, getPaymentData, getOrderData } from './utils';
 import { showLoginRequiredModal, showPaymentFailedModal } from '../utils';
 
 const { __ } = wp.i18n;
@@ -19,6 +19,7 @@ function App({ form, type, attributes }) {
     loginUrl,
     isLoginRequired,
     buttonName,
+    buttonStyle,
     buttonClassName,
     modalClassName,
     title,
@@ -117,6 +118,7 @@ function App({ form, type, attributes }) {
       <Button
         size="large"
         type="primary"
+        style={getButtonStyle(buttonStyle)}
         className={buttonClassName}
         onClick={openModal}
       >{buttonName}</Button>

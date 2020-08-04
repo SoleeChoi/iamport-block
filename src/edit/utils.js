@@ -75,6 +75,7 @@ export function getDefaultAttributes(type, attributes) {
   const {
     buttonName,
     buttonClassName,
+    buttonStyle,
     modalClassName,
     title,
     description,
@@ -94,6 +95,7 @@ export function getDefaultAttributes(type, attributes) {
   return {
     buttonName: buttonName || __('결제하기', 'iamport-block'),
     buttonClassName,
+    buttonStyle,
     modalClassName,
     title: title || __('참가권 결제', 'iamport-block'),
     description,
