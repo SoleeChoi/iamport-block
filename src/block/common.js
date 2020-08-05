@@ -45,6 +45,10 @@ export const COMMON_ATTRIBUTES = {
     type: 'array',
     selector: 'input',
   },
+  buyerOptions: { // 구매자 정보
+    type: 'object',
+    selector: 'input',
+  },
   currency: { // 화폐 단위
     type: 'string',
     selector: 'input',

@@ -6,7 +6,7 @@ const { __ } = wp.i18n;
 const { Item } = Form;
 const { Search } = Input;
 
-export function AddressField({ label, required, getFieldDecorator, onChange }) {
+export function AddressField({ label, name, required, getFieldDecorator, onChange }) {
 
   // 우편번호 찾기 찾기 화면을 넣을 element
   const wrapRef = useRef(null);
@@ -59,15 +59,15 @@ export function AddressField({ label, required, getFieldDecorator, onChange }) {
           }
           // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
           if (extraAddr !== '') {
-            extraAddr = ` (${extraAddr})`;
+            extraAddr += ` (${extraAddr})`;
           }
         }
 
         onChange({
-          [label]: {
+          [name]: {
             address: addr,
             zipcode: zonecode,
-            extraAddress: extraAddr,
+            extraAddress: extraAddr.trim(),
           },
         });
         detailAddressRef.current.input.focus();
@@ -99,12 +99,12 @@ export function AddressField({ label, required, getFieldDecorator, onChange }) {
   return (
     <div className="iamport-address-container">
       <Item label={label}>
-        {getFieldDecorator(`${label}.zipcode`, {
+        {getFieldDecorator(`${name}.zipcode`, {
           rules: [{ required, message: __('필수 입력입니다', 'iamport-block') }],
         })(
           <Search
             size="large"
-            key={`${label}.zipcode`}
+            key={`${name}.zipcode`}
             placeholder={__('우편번호', 'iamport-block')}
             enterButton={__('우편번호 찾기', 'iamport-block')}
             onSearch={searchZipcode}
@@ -112,7 +112,7 @@ export function AddressField({ label, required, getFieldDecorator, onChange }) {
         )}
       </Item>
       <Item>
-        {getFieldDecorator(`${label}.address`, {
+        {getFieldDecorator(`${name}.address`, {
           rules: [{ required, message: __('필수 입력입니다', 'iamport-block') }],
         })(
           <Input
@@ -123,7 +123,7 @@ export function AddressField({ label, required, getFieldDecorator, onChange }) {
         )}
       </Item>
       <Item>
-        {getFieldDecorator(`${label}.extraAddress`)(
+        {getFieldDecorator(`${name}.extraAddress`)(
           <Input
             size="large"
             placeholder={__('참고항목', 'iamport-block')}  
@@ -131,7 +131,7 @@ export function AddressField({ label, required, getFieldDecorator, onChange }) {
         )}
       </Item>
       <Item>
-        {getFieldDecorator(`${label}.detailAddress`)(
+        {getFieldDecorator(`${name}.detailAddress`)(
           <Input
             size="large"
             ref={detailAddressRef}

@@ -25,6 +25,14 @@
       width: 100%;
     }
 
+    .ant-form-item-label > label {
+      font-weight: normal;
+    }
+
+    .ant-checkbox input[type="checkbox"]:disabled {
+      display: none;
+    }
+
     .ant-col.ant-col-3 {
       text-align: right;
     }
@@ -43,6 +51,7 @@
       // 기본 필드, 결제 금액 필드, 커스텀 필드 타이틀
       margin-bottom: 0.5rem;
       margin-top: 2rem;
+      color: #333;
     }
 
     h4 {
@@ -76,7 +85,6 @@
       vertical-align: middle;
       position: relative;
       min-height: 1px;
-      font-weight: bold;
 
       // 필수입력 여부
       .ant-checkbox-wrapper {

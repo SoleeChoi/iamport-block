@@ -1,6 +1,7 @@
 import { Form, Input, Select, Icon } from 'antd';
 
 import PaymentAmount from './PaymentAmount';
+import AddressField from './AddressField';
 
 import { PAY_METHODS_FOR_PAYMENT } from '../constants';
 
@@ -8,8 +9,9 @@ const { __ } = wp.i18n;
 const { Item } = Form;
 const { Option } = Select;
 
-function BasicFields({ show, getFieldDecorator, attributes }) {
-  const { amountType, payMethods } = attributes;
+function BasicFields({ show, getFieldDecorator, attributes, onChangeAddress }) {
+  const { amountType, payMethods, buyerOptions } = attributes;
+  const { email, name, phone, address } = buyerOptions;
 
   return (
     <div style={{ display: show ? 'block' : 'none' }}>
@@ -31,17 +33,17 @@ function BasicFields({ show, getFieldDecorator, attributes }) {
           />
         </div>
       }
-      <Item label={__('이름','iamport-block')}>
+      <Item label={name.label}>
         {getFieldDecorator('buyer_name', {
           rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],
         })(
           <Input
             size="large"
-            placeholder={__('이름','iamport-block')}
+            placeholder={name.placeholder}
           />,
         )}
       </Item>
-      <Item label={__('이메일','iamport-block')}>
+      <Item label={email.label}>
         {getFieldDecorator('buyer_email', {
           rules: [{
             required: true, message: __('필수입력입니다', 'iamport-block'),
@@ -50,21 +52,31 @@ function BasicFields({ show, getFieldDecorator, attributes }) {
         })(
           <Input
             size="large"
-            placeholder={__('이메일','iamport-block')}
+            placeholder={email.placeholder}
           />,
         )}
       </Item>
-      <Item label={__('전화번호','iamport-block')}>
+      <Item label={phone.label}>
         {getFieldDecorator('buyer_tel', {
           rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],
         })(
           <Input
             size="large"
             type="number"
-            placeholder={__('전화번호','iamport-block')}
+            placeholder={phone.placeholder}
           />,
         )}
       </Item>
+      {
+        address.checked &&
+        <AddressField
+          label={address.label}
+          name="buyer_addr"
+          required={true}
+          getFieldDecorator={getFieldDecorator}
+          onChange={onChangeAddress}  
+        />
+      }
     </div>
   );
 }

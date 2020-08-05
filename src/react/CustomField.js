@@ -112,6 +112,7 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
       return (
         <AddressField
           label={label}
+          name={label}
           required={required}
           getFieldDecorator={getFieldDecorator}
           onChange={onChangeAddress}  

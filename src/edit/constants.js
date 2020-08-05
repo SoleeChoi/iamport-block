@@ -30,6 +30,7 @@ export const BASIC_KEYS = [
   'pgMids',
   'amountType',
   'amountOptions',
+  'buyerOptions',
   'currency',
   'cardQuota',
   'vbankDue',
@@ -39,6 +40,28 @@ export const BASIC_KEYS = [
 
 export const DEFAULT_AMOUNT_OPTIONS = [{ label: '', value: 1000, taxFreeAmount: 0 }];
 export const DEFAULT_AGREEMENT_OPTIONS = [{ label: '', value: '', type: 'link' }];
+export const DEFAULT_BUYER_OPTIONS = {
+  name: {
+    checked: true,
+    label: __('이름', 'iamport-block'),
+    placeholder: '',
+  },
+  email: {
+    checked: true,
+    label: __('이메일', 'iamport-block'),
+    placeholder: '',
+  },
+  phone: {
+    checked: true,
+    label: __('전화번호', 'iamport-block'),
+    placeholder: '',
+  },
+  address: {
+    checked: false,
+    label: __('주소', 'iamport-block'),
+    placeholder: '',
+  },
+};
 
 // 일반결제용 PG사
 export const PGS_FOR_SAMSUNG = ['html5_inicis', 'kcp'];

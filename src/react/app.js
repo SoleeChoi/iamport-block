@@ -77,7 +77,6 @@ function App({ form, type, attributes }) {
       if (!error) {
         const paymentData = getPaymentData(values, attributes, type);
         const orderData = getOrderData(paymentData);
-        console.log(paymentData, orderData);
 
         jQuery.ajax({
           method: 'POST',
@@ -162,6 +161,7 @@ function App({ form, type, attributes }) {
               getFieldDecorator={getFieldDecorator}
               attributes={attributes} 
               show={fieldType === 'basic'}
+              onChangeAddress={addressObj => setFieldsValue(addressObj)}
             />
           </Form>
           <ButtonContainer
