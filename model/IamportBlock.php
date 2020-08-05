@@ -88,18 +88,19 @@ if ( !class_exists('IamportBlock') ) {
 		}
 
 		public function ajax_get_order_uid() {
-			$order_title 	= $_POST['order_title'];
-			$pay_method 	= $_POST['pay_method']; //카카오페이는 kakaopay로 일단 올라오고, 그 후 front에서 card로 변경되어야 함
-			$buyer_name 	= $_POST['buyer_name'];
-			$buyer_email 	= $_POST['buyer_email'];
-			$buyer_tel 		= $_POST['buyer_tel'];
-			$order_amount 	= $_POST['order_amount'];
+			$order_title 	    = $_POST['order_title'];
+			$pay_method 	    = $_POST['pay_method']; //카카오페이는 kakaopay로 일단 올라오고, 그 후 front에서 card로 변경되어야 함
+			$buyer_name 	    = $_POST['buyer_name'];
+			$buyer_email 	    = $_POST['buyer_email'];
+      $buyer_tel 		    = $_POST['buyer_tel'];
+      $shipping_addr	  = $_POST['shipping_addr'];
+			$order_amount 	  = $_POST['order_amount'];
 			$tax_free_amount 	= $_POST['tax_free_amount'];
-			$currency 	    = $_POST['currency'];
-			$amount_label 	= $_POST['amount_label'];
-			$redirect_after	= $_POST['redirect_after'];
-			$attached_files = $_FILES;
-			$extraFields	= $_POST['extra_fields'];
+			$currency 	      = $_POST['currency'];
+			$amount_label 	  = $_POST['amount_label'];
+			$redirect_after	  = $_POST['redirect_after'];
+			$attached_files   = $_FILES;
+			$extraFields	    = $_POST['extra_fields'];
 
 			foreach( $_FILES as $fileType => $fileValue ) {
 				/* ---------- NFC to NFD ---------- */
@@ -131,7 +132,8 @@ if ( !class_exists('IamportBlock') ) {
 			add_post_meta( $order_id, 'pay_method', $pay_method, true);
 			add_post_meta( $order_id, 'buyer_name', $buyer_name, true);
 			add_post_meta( $order_id, 'buyer_email', $buyer_email, true);
-			add_post_meta( $order_id, 'buyer_tel', $buyer_tel, true);
+      add_post_meta( $order_id, 'buyer_tel', $buyer_tel, true);
+      add_post_meta( $order_id, 'shipping_addr', $shipping_addr, true);
 			add_post_meta( $order_id, 'order_amount', $order_amount, true);
 			add_post_meta( $order_id, 'tax_free_amount', $tax_free_amount, true);
 			add_post_meta( $order_id, 'currency', $currency, true);
@@ -197,7 +199,7 @@ if ( !class_exists('IamportBlock') ) {
 			$columns['order_status'] 		= '주문상태';
 			$columns['order_paid_amount']	= '요청금액 (면세금액)<br>결제금액';
 			$columns['pay_method_date'] 	= '결제수단<br>결제시각';
-			$columns['buyer_info'] 			= '이름<br>이메일<br>전화번호';
+			$columns['buyer_info'] 			= '이름<br>이메일<br>전화번호<br>주소';
 			$columns['extra_fields'] 		= '부가정보';
 			$columns['attached_files'] 		= '첨부파일';
 
@@ -250,7 +252,8 @@ if ( !class_exists('IamportBlock') ) {
 				case 'buyer_info':
 					echo $iamport_order->get_buyer_name() . '<br>' .
 							 $iamport_order->get_buyer_email() . '<br>' .
-							 $iamport_order->get_buyer_tel();
+               $iamport_order->get_buyer_tel() . '<br>' .
+               $iamport_order->get_shipping_addr();
 					break;
 
 				case 'attached_files': {

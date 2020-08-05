@@ -149,26 +149,31 @@ function getVbankDue(payMethod, vbankDue) {
   return undefined;
 }
 
+function getFullAddress(value) {
+  // 전체 주소 값 계산
+  let fullAddress = '';
+  const { address, extraAddress, detailAddress, zipcode } = value;
+  if (address) {
+    fullAddress += `${address} `;
+  }
+  if (extraAddress) {
+    fullAddress += `${extraAddress} `;
+  }
+  if (detailAddress) {
+    fullAddress += `${detailAddress} `;
+  }
+  if (zipcode) {
+    fullAddress += zipcode;
+  }
+  return fullAddress;
+}
+
 function getCustomValue(values, { label, type, agreementOptions }) {
   const value = values[label];
   switch (type) {
     case 'address': {
       // 주소 입력 필드
-      let fullAddress = '';
-      const { address, extraAddress, detailAddress, zipcode } = value;
-      if (address) {
-        fullAddress += `${address} `;
-      }
-      if (extraAddress) {
-        fullAddress += `${extraAddress} `;
-      }
-      if (detailAddress) {
-        fullAddress += `${detailAddress} `;
-      }
-      if (zipcode) {
-        fullAddress += zipcode;
-      }
-      return fullAddress;
+      return getFullAddress(value);
     }
     case 'checkbox':
       return value.join(', ');
@@ -187,7 +192,7 @@ function getCustomValue(values, { label, type, agreementOptions }) {
 
 // 유저가 입력한 값을 기반으로 결제 데이터 계산
 export function getPaymentData(values, attributes, type) {
-  const { pay_method, amount, buyer_name, buyer_tel, buyer_email } = values;
+  const { pay_method, amount, buyer_name, buyer_tel, buyer_email, buyer_addr } = values;
   const { bizNum, name, currency, redirectAfter, cardQuota, vbankDue, digital, customFields } = attributes;
   const pg = getPg(attributes, pay_method);
   const payMethod = getPayMethod(pay_method);
@@ -222,6 +227,12 @@ export function getPaymentData(values, attributes, type) {
     paymentData.digital = digital;
   }
 
+  if (buyer_addr) {
+    // 구매자 주소 입력 필드
+    paymentData.buyer_addr = getFullAddress(buyer_addr);
+    paymentData.buyer_postcode = buyer_addr.zipcode;
+  }
+
   // 커스텀 입력 필드
   const custom_data = {};
   const file_data = {};
@@ -253,6 +264,7 @@ export function getOrderData(paymentData) {
     buyer_name,
     buyer_email,
     buyer_tel,
+    buyer_addr,
     custom_data,
     file_data,
     redirectAfter,
@@ -265,11 +277,14 @@ export function getOrderData(paymentData) {
   orderData.append('buyer_name', buyer_name);
   orderData.append('buyer_email', buyer_email);
   orderData.append('buyer_tel', buyer_tel);
+  if (pay_method) {
+    orderData.append('pay_method', pay_method);
+  }
   if (currency) {
     orderData.append('currency', currency || 'KRW');
   }
-  if (pay_method) {
-    orderData.append('pay_method', pay_method);
+  if (buyer_addr) {
+    orderData.append('shipping_addr', buyer_addr);
   }
   if (custom_data) {
     orderData.append('extra_fields', JSON.stringify(custom_data));

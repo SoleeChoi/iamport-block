@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Form, Button } from 'antd';
 
 import BasicFields from './BasicFields';
+import BuyerFields from './BuyerFields';
 import PaymentAmount from './PaymentAmount';
 import CustomFields from './CustomFields';
 
@@ -99,6 +100,10 @@ export function PaymentSetting({ form, attributes, type, className, setAttribute
           onChange={onChangeAmountType}
           onAdd={onAddAmountOptions}
           onDelete={onDeleteAmountOptions}
+        />
+        {/* 구매자 필드 */}
+        <BuyerFields
+          getFieldDecorator={getFieldDecorator}
         />
         {/* 커스텀 입력 필드 */}
         <CustomFields
