@@ -38,13 +38,22 @@
       // 각 숏코드 파싱
       $shortcode = new IamportShortcode($eachShortcode);
 
-      // 새 스트링: 앞 스트링 + 파싱된 숏코드 + 뒷 스트링
+      // TODO: 새 스트링: 앞 스트링 + 파싱된 숏코드 + 뒷 스트링
       $postContent =
         $frontString .
-        '<!-- wp:cgb/iamport-payment ' . $shortcode->convertToJsonString() . ' /-->' .
+        '</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:cgb/iamport-payment ' .
+        $shortcode->convertToJsonString() .
+        ' /-->
+
+<!-- wp:paragraph -->
+<p>' .
         $rearString;
     }
 
+    // var_dump($postContent);
     wp_update_post(
       array(
         'ID' => $postId,
