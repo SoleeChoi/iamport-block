@@ -9,30 +9,30 @@
 
 	/* ---------- 아임포트 설정에서 '저장하기' 버튼 눌렀을때 ---------- */
 	if ( isset($_POST['action']) && $_POST['action'] == "migrate_to_iamport_block") {
-    $post_id = $_POST['post_id'];
-    $post_content = get_post($post_id)->post_content;
+    $postId = $_POST['post_id'];
+    $postContent = get_post($postId)->post_content;
 
     $offset = 0;
-    $new_post_content = null;
+    $newPostContent = null;
 
     // 포스트에 존재하는 모든 숏코드 검색
     preg_match_all(
       '/\[iamport_payment_button(.*)\[\/iamport_payment_button\]/',
-      $post_content,
+      $postContent,
       $matches,
       PREG_OFFSET_CAPTURE,
       $offset
     );
     foreach($matches[0] as $match) {
-      $each_shortcode = $match[0];
+      $eachShortcode = $match[0];
 
       // 각 숏코드 파싱
-      $shortcode = new IamportShortcode($each_shortcode);
-      $new_post_content = $post_content . '<!-- wp:cgb/iamport-payment ' . $shortcode->convertToJsonString() . ' /-->';
+      $shortcode = new IamportShortcode($eachShortcode);
+      $newPostContent = $postContent . '<!-- wp:cgb/iamport-payment ' . $shortcode->convertToJsonString() . ' /-->';
     }
 		$newPost = array(
-      'ID' => $post_id,
-      'post_content' => $new_post_content,
+      'ID' => $postId,
+      'post_content' => $newPostContent,
     );
     wp_update_post($newPost, true);
 	}
