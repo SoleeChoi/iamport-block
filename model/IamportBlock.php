@@ -36,12 +36,21 @@ if ( !class_exists('IamportBlock') ) {
 				'administrator',
 				'iamport-block-setting',
 				function() { echo require_once(dirname(__FILE__).'/../view/admin/IamportBlockSetting.php'); }
+      );
+      
+      add_submenu_page(
+				'edit.php?post_type=iamport_block',
+				'아임포트 마이그레이션',
+				'아임포트 마이그레이션',
+				'administrator',
+				'iamport-block-migration',
+				function() { echo require_once(dirname(__FILE__).'/../view/admin/IamportBlockMigration.php'); }
 			);
 
 			add_submenu_page(
-				'edit.php?post_type=iamport_payment',
-				'아임포트 블록 메뉴얼',
-				'아임포트 블록 메뉴얼',
+				'edit.php?post_type=iamport_block',
+				'아임포트 블록 매뉴얼',
+				'아임포트 블록 매뉴얼',
 				'administrator',
 				'iamport-block-manual',
 				function() { echo require_once(dirname(__FILE__).'/../view/admin/IamportBlockManual.php'); }

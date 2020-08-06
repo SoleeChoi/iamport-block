@@ -1,0 +1,24 @@
+.iamport-block-container.migration p {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.iamport-block-container.migration table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.iamport-block-container.migration table thead th,
+.iamport-block-container.migration table tbody td {
+  text-align: center;
+  padding: 0.5rem;
+  border: 1px solid #888;
+}
+
+.iamport-block-container.migration table thead th {
+  background-color: #ddd;
+}
+.iamport-block-container.migration table tbody td {
+  background-color: #fff;
+}
+.iamport-block-container.migration table tbody td textarea {
+  width: 100%;
+}
