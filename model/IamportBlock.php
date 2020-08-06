@@ -79,7 +79,7 @@ if ( !class_exists('IamportBlock') ) {
 
       $configuration 					        = new stdClass();
       $configuration->$user_code      = $this->user_code;
-			$configuration->login_required 	= $this->login_required === 'Y';
+			$configuration->login_required 	= $this->login_required == 'Y';
       $configuration->biz_num 			  = $this->biz_num;
 
 			$this->payment_info = new IamportBlockPaymentInfo($this->user_code, $this->api_key, $this->api_secret, $configuration);
