@@ -12,29 +12,46 @@
     $postId = $_POST['post_id'];
     $postContent = get_post($postId)->post_content;
 
-    $offset = 0;
-    $newPostContent = null;
+    while(1) {
+      // 숏코드 찾기
+      preg_match(
+        '/\[iamport_payment_button(.*)\[\/iamport_payment_button\]/',
+        $postContent,
+        $matches,
+        PREG_OFFSET_CAPTURE
+      );
 
-    // 포스트에 존재하는 모든 숏코드 검색
-    preg_match_all(
-      '/\[iamport_payment_button(.*)\[\/iamport_payment_button\]/',
-      $postContent,
-      $matches,
-      PREG_OFFSET_CAPTURE,
-      $offset
-    );
-    foreach($matches[0] as $match) {
-      $eachShortcode = $match[0];
+      if (count($matches) == 0) {
+        break;
+      }
+
+      // 찾아진 숏코드
+      $eachShortcode = $matches[0][0];
+      // 숏코드의 위치
+      $startAt = $matches[0][1];
+
+      // 앞 스트링: 처음 ~ 숏코드 이전까지의 스트링
+      $frontString = substr($postContent, 0, $startAt);
+      // 뒷 스트링: 숏코드 이후 ~ 끝까지의 스트링
+      $rearString = substr($postContent, $startAt + strlen($eachShortcode));
 
       // 각 숏코드 파싱
       $shortcode = new IamportShortcode($eachShortcode);
-      $newPostContent = $postContent . '<!-- wp:cgb/iamport-payment ' . $shortcode->convertToJsonString() . ' /-->';
+
+      // 새 스트링: 앞 스트링 + 파싱된 숏코드 + 뒷 스트링
+      $postContent =
+        $frontString .
+        '<!-- wp:cgb/iamport-payment ' . $shortcode->convertToJsonString() . ' /-->' .
+        $rearString;
     }
-		$newPost = array(
-      'ID' => $postId,
-      'post_content' => $newPostContent,
+
+    wp_update_post(
+      array(
+        'ID' => $postId,
+        'post_content' => $postContent,
+      ),
+      true
     );
-    wp_update_post($newPost, true);
 	}
 
 	ob_start();
