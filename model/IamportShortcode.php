@@ -139,12 +139,14 @@ if ( !class_exists('IamportShortcode') ) {
 					preg_match_all('/\((.*)\)/', $amount, $amountLabel); // 괄호 안에 괄호가 들어가 있을 수 있어 greedy match
 					preg_match_all('/([0-9\.]+)/', $amount, $amountValue); // float value 허용
 
-					$label = null;
+          $label = null;
+          $value = floatval($amountValue[0][0]);
 					if (!empty($amountLabel) && $amountLabel[1]) {
-						$label = $amountLabel[1][0];
+            // 라벨이 있는 경우, 결제 금액 (라벨)과 같이 만든다
+						$label = $value . ' (' . trim($amountLabel[1][0]) . ')';
 					} else {
             // 라벨이 없는 경우, 결제 금액과 같은 값으로 설정한다
-            $label = $amountValue[0][0];
+            $label = $value;
           }
 
 					$taxFree = 0;
@@ -153,8 +155,8 @@ if ( !class_exists('IamportShortcode') ) {
           }
 
 					$amountOptions[] = array(
-						'label'         => trim($label),
-						'value'         => floatval($amountValue[0][0]),
+						'label'         => $label,
+						'value'         => $value,
             'taxFreeAmount' => $taxFree,
 					);
 				}
