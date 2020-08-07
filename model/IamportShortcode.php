@@ -50,8 +50,6 @@ if ( !class_exists('IamportShortcode') ) {
 				}
       }
 
-      // var_dump($customFields);
-
 			return array(
 				'buttonName' 		=> $buttonName,
 				'customFields' 	=> $customFields
@@ -274,14 +272,15 @@ if ( !class_exists('IamportShortcode') ) {
         } else {
           // 정의 된 경우
           $splittedPgMid = explode('.', $pgMid, 2);
-          $pgs[$payMethod] = $splittedPgMid[0];
 
           $mid = null;
           if (count($splittedPgMid) > 1) {
             // PG사.PG상점아이디
             $mid = $splittedPgMid[1];  
+            $pgs[$payMethod] = $splittedPgMid[0];
           } else {
             $mid = $pgMid;
+            $pgs[$payMethod] = $this->getDefaultPg($payMethod);
           }
           $pgMids[$payMethod] = $mid;
         }
@@ -303,13 +302,7 @@ if ( !class_exists('IamportShortcode') ) {
       $mid = null;
       if (empty($pgSetting)) {
         // PG사가 정의되지 않은 경우
-        if ($payMethod == 'kakaopay' || $payMethod == 'paypal') {
-          $pg = $payMethod;
-        } else if ($payMethod == 'phone') {
-          $pg = 'danal';
-        } else {
-          $pg = 'html5_inicis';
-        }
+        $pg = $this->getDefaultPg($payMethod);
       } else {
         // PG사가 정의 된 경우
         $pg = $pgSetting;
@@ -324,6 +317,18 @@ if ( !class_exists('IamportShortcode') ) {
         'pg' => $pg,
         'mid' => $mid,
       );
+    }
+
+    private function getDefaultPg($payMethod) {
+      switch ($payMethod) {
+        case 'kakaopay':
+        case 'paypal':
+          return $payMethod;
+        case 'phone':
+          return 'danal';
+        default:
+          return 'html5_inicis';
+      }
     }
 
     private function getCardQuota($iamportSetting) {
