@@ -11,7 +11,7 @@
 		<h1>아임포트 블록 매뉴얼</h1>
 
 		<div class="iamport-block-box">
-      <h2><span>STEP1</span>아임포트 블록 추가</h2>
+      <h2><span>STEP1</span>아임포트 일반결제 블록 추가</h2>
       <div class="iamport-block-left">
         <p>
           페이지에서 + 버튼을 누르면 아래와 같이 워드프레스가 기본적으로 제공하는 위젯의 목록을 확인 할 수 있습니다. 이 중 <code>아임포트 일반결제</code> 블록을 찾아 선택하면 페이지에 결제 창을 커스터마이징 할 수 있는 화면이 생성됩니다.
@@ -214,6 +214,9 @@
           <li>-<code>복수 선택</code>: 복수 선택 값</li>
           <li>-<code>단일 선택(라디오/드롭다운)</code>: 단일 선택 값</li>
         </ul>
+        <p>
+          첨부된 실제 파일은 워드프레스 프로젝트 폴더 > wp-content 폴더 > uploads 폴더 내부에 위치하며, <code>아임포트 결제내역</code> 페이지 <code>첨부파일</code> 칼럼에서도 확인하실 수 있습니다.
+        </p>
       </div>
       <div class="iamport-block-clear"></div>
 
