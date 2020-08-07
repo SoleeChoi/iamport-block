@@ -48,7 +48,7 @@ export function BasicFields({ type, payMethods, getFieldDecorator }) {
           rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
         })(<Input size="large" />)}
       </Item>
-      <Item label={__('결제 팝업 설명','iamport-block')}>
+      <Item label={__('결제 팝업 서브 타이틀','iamport-block')}>
         {getFieldDecorator('description')(<Input size="large" />)}
       </Item>
       <Item label={__('주문명','iamport-block')}>

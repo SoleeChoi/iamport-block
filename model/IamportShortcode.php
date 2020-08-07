@@ -100,7 +100,7 @@ if ( !class_exists('IamportShortcode') ) {
         'buttonStyle'       => $a['style'],                   // 결제 버튼 스타일
         'buttonClassName'   => $a['class'],                   // 결제 버튼 클래스 이름
         'title'             => $a['title'],                   // 결제 모달 타이틀
-        'description'       => $a['description'],             // 결제 결제 모달 설명
+        'description'       => $a['description'],             // 결제 결제 모달 서브 타이틀
         'name'              => $a['name'],                    // 주문명
         'amountType'        => $amountInfo['amountType'],     // 결제 금액 유형
         'amountOptions'     => $amountInfo['amountOptions'],  // 결제 금액 정보
