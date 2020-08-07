@@ -62,7 +62,7 @@ if ( !class_exists('IamportCustomShortcode') ) {
       if (empty($options)) {
         return array();
       }
-      return explode(',', $options);
+      return array_map('trim', explode(',', $options));
     }
 
     private function getAgreementOptions($type, $a) {
