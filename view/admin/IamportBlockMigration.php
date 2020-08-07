@@ -97,31 +97,59 @@
           <th>포스트 ID</th>
           <th>포스트 타이틀</th>
           <th>포스트 컨텐츠</th>
-          <th></td>
+          <th>블록으로 전환</td>
         </tr>
       </thead>
       <tbody>
         <?php
-          // 숏코드를 포함하고 있는 포스트를 리스트로 뿌려준다
-          $posts = get_posts(array(
-            'post_type' => 'page',
+          $postCount = 0;
+
+          // 워드프레스에 설정된 모든 페이지를 가져온다
+          $query = new WP_Query(array(
+            'post_type'   =>  array('page','post'),
+            'post_status' => 'publish'
           ));
-          if ($posts) {
-            foreach ($posts as $post):
+
+          if ($query->have_posts()) {
+            while ($query->have_posts()) {
+              $query->the_post();
+
+              $post = get_post();
+              // 숏코드를 포함하고 있는 포스트의 리스트만 렌더링한다
+              preg_match(
+                '/\[iamport_payment_button(.*)\[\/iamport_payment_button\]/',
+                $post->post_content,
+                $matches,
+                PREG_OFFSET_CAPTURE
+              );
+              if (count($matches) > 0) {
+                $postCount += 1;
+                ?>
+                  <tr>
+                    <td><a href="<?=home_url().'/'.$post->post_name?>" target="_blank"><?=$post->ID?></a></td>
+                    <td><?=$post->post_title?></td>
+                    <td><textarea><?=$post->post_content?></textarea></td>
+                    <td>
+                      <form method="post" action="">
+                        <input type="hidden" name="post_id" value="<?=$post->ID?>" />
+                        <input type="hidden" name="action" value="migrate_to_iamport_block" />
+                        <input class="button-primary" type="submit" name="iamport-options" value="마이그레이션" />
+                      </form>
+                    </td>
+                  </tr>
+                <?php
+              }
+            }
+          }
+          wp_reset_postdata();
+          
+          if ($postCount == 0) { ?>
+            <tr>
+              <td colspan="4"><p>마이그레이션이 필요한 포스트가 없습니다</p></td>
+            </tr>
+        <?php
+          }
         ?>
-          <tr>
-            <td><a href="<?=home_url().'/'.$post->post_name?>" target="_blank"><?=$post->ID?></a></td>
-            <td><?=$post->post_title?></td>
-            <td><textarea><?=$post->post_content?></textarea></td>
-            <td>
-              <form method="post" action="">
-                <input type="hidden" name="post_id" value="<?=$post->ID?>" />
-                <input type="hidden" name="action" value="migrate_to_iamport_block" />
-                <input class="button-primary" type="submit" name="iamport-options" value="마이그레이션" />
-              </form>
-            </td>
-          </tr>
-        <?php endforeach; }?>
       </tbody>
     </table>
 	</div>

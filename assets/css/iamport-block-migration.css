@@ -9,15 +9,16 @@
 .iamport-block-container.migration table thead th,
 .iamport-block-container.migration table tbody td {
   text-align: center;
-  padding: 0.5rem;
   border: 1px solid #888;
 }
 
 .iamport-block-container.migration table thead th {
   background-color: #ddd;
+  padding: 1rem;
 }
 .iamport-block-container.migration table tbody td {
   background-color: #fff;
+  padding: 0.5rem;
 }
 .iamport-block-container.migration table tbody td textarea {
   width: 100%;
