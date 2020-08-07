@@ -190,10 +190,40 @@
         <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/amount-options.png" alt="결제 금액 옵션"/>
       </div>
       <div class="iamport-block-clear"></div>
+    </div>
+    
+    <div class="iamport-block-box">
+      <h2><span>STEP4</span>구매자 필드 설정하기</h2>
+      <h3><span>1</span>입력 유형</h3>
+      <div class="iamport-block-left">
+        <p>결제시 입력 받을 구매자 정보 종류를 선택할 수 있습니다. 해당 값은 아임포트 관리자 페이지 > 결제내역에 구매자 정보로 등록됩니다.</p>
+        <ul>
+          <li>-<code>이름</code>: 구매자의 이름(필수)</li>
+          <li>-<code>이메일</code>: 구매자의 이메일 주소(필수)</li>
+          <li>-<code>전화번호</code>: 구매자 전화번호(필수)</li>
+          <li>-<code>주소</code>: 구매자 주소(선택)</li>
+        </ul>
+      </div>
+      <div class="iamport-block-left iamport-text-center">
+        <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/buyer-fields.png" alt="구매자 필드 예시"/>
+      </div>
+      <div class="iamport-block-clear"></div>
+
+      <h3><span>2</span>입력 라벨</h3>
+      <div class="iamport-block-left">
+        <p>구매자 정보 입력 필드에 대해 라벨을 설정할 수 있습니다. 이 값은 <code>필수입력</code>입니다.</p>
+      </div>
+      <div class="iamport-block-clear"></div>
+
+      <h3><span>3</span>입력 힌트</h3>
+      <div class="iamport-block-left">
+        <p>주소를 제외한 구매자 정보 입력 필드에 대해, 사용자에게 제공할 힌트를 설정할 수 있습니다.</p>
+      </div>
+      <div class="iamport-block-clear"></div>
 		</div>
 
 		<div class="iamport-block-box">
-      <h2><span>STEP4</span>커스텀 필드 설정하기</h2>
+      <h2><span>STEP5</span>커스텀 필드 설정하기</h2>
       <div class="iamport-block-left">
         <p>결제 정보 외에, 사용자로부터 가맹점 자체적으로 추가 입력 받을 필드를 설정할 수 있습니다. 오른쪽 그림의 <code>필드 추가</code> 버튼을 통해 입력 받을 새 필드를 추가할 수 있고, <code>필드 삭제</code> 버튼을 통해 추가된 필드를 삭제할 수 있습니다.</p>
         <p>입력 받은 커스텀 필드는, 결제 후 아임포트 결제내역 테이블의 <code>부가정보</code> 칼럼에서 확인하실 수 있습니다.</p>
