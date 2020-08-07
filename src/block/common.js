@@ -29,7 +29,7 @@ export const COMMON_ATTRIBUTES = {
     type: 'string',
     selector: 'input',
   },
-  description: { // 결제 모달 설명
+  description: { // 결제 모달 서브 타이틀
     type: 'string',
     selector: 'input',
   },
