@@ -14,10 +14,10 @@
       <h2><span>STEP1</span>아임포트 블록 추가</h2>
       <div class="iamport-block-left">
         <p>
-          페이지에서 + 버튼을 누르면 아래와 같이 워드프레스가 기본적으로 제공하는 위젯의 목록을 확인 할 수 있습니다. 이 중 <code>아임포트 블록</code>을 찾아 선택하면 페이지에 결제 창을 커스터마이징 할 수 있는 화면이 생성됩니다.
+          페이지에서 + 버튼을 누르면 아래와 같이 워드프레스가 기본적으로 제공하는 위젯의 목록을 확인 할 수 있습니다. 이 중 <code>아임포트 일반결제</code> 블록을 찾아 선택하면 페이지에 결제 창을 커스터마이징 할 수 있는 화면이 생성됩니다.
         </p>
         <p>
-          위젯의 종류가 많아 <code>아임포트</code> 블록을 찾는데 어려움이 있으신 경우, <code>아임포트 블록</code>이라는 키워드로 블록을 검색 하실 수 있습니다. 또한 <code>공통 블록</code> 카테고리를 선택하시면 보다 빠르게 아임포트 블록을 찾으실 수 있습니다.
+          위젯의 종류가 많아 <code>아임포트 일반결제</code> 블록을 찾는데 어려움이 있으신 경우, <code>아임포트 일반결제</code>라는 키워드로 블록을 검색 하실 수 있습니다. 또한 <code>공통 블록</code> 카테고리를 선택하시면 보다 빠르게 <code>아임포트 일반결제</code> 블록을 찾으실 수 있습니다.
         </p>
       </div>
       <div class="iamport-block-left iamport-text-center">
@@ -151,6 +151,7 @@
           <li>-<code>고정형</code>: 구매자가 항상 정해진 금액으로 결제하는 방식</li>
           <li>-<code>가변형</code>: 구매자가 결제할 금액을 직접 입력하는 방식(면세금액 설정 불가)</li>
           <li>-<code>고정형</code>: 구매자가 결제할 금액을 N개의 옵션 중 선택하는 방식</li>
+          <li>-<code>무료형</code>: 구매자가 기부하는 방식(결제가 진행되지는 않지만 결제내역에 데이터가 쌓임)</li>
         </ul>
       </div>
       <div class="iamport-block-left iamport-text-center">
@@ -228,7 +229,13 @@
       </div>
       <div class="iamport-block-clear"></div>
 
-      <h3><span>4</span>입력 옵션</h3>
+      <h3><span>4</span>입력 힌트</h3>
+      <div class="iamport-block-left">
+        <p>텍스트 유형의 입력 필드의 경우, 입력 값에 대해 사용자에게 제공할 힌트를 설정할 수 있습니다.</p>
+      </div>
+      <div class="iamport-block-clear"></div>
+
+      <h3><span>5</span>입력 옵션</h3>
       <div class="iamport-block-left">
         <p><code>복수 선택</code>, <code>단일 선택(라디오/드롭다운)</code> 유형의 필드는 유저로부터 입력/선택 가능한 옵션을 제공해야 합니다. 오른쪽 그림 속 + 버튼을 통해 새 옵션을 추가할 수 있고, X 버튼을 통해 추가된 옵션을 삭제할 수 있습니다.</p>
         <p>옵션 값은 1개 이상 입력해야 하며, 각 옵션 값은 하나의 필드에 대해 반드시 유일한 값이어야 합니다.</p>
@@ -238,9 +245,9 @@
       </div>
       <div class="iamport-block-clear"></div>
 
-      <h3><span>5</span>약관 옵션</h3>
+      <h3><span>6</span>약관 옵션</h3>
       <div class="iamport-block-left">
-        <p><code>약관 동의</code> 유형의 필드는 유저가 약관을 확인할 수 있도록 약관이 명시된 링크를 설정해야 합니다. 하나의 약관 동의 필드에 대해, 2개 이상의 약관을 설정할 수 있으며 위 <code>복수/단일 선택</code> 필드 처럼 약관을 추가 또는 삭제할 수 있습니다. 이때 <code>약관 라벨</code>값은 반드시 유일한 값이어야 합니다.</p>
+        <p><code>약관 동의</code> 유형의 필드는 유저가 약관을 확인할 수 있도록 약관이 명시된 <code>링크</code>를 설정하거나 약관 <code>전문</code>을 직접 표기해야 합니다. 하나의 약관 동의 필드에 대해, 2개 이상의 약관을 설정할 수 있으며 위 <code>복수/단일 선택</code> 필드 처럼 약관을 추가 또는 삭제할 수 있습니다. 이때 <code>약관 라벨</code>값은 반드시 유일한 값이어야 합니다.</p>
       </div>
       <div class="iamport-block-left iamport-text-center">
         <img src="<?=plugin_dir_url( __FILE__ )?>../../assets/img/agreement-fields.png" alt="약관 동의 옵션"/>
