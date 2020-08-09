@@ -1,15 +1,18 @@
 import moment from 'moment';
+import 'formdata-polyfill'; // FormData polyfill for IE9
 
 // css string을 object로 변환
 export function getButtonStyle(buttonStyle) {
   const buttonStyleObj = {};
-  buttonStyle.split(';').forEach(eachStyle => {
-    const[key, value] = eachStyle.split(':');
-    if (key) {
-      const keyToCamelCase = key.trim().replace(/([-][a-z])/ig, $1 => $1.toUpperCase().replace('-', ''));
-      buttonStyleObj[keyToCamelCase] = value.trim();
-    }
-  });
+  if (buttonStyle) {
+    buttonStyle.split(';').forEach(eachStyle => {
+      const[key, value] = eachStyle.split(':');
+      if (key) {
+        const keyToCamelCase = key.trim().replace(/([-][a-z])/ig, $1 => $1.toUpperCase().replace('-', ''));
+        buttonStyleObj[keyToCamelCase] = value.trim();
+      }
+    });
+  }
   return buttonStyleObj;
 }
 
