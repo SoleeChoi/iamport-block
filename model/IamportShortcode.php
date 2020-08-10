@@ -47,7 +47,6 @@ if ( !class_exists('IamportShortcode') ) {
 			if ($matchCount > 0) {
         for ($i = 0; $i < $matchCount; $i++) {
           $atts = shortcode_parse_atts($matches[3][$i]);
-          var_dump($atts);
           $eachCustomShortcode = new IamportCustomShortcode($atts, $matches[5][$i]);
           $customFields[] = $eachCustomShortcode->convertToJsonString();
         }
@@ -58,44 +57,6 @@ if ( !class_exists('IamportShortcode') ) {
 				'customFields' 	=> $customFields
 			);
     }
-    
-    // private function parseShortcodeContent($shortcodeString) {
-    //   // 숏코드 스트링으로부터 숏코드 컨텐츠 파싱
-    //   $pattern = get_shortcode_regex();
-    //   preg_match("/$pattern/s", $shortcodeString, $matches);
-    //   $content = $matches[5];
-
-    //   if (empty($content)) {
-    //     $content = __('결제하기', 'iamport-block');
-    //   }
-
-		// 	// markup 제거
-		// 	$content = preg_replace('/<\s*\/?[a-zA-Z0-9]+[^>]*>/s', '', $content);
-
-		// 	// &nbsp; &amp;nbsp; 제거
-		// 	$content = htmlentities($content, null, 'utf-8');
-		// 	$content = preg_replace('/nbsp;|&nbsp;|&amp;/', '', $content);
-    //   $content = html_entity_decode($content);
-
-    //   // content에 포함된 숏코드 제거
-    //   $fieldRegex = get_shortcode_regex(array('iamport_payment_button_field'));
-		// 	$buttonName = trim(preg_replace("/$fieldRegex/s", '', $content));
-
-		// 	// 커스텀 필드
-		// 	$customFields = array();
-    //   $matchCount = preg_match_all("/$fieldRegex/s", $content, $fieldMatches);
-		// 	if ($matchCount > 0) {
-		// 		foreach ($fieldMatches[0] as $field) {
-    //       $eachCustomShortcode = new IamportCustomShortcode($field);
-    //       $customFields[] = $eachCustomShortcode->convertToJsonString();
-		// 		}
-    //   }
-
-		// 	return array(
-		// 		'buttonName' 		=> $buttonName,
-		// 		'customFields' 	=> $customFields
-		// 	);
-		// }
 
 		public function convertToJsonString() {
       // 1. 숏코드 스트링을 파싱해, array로 저장
