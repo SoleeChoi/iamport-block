@@ -7,7 +7,7 @@
 
   require_once(dirname(__FILE__).'/../../model/IamportShortcode.php');
 
-	/* ---------- 아임포트 설정에서 '저장하기' 버튼 눌렀을때 ---------- */
+  // 각 포스트의 마이그레이션 버튼 눌렀을때
 	if ( isset($_POST['action']) && $_POST['action'] == "migrate_to_iamport_block") {
     $postId = $_POST['post_id'];
     $postContent = get_post($postId)->post_content;
@@ -15,7 +15,7 @@
     while(1) {
       // 숏코드 찾기
       preg_match(
-        '/\[iamport_payment_button(.*)\[\/iamport_payment_button\]/',
+        '/' . get_shortcode_regex() . '/s',
         $postContent,
         $matches,
         PREG_OFFSET_CAPTURE
@@ -36,7 +36,9 @@
       $rearString = substr($postContent, $startAt + strlen($eachShortcode));
 
       // 각 숏코드 파싱
-      $shortcode = new IamportShortcode($eachShortcode);
+      $atts = shortcode_parse_atts($matches[3][0]);
+      $content = $matches[5][0];
+      $shortcode = new IamportShortcode($atts, $content);
 
       // 새 스트링: 앞 스트링 + 파싱된 숏코드 + 뒷 스트링
       $postContent =
@@ -69,7 +71,7 @@
       ),
       true
     );
-	}
+  }
 
 	ob_start();
 
@@ -87,7 +89,7 @@
 	$iamportSetting = get_option('iamport_block_setting');
 ?>
 	<div class="iamport-block-container migration">
-    <h1>아임포트 블록 마이그레이션</h1>
+    <h1>아임포트 숏코드 마이그레이션</h1>
     <p>
       아래는 숏코드가 포함된 포스트의 리스트입니다. 각 포스트에 대해 마이그레이션 버튼을 눌러, 숏코드를 블록으로 대체해주세요.
     </p>
