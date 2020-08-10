@@ -274,6 +274,7 @@ export function getOrderData(paymentData) {
   } = paymentData;
 
   orderData.append('action', 'get_order_uid');
+  orderData.append('post_type', 'iamport_block');
   orderData.append('order_title', name);
   orderData.append('tax_free_amount', tax_free);
   orderData.append('order_amount', amount);
