@@ -25,13 +25,17 @@ if ( !class_exists('IamportShortcode') ) {
       $pattern = get_shortcode_regex();
       preg_match_all("/$pattern/s", $this->content, $matches);
 
-      $content = $matches[5];
-      if (empty($content)) {
-        $content = __('결제하기', 'iamport-block');
+      if (empty($matches[5])) {
+        // iamport_payment_button_field가 없는 경우
+        if (empty($this->content)) {
+          $content = __('결제하기', 'iamport-block');
+        } else {
+          $content = $this->content;
+        }
       }
 
 			// markup 제거
-			$content = preg_replace('/<\s*\/?[a-zA-Z0-9]+[^>]*>/s', '', $content);
+			$content = preg_replace('/<\s*\/?[a-zA-Z0-9]+[^>]*>/s', '', $this->content);
 
 			// &nbsp; &amp;nbsp; 제거
 			$content = htmlentities($content, null, 'utf-8');
@@ -83,6 +87,7 @@ if ( !class_exists('IamportShortcode') ) {
         'amount_label'      => __('결제금액', 'iamport-block'),
       ), $this->atts);
 
+      $buttonStyle = preg_replace('/nbsp;|&nbsp;|&amp;/', '', $a['style']);
       $amountInfo = $this->getAmountInfo($a['amount'], $a['tax_free']);
       $buyerOptions = $this->getBuyerOptions($a['field_list']);
       $payMethods = array_unique(explode(',', $a['pay_method_list']));
@@ -99,7 +104,7 @@ if ( !class_exists('IamportShortcode') ) {
       // 2. 숏코드 array를 블록 에디터에서 필요한 값으로 전환
       $convertedShortcode = array(
         'buttonName'        => $this->buttonName,             // 결제 버튼 라벨
-        'buttonStyle'       => $a['style'],                   // 결제 버튼 스타일
+        'buttonStyle'       => $buttonStyle,                  // 결제 버튼 스타일
         'buttonClassName'   => $a['class'],                   // 결제 버튼 클래스 이름
         'title'             => $a['title'],                   // 결제 모달 타이틀
         'description'       => $a['description'],             // 결제 결제 모달 서브 타이틀
