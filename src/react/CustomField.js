@@ -1,9 +1,10 @@
-import { Form, Row, Col, Checkbox, Radio, Select, Icon } from 'antd';
+import { Form, Row, Col, Checkbox, Select, Icon } from 'antd';
 
-import AddressField from './AddressField';
+import RadioField from './RadioField';
 import FileField from './FileField';
-import InputField from './InputField';
 import AgreementField from './AgreementField';
+import AddressField from './AddressField';
+import InputField from './InputField';
 
 const { __ } = wp.i18n;
 const { Item } = Form;
@@ -35,21 +36,13 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
     }
     case 'radio': {
       return (
-        <Item label={label}>
-          {getFieldDecorator(label, {
-            rules: [{ required, message: __('필수 선택입니다', 'iamport-block') }],
-          })(
-            <Radio.Group>
-              <Row>
-                {options.map(option =>
-                  <Col key={option} md={12} lg={8} xl={6}>
-                    <Radio value={option}>{option}</Radio>
-                  </Col>
-                )}
-              </Row>
-            </Radio.Group>,
-          )}
-        </Item>
+        <RadioField
+          label={label}
+          name={label}
+          options={options}
+          required={required}
+          getFieldDecorator={getFieldDecorator}
+        />
       );
     }
     case 'dropdown': {
