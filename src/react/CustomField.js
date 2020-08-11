@@ -1,15 +1,10 @@
-import { Form, Select, Icon } from 'antd';
-
 import RadioField from './RadioField';
 import CheckboxField from './CheckboxField';
+import DropdownField from './DropdownField';
 import FileField from './FileField';
 import AgreementField from './AgreementField';
 import AddressField from './AddressField';
 import InputField from './InputField';
-
-const { __ } = wp.i18n;
-const { Item } = Form;
-const { Option } = Select;
 
 function CustomField({ field, getFieldDecorator, onChangeAddress }) {
   const { label, type, placeholder, options, agreementOptions, required } = field;
@@ -40,21 +35,13 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
     }
     case 'dropdown': {
       return (
-        <Item label={label}>
-          {getFieldDecorator(label, {
-            rules: [{ required, message: __('필수 선택입니다', 'iamport-block') }],
-          })(
-            <Select
-              size="large"
-              style={{ width: '100%' }}
-              suffixIcon={<Icon type="caret-down" />}
-            >
-              {options.map(eachOption =>
-                <Option value={eachOption} key={eachOption}>{eachOption}</Option>
-              )}
-            </Select>,
-          )}
-        </Item>
+        <DropdownField
+          label={label}
+          name={label}
+          options={options}
+          required={required}
+          getFieldDecorator={getFieldDecorator}
+        />
       );
     }
     case 'agreement': {
