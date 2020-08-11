@@ -7,13 +7,9 @@ if ( !class_exists('IamportCustomShortcode') ) {
     private $atts;
     private $content;
 
-		public function __construct($shortcodeString) {
-      $this->atts = shortcode_parse_atts($shortcodeString);
-
-      // 숏코드 스트링으로부터 숏코드 컨텐츠 파싱
-      $pattern = get_shortcode_regex();
-      preg_match("/$pattern/s", $shortcodeString, $matches);
-      $this->content = $matches[5];
+		public function __construct($atts, $content) {
+      $this->atts = $atts;
+      $this->content = $content;
     }
     
     public function convertToJsonString() {

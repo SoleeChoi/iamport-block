@@ -25,8 +25,8 @@ if ( !class_exists('IamportBlock') ) {
 			add_action( 'wp_ajax_nopriv_get_order_uid', array($this, 'ajax_get_order_uid') );
 
 			add_action( 'add_meta_boxes', array($this, 'iamport_order_metabox') );
-			add_action( 'save_post', array($this, 'save_iamport_order_metabox') );
-		}
+      add_action( 'save_post', array($this, 'save_iamport_order_metabox') );
+    }
 
 		public function iamport_admin_menu() {
 			add_submenu_page(
@@ -97,77 +97,80 @@ if ( !class_exists('IamportBlock') ) {
 		}
 
 		public function ajax_get_order_uid() {
-			$order_title 	    = $_POST['order_title'];
-			$pay_method 	    = $_POST['pay_method']; //카카오페이는 kakaopay로 일단 올라오고, 그 후 front에서 card로 변경되어야 함
-			$buyer_name 	    = $_POST['buyer_name'];
-			$buyer_email 	    = $_POST['buyer_email'];
-      $buyer_tel 		    = $_POST['buyer_tel'];
-      $shipping_addr	  = $_POST['shipping_addr'];
-			$order_amount 	  = $_POST['order_amount'];
-			$tax_free_amount 	= $_POST['tax_free_amount'];
-			$currency 	      = $_POST['currency'];
-			$amount_label 	  = $_POST['amount_label'];
-			$redirect_after	  = $_POST['redirect_after'];
-			$attached_files   = $_FILES;
-			$extraFields	    = $_POST['extra_fields'];
+      $post_type        = $_POST['post_type'];
+      if ($post_type == 'iamport_block') {
+        $order_title 	    = $_POST['order_title'];
+        $pay_method 	    = $_POST['pay_method']; //카카오페이는 kakaopay로 일단 올라오고, 그 후 front에서 card로 변경되어야 함
+        $buyer_name 	    = $_POST['buyer_name'];
+        $buyer_email 	    = $_POST['buyer_email'];
+        $buyer_tel 		    = $_POST['buyer_tel'];
+        $shipping_addr	  = $_POST['shipping_addr'];
+        $order_amount 	  = $_POST['order_amount'];
+        $tax_free_amount 	= $_POST['tax_free_amount'];
+        $currency 	      = $_POST['currency'];
+        $amount_label 	  = $_POST['amount_label'];
+        $redirect_after	  = $_POST['redirect_after'];
+        $attached_files   = $_FILES;
+        $extraFields	    = $_POST['extra_fields'];
 
-			foreach( $_FILES as $fileType => $fileValue ) {
-				/* ---------- NFC to NFD ---------- */
-				//normalizer_normalize 메소드가 없는 경우가 많음
-				// $fileName = $fileValue['name'];
-				// $fileValue['name'] = normalizer_normalize($fileName);
+        foreach( $_FILES as $fileType => $fileValue ) {
+          /* ---------- NFC to NFD ---------- */
+          //normalizer_normalize 메소드가 없는 경우가 많음
+          // $fileName = $fileValue['name'];
+          // $fileValue['name'] = normalizer_normalize($fileName);
 
-        $uploadFiles = wp_handle_upload($fileValue, array('action' => 'get_order_uid'));
-        if ( !isset($uploadFiles['error']) ) {
-          $attached_files[$fileType]['location'] = $uploadFiles['url'];
+          $uploadFiles = wp_handle_upload($fileValue, array('action' => 'get_order_uid'));
+          if ( !isset($uploadFiles['error']) ) {
+            $attached_files[$fileType]['location'] = $uploadFiles['url'];
+          }
         }
-			}
 
-			$order_data = array(
-				'post_status'		=> 'publish',
-				'post_type'			=> 'iamport_block',
-				'post_title'		=> $order_title,
-				'post_parent'		=> 0,
-				'comment_status'	=> 'closed'
-			);
+        $order_data = array(
+          'post_status'		=> 'publish',
+          'post_type'			=> 'iamport_block',
+          'post_title'		=> $order_title,
+          'post_parent'		=> 0,
+          'comment_status'	=> 'closed'
+        );
 
-			$order_id = wp_insert_post( $order_data );
+        $order_id = wp_insert_post( $order_data );
 
-			//TODO : model setter 활용하기
-      $order_uid = $this->get_order_uid();
-      $customer_uid = $this->get_customer_uid();
-      add_post_meta( $order_id, 'order_uid', $order_uid, true);
-      add_post_meta( $order_id, 'customer_uid', $customer_uid, true);
-			add_post_meta( $order_id, 'pay_method', $pay_method, true);
-			add_post_meta( $order_id, 'buyer_name', $buyer_name, true);
-			add_post_meta( $order_id, 'buyer_email', $buyer_email, true);
-      add_post_meta( $order_id, 'buyer_tel', $buyer_tel, true);
-      add_post_meta( $order_id, 'shipping_addr', $shipping_addr, true);
-			add_post_meta( $order_id, 'order_amount', $order_amount, true);
-			add_post_meta( $order_id, 'tax_free_amount', $tax_free_amount, true);
-			add_post_meta( $order_id, 'currency', $currency, true);
-			add_post_meta( $order_id, 'amount_label', $amount_label, true);
-			add_post_meta( $order_id, 'order_status', 'ready', true);
-			add_post_meta( $order_id, 'attached_files', $attached_files, true);
-			add_post_meta( $order_id, 'extra_fields', $extraFields, true);
+        //TODO : model setter 활용하기
+        $order_uid = $this->get_order_uid();
+        $customer_uid = $this->get_customer_uid();
+        add_post_meta( $order_id, 'order_uid', $order_uid, true);
+        add_post_meta( $order_id, 'customer_uid', $customer_uid, true);
+        add_post_meta( $order_id, 'pay_method', $pay_method, true);
+        add_post_meta( $order_id, 'buyer_name', $buyer_name, true);
+        add_post_meta( $order_id, 'buyer_email', $buyer_email, true);
+        add_post_meta( $order_id, 'buyer_tel', $buyer_tel, true);
+        add_post_meta( $order_id, 'shipping_addr', $shipping_addr, true);
+        add_post_meta( $order_id, 'order_amount', $order_amount, true);
+        add_post_meta( $order_id, 'tax_free_amount', $tax_free_amount, true);
+        add_post_meta( $order_id, 'currency', $currency, true);
+        add_post_meta( $order_id, 'amount_label', $amount_label, true);
+        add_post_meta( $order_id, 'order_status', 'ready', true);
+        add_post_meta( $order_id, 'attached_files', $attached_files, true);
+        add_post_meta( $order_id, 'extra_fields', $extraFields, true);
 
-			$thankyou_url = '';
-			$thankyou_page = get_iamport_block_page_by_slug('iamport_block_payment_result');
-			if ( !empty($thankyou_page) ) {
-				$thankyou_url = add_query_arg( array(
-					'iamport-order-received' => $order_uid,
-					'redirect-after' => $redirect_after
-				), get_page_link($thankyou_page[0]->ID) );
-			}
+        $thankyou_url = '';
+        $thankyou_page = get_iamport_block_page_by_slug('iamport_block_payment_result');
+        if ( !empty($thankyou_page) ) {
+          $thankyou_url = add_query_arg( array(
+            'iamport-order-received' => $order_uid,
+            'redirect-after' => $redirect_after
+          ), get_page_link($thankyou_page[0]->ID) );
+        }
 
-			$response = array(
-        'order_id'      => $order_id,
-        'order_uid'     => $order_uid,
-        'customer_uid'  => $customer_uid,
-        'thankyou_url'  => $thankyou_url,
-      );
+        $response = array(
+          'order_id'      => $order_id,
+          'order_uid'     => $order_uid,
+          'customer_uid'  => $customer_uid,
+          'thankyou_url'  => $thankyou_url,
+        );
 
-			wp_send_json($response);
+        wp_send_json($response);
+      }
 		}
 
 		private function get_order_uid() {
