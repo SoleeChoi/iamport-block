@@ -70,7 +70,7 @@ export function getCustomLabels(customFields) {
   customFields.forEach(({ type, label, agreementOptions }) => {
     if (type === 'agreement') {
       agreementOptions.forEach(agreementOption =>
-        customLabels.push(agreementOption.label)
+        customLabels.push(`${label}.${agreementOption.label}`)
       );
     } else {
       customLabels.push(label);

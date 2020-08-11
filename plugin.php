@@ -59,7 +59,7 @@ function iamport_scripts()
 
     wp_enqueue_script(
       'iamport-js-sdk',
-      'https://service.iamport.kr/js/iamport.payment-1.1.8.js',
+      'https://cdn.iamport.kr/js/iamport.payment-1.1.8.js',
       array( 'jquery', 'jquery-ui-dialog' )
     );
 

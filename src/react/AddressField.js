@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { Form, Input } from 'antd';
 
+import InputField from './InputField';
+
 const { __ } = wp.i18n;
 
 const { Item } = Form;
@@ -111,25 +113,18 @@ export function AddressField({ label, name, required, getFieldDecorator, onChang
           />,
         )}
       </Item>
-      <Item>
-        {getFieldDecorator(`${name}.address`, {
-          rules: [{ required, message: __('필수 입력입니다', 'iamport-block') }],
-        })(
-          <Input
-            size="large"
-            placeholder={__('주소', 'iamport-block')}
-            disabled  
-          />,
-        )}
-      </Item>
-      <Item>
-        {getFieldDecorator(`${name}.extraAddress`)(
-          <Input
-            size="large"
-            placeholder={__('참고항목', 'iamport-block')}  
-          />
-        )}
-      </Item>
+      <InputField
+        name={`${name}.address`}
+        required={required}
+        disabled={true}
+        placeholder={__('주소', 'iamport-block')}
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        name={`${name}.extraAddress`}
+        placeholder={__('참고항목', 'iamport-block')}
+        getFieldDecorator={getFieldDecorator}
+      />
       <Item>
         {getFieldDecorator(`${name}.detailAddress`)(
           <Input
