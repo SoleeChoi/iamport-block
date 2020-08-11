@@ -2,7 +2,7 @@
 /**
  * Plugin Name: 아임포트 블록 플러그인
  * Plugin URI: https://wordpress.org/plugins/iamport-block/
- * Description: 원하는 위치에 자유 자재로 결제 버튼을 생성하실 수 있는 아임포트 플러그인입니다. 국내 PG사의 다양한 결제수단을 이용하실 수 있습니다. (신용카드/실시간계좌이체/가상계좌/휴대폰소액결제 - 에스크로포함)
+ * Description: 워드프레스 블록을 활용해 원하는 위치에 자유 자재로 결제 버튼을 생성하실 수 있는 아임포트 플러그인입니다. 여러 PG사의 다양한 결제수단을 이용하실 수 있습니다. (신용카드/실시간계좌이체/가상계좌/휴대폰소액결제/카카오페이/페이팔/삼성페이 - 에스크로포함)
  * Author: SIOT
  * Author URI: http://www.siot.do
  * Version: 0.9.0
