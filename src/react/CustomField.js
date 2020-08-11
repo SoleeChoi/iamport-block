@@ -1,6 +1,7 @@
 import { Form, Row, Col, Checkbox, Radio, Select, Input, Icon } from 'antd';
 
 import AddressField from './AddressField';
+import FileField from './FileField';
 import InputField from './InputField';
 
 const { __ } = wp.i18n;
@@ -122,18 +123,12 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
     }
     case 'file': {
       return (
-        <Item label={label}>
-          {getFieldDecorator(label, {
-            valuePropName: 'filelist',
-            getValueFromEvent: ({ target: { files } }) => {
-              const [file] = files;
-              return file;
-            },
-            rules: [{ required, message: __('필수 선택입니다', 'iamport-block') }],
-          })(
-            <Input size="large" type="file" />
-          )}
-        </Item>
+        <FileField
+          label={label}
+          name={label}
+          required={required}
+          getFieldDecorator={getFieldDecorator}
+        />
       );
     }
     default: {
