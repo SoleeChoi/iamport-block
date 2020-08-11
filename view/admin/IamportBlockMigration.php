@@ -52,18 +52,15 @@
         $rearString;
     }
 
-    // TODO: <!-- wp:paragraph --><p> </p><!-- /wp:paragraph --> 제거
     $postContent = str_replace(
-      '<!-- wp:paragraph -->
-<p><!-- wp:cgb/iamport-payment',
-      '<!-- wp:cgb/iamport-payment',
+      "<!-- wp:paragraph -->\n<p><!-- wp:cgb/iamport-payment",
+      "<!-- wp:cgb/iamport-payment",
       $postContent
     );
 
     $postContent = str_replace(
-      '/--></p>
-<!-- /wp:paragraph -->',
-      '/-->',
+      "/--></p>\n<!-- /wp:paragraph -->",
+      "/-->",
       $postContent
     );
 

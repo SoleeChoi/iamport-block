@@ -77,6 +77,9 @@ function getIamportAttributes($attributes) {
   // 결제 창 열자마자 결제내역에 결제 건 추가하기 위한 HTTP 요청 URL
   $attributes['adminUrl'] = admin_url('admin-ajax.php');
 
+  // 모바일 기기인지 여부
+  $attributes['isMobile'] = wp_is_mobile();
+
   // Parse attributes
   return htmlspecialchars(json_encode($attributes));
 }

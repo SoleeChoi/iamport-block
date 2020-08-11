@@ -16,6 +16,17 @@ export function getButtonStyle(buttonStyle) {
   return buttonStyleObj;
 }
 
+export function getModalClassName({ modalClassName, isMobile }) {
+  let className = 'iamport-block-modal';
+  if (modalClassName) {
+    className += ` ${modalClassName}`;
+  }
+  if (isMobile) {
+    className += ' mobile';
+  }
+  return className;
+}
+
 // 모달 열었을때 셋팅되어있는 기본 값 계산
 export function getDefaultFieldValues(attributes) {
   const { payMethods, amountType, amountOptions, customFields } = attributes;
