@@ -1,6 +1,7 @@
 import { Form, Row, Col, Checkbox, Radio, Select, Input, Icon } from 'antd';
 
 import AddressField from './AddressField';
+import InputField from './InputField';
 
 const { __ } = wp.i18n;
 const { Item } = Form;
@@ -137,13 +138,13 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
     }
     default: {
       return (
-        <Item label={label}>
-          {getFieldDecorator(label, {
-            rules: [{ required, message: __('필수 입력입니다', 'iamport-block') }],
-          })(
-            <Input size="large" placeholder={placeholder} />,
-          )}
-        </Item>
+        <InputField
+          label={label}
+          name={label}
+          placeholder={placeholder}
+          required={required}
+          getFieldDecorator={getFieldDecorator}
+        />
       );
     }
   }

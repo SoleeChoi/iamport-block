@@ -1,7 +1,8 @@
-import { Form, Input, Select, Icon } from 'antd';
+import { Form, Select, Icon } from 'antd';
 
 import PaymentAmount from './PaymentAmount';
 import AddressField from './AddressField';
+import InputField from './InputField';
 
 import { PAY_METHODS_FOR_PAYMENT } from '../constants';
 
@@ -33,40 +34,30 @@ function BasicFields({ show, getFieldDecorator, attributes, onChangeAddress }) {
           />
         </div>
       }
-      <Item label={name.label}>
-        {getFieldDecorator('buyer_name', {
-          rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],
-        })(
-          <Input
-            size="large"
-            placeholder={name.placeholder}
-          />,
-        )}
-      </Item>
-      <Item label={email.label}>
-        {getFieldDecorator('buyer_email', {
-          rules: [{
-            required: true, message: __('필수입력입니다', 'iamport-block'),
-            type: 'email', message: __('이메일 주소가 올바르지 않습니다', 'iamport-block'),
-          }],
-        })(
-          <Input
-            size="large"
-            placeholder={email.placeholder}
-          />,
-        )}
-      </Item>
-      <Item label={phone.label}>
-        {getFieldDecorator('buyer_tel', {
-          rules: [{ required: true, message: __('필수입력입니다', 'iamport-block') }],
-        })(
-          <Input
-            size="large"
-            type="number"
-            placeholder={phone.placeholder}
-          />,
-        )}
-      </Item>
+      <InputField
+        label={name.label}
+        name="buyer_name"
+        type="email"
+        required={true}
+        placeholder={name.placeholder}
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={email.label}
+        name="buyer_email"
+        type="email"
+        required={true}
+        placeholder={email.placeholder}
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={phone.label}
+        name="buyer_tel"
+        type="number"
+        required={true}
+        placeholder={phone.placeholder}
+        getFieldDecorator={getFieldDecorator}
+      />
       {
         address.checked &&
         <AddressField
