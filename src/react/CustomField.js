@@ -1,13 +1,13 @@
-import { Form, Row, Col, Checkbox, Radio, Select, Input, Icon } from 'antd';
+import { Form, Row, Col, Checkbox, Radio, Select, Icon } from 'antd';
 
 import AddressField from './AddressField';
 import FileField from './FileField';
 import InputField from './InputField';
+import AgreementField from './AgreementField';
 
 const { __ } = wp.i18n;
 const { Item } = Form;
 const { Option } = Select;
-const { TextArea } = Input;
 
 function CustomField({ field, getFieldDecorator, onChangeAddress }) {
   const { label, type, placeholder, options, agreementOptions, required } = field;
@@ -74,39 +74,16 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
     case 'agreement': {
       return (
         agreementOptions.map(({ label, value, type }, index) => 
-          <Item
+          <AgreementField
             label={index === 0 && field.label}
             className={index !== agreementLength - 1 && 'iamport-agreement-container'}
-          >
-            <Row>
-              <Col span={20}>
-                {getFieldDecorator(`${field.label}.${label}`, {
-                  valuePropName: 'checked',
-                  rules: [{
-                    validator:(_, value) => required && !value ? Promise.reject('약관 동의는 필수입니다') : Promise.resolve(),
-                  }],
-                })(
-                  <Checkbox>{label}</Checkbox>,
-                )}
-              </Col>
-              <Col span={4} className="iamport-agreement-link">
-                {
-                  type === 'link' &&
-                  <a
-                    href={value}
-                    key={value}
-                    target="_blank"
-                  >{__('약관 보기', 'iamport-block')}</a>
-                }
-              </Col>
-            </Row>
-            {
-              type === 'content' &&
-              <Row gutter={[8, 8]}>
-                <Col span={24}><TextArea value={value} /></Col>
-              </Row>
-            }
-          </Item>
+            name={`${field.label}.${label}`}
+            required={required}
+            agreementLabel={label}
+            value={value}
+            type={type}
+            getFieldDecorator={getFieldDecorator}
+          />
         )
       );
     }
