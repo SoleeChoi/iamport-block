@@ -125,12 +125,15 @@ export function AddressField({ label, name, required, getFieldDecorator, onChang
         placeholder={__('참고항목', 'iamport-block')}
         getFieldDecorator={getFieldDecorator}
       />
-      <InputField
-        name={`${name}.detailAddress`}
-        ref={detailAddressRef}
-        placeholder={__('상세주소', 'iamport-block')}
-        getFieldDecorator={getFieldDecorator}
-      />
+      <Item>
+        {getFieldDecorator(`${name}.detailAddress`)(
+          <Input
+            size="large"
+            ref={detailAddressRef}
+            placeholder={__('상세주소', 'iamport-block')}  
+          />
+        )}
+      </Item>
       <div
         id="wrap"
         style={{

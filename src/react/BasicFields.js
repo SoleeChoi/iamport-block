@@ -37,7 +37,6 @@ function BasicFields({ show, getFieldDecorator, attributes, onChangeAddress }) {
       <InputField
         label={name.label}
         name="buyer_name"
-        type="email"
         required={true}
         placeholder={name.placeholder}
         getFieldDecorator={getFieldDecorator}
