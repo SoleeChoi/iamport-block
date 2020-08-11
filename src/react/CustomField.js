@@ -1,6 +1,7 @@
-import { Form, Row, Col, Checkbox, Select, Icon } from 'antd';
+import { Form, Select, Icon } from 'antd';
 
 import RadioField from './RadioField';
+import CheckboxField from './CheckboxField';
 import FileField from './FileField';
 import AgreementField from './AgreementField';
 import AddressField from './AddressField';
@@ -17,21 +18,13 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
   switch(type) {
     case 'checkbox': {
       return (
-        <Item label={label}>
-          {getFieldDecorator(label, {
-            rules: [{ required, message: __('필수 선택입니다', 'iamport-block') }],
-          })(
-            <Checkbox.Group>
-              <Row>
-                {options.map(option =>
-                  <Col key={option} md={12} lg={8} xl={6}>
-                    <Checkbox value={option}>{option}</Checkbox>
-                  </Col>
-                )}
-              </Row>
-            </Checkbox.Group>,
-          )}
-        </Item>
+        <CheckboxField
+          label={label}
+          name={label}
+          options={options}
+          required={required}
+          getFieldDecorator={getFieldDecorator}
+        />
       );
     }
     case 'radio': {
