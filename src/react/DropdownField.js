@@ -4,20 +4,35 @@ const { __ } = wp.i18n;
 const { Item } = Form;
 const { Option } = Select;
 
-function DropdownField({ label, name, options, required, getFieldDecorator }) {
+function DropdownField({
+  label,
+  name,
+  style,
+  options,
+  optionValue = eachOption => eachOption,
+  optionLabel = eachOption => eachOption,
+  required,
+  onChange,
+  getFieldDecorator,
+}) {
   return (
-    <Item label={label}>
+    <Item label={label} style={style}>
       {getFieldDecorator(name, {
         rules: [{ required, message: __('필수 선택입니다', 'iamport-block') }],
       })(
         <Select
           size="large"
-          style={{ width: '100%' }}
           suffixIcon={<Icon type="caret-down" />}
+          style={{ width: '100%' }}
+          onChange={onChange}
         >
-          {options.map(eachOption =>
-            <Option value={eachOption} key={eachOption}>{eachOption}</Option>
-          )}
+          {options.map((eachOption, index) => {
+            const value = optionValue(eachOption, index);
+            const label = optionLabel(eachOption, index);
+            return (
+              <Option value={value} key={value}>{label}</Option>
+            );
+          })}
         </Select>,
       )}
     </Item>

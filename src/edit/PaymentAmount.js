@@ -1,10 +1,11 @@
-import { Form, Row, Col, Input, Select, Icon, Button } from 'antd';
+import { Form, Row, Col, Input, Button } from 'antd';
 
 import { AMOUNT_TYPES } from './constants';
+
+import DropdownField from '../react/DropdownField';
 import { CURRENCY_OPTIONS } from '../constants';
 
 const { Item } = Form;
-const { Option } = Select;
 const { __ } = wp.i18n;
 
 export function PaymentAmount({
@@ -23,35 +24,25 @@ export function PaymentAmount({
       <h3>{__('결제 금액 필드', 'iamport-block')}</h3>
       <Row gutter={[8, 0]}>
         <Col span={7}>
-          <Item label={__('금액 유형','iamport-block')}>
-            {getFieldDecorator('amountType')(
-              <Select
-                size="large"
-                suffixIcon={<Icon type="caret-down" />}
-                onChange={onChange}
-              >
-                {Object.keys(AMOUNT_TYPES).map(eachType =>
-                  <Option value={eachType}>{AMOUNT_TYPES[eachType]}</Option>
-                )}
-              </Select>,
-            )}
-          </Item>
+          <DropdownField
+            label={__('금액 유형','iamport-block')}
+            name="amountType"
+            options={Object.keys(AMOUNT_TYPES)}
+            optionLabel={eachOption => AMOUNT_TYPES[eachOption]}
+            onChange={onChange}
+            getFieldDecorator={getFieldDecorator}
+          />
         </Col>
         {
           amountType !== 'free' &&
           <Col span={7}>
-            <Item label={__('화폐 단위','iamport-block')}>
-              {getFieldDecorator('currency')(
-                <Select
-                  size="large"
-                  suffixIcon={<Icon type="caret-down" />}
-                >
-                  {Object.keys(CURRENCY_OPTIONS).map(eachType =>
-                    <Option value={eachType}>{CURRENCY_OPTIONS[eachType]}</Option>
-                  )}
-                </Select>,
-              )}
-            </Item>
+            <DropdownField
+              label={__('화폐 단위','iamport-block')}
+              name="currency"
+              options={Object.keys(CURRENCY_OPTIONS)}
+              optionLabel={eachOption => CURRENCY_OPTIONS[eachOption]}
+              getFieldDecorator={getFieldDecorator}
+            />
           </Col>
         }
       </Row>

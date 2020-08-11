@@ -1,6 +1,7 @@
 import { Form, Row, Col, Input, Checkbox, Select, Switch, Icon } from 'antd';
 
 import { getPgLists, getPgLabel, getPayMethods } from './utils';
+import DropdownField from '../react/DropdownField';
 
 const { __ } = wp.i18n;
 const { Item } = Form;
@@ -84,54 +85,40 @@ export function BasicFields({ type, payMethods, getFieldDecorator }) {
           )}
         </Col>
       </Row>
-      <Item
+      <DropdownField
         label={__('신용카드 할부 개월수','iamport-block')}
+        name="cardQuota"
         style={{ display: isCardQuotaVisible ? 'block' : 'none' }}
-      >
-        {getFieldDecorator('cardQuota')(
-          <Select
-            size="large"
-            suffixIcon={<Icon type="caret-down" />}
-          >
-            {Array(13).fill(1).map((value, index) => {
-              let label;
-              if (index === 0) {
-                label = __('PG사 기본 제공 옵션', 'iamport-block');
-              } else if (index === 1) {
-                label = __('일시불 (할부불가)', 'iamport-block');
-              } else {
-                label = __(`최대 ${index}개월`, 'iamport-block');
-              }
-
-              return <Option value={index} key={index}>{label}</Option>;
-            })}
-          </Select>,
-        )}
-      </Item>
-      <Item
+        options={Array(13).fill(1)}
+        optionLabel={(_, index) => {
+          if (index === 0) {
+            return __('PG사 기본 제공 옵션', 'iamport-block');
+          }
+          if (index === 1) {
+            return __('일시불 (할부불가)', 'iamport-block');
+          }
+          return  __(`최대 ${index}개월`, 'iamport-block');
+        }}
+        optionValue={(_, index) => index}
+        getFieldDecorator={getFieldDecorator}
+      />
+      <DropdownField
         label={__('가상계좌 입금 기한','iamport-block')}
+        name="vbankDue"
         style={{ display: isVbankDueVisible ? 'block' : 'none' }}
-      >
-        {getFieldDecorator('vbankDue')(
-          <Select
-            size="large"
-            suffixIcon={<Icon type="caret-down" />}
-          >
-            {Array(14).fill(1).map((value, index) => {
-              let label;
-              if (index === 0) {
-                label = __('PG사 기본 제공 옵션', 'iamport-block');
-              } else if (index === 1) {
-                label = __('당일 자정까지', 'iamport-block');
-              } else {
-                label = __(`${index - 1}일 뒤 자정까지`, 'iamport-block');
-              }
-
-              return <Option value={index -1} key={index}>{label}</Option>;
-            })}
-          </Select>,
-        )}
-      </Item>
+        options={Array(14).fill(1)}
+        optionLabel={(_, index) => {
+          if (index === 0) {
+            return __('PG사 기본 제공 옵션', 'iamport-block');
+          }
+          if (index === 1) {
+            return __('당일 자정까지', 'iamport-block');
+          }
+          return  __(`${index - 1}일 뒤 자정까지`, 'iamport-block');
+        }}
+        optionValue={(_, index) => index - 1}
+        getFieldDecorator={getFieldDecorator}
+      />
       <Item
         label={__('실물 컨텐츠 여부','iamport-block')}
         style={{ display: isDigitalVisible ? 'block' : 'none' }}
