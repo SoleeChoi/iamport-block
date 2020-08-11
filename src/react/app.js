@@ -6,7 +6,14 @@ import BasicFields from './BasicFields';
 import CustomField from './CustomField';
 import ButtonContainer from './ButtonContainer';
 
-import { getButtonStyle, getDefaultFieldValues, getCustomLabels, getPaymentData, getOrderData } from './utils';
+import {
+  getButtonStyle,
+  getModalClassName,
+  getDefaultFieldValues,
+  getCustomLabels,
+  getPaymentData,
+  getOrderData,
+} from './utils';
 import { showLoginRequiredModal, showPaymentFailedModal } from '../utils';
 
 const { __ } = wp.i18n;
@@ -21,7 +28,6 @@ function App({ form, type, attributes }) {
     buttonName,
     buttonStyle,
     buttonClassName,
-    modalClassName,
     title,
     description,
     amountType,
@@ -29,6 +35,7 @@ function App({ form, type, attributes }) {
   } = attributes;
 
   const defaultFieldType = customFields && customFields.length === 0 ? 'basic' : 'custom';
+
   const customLabels = getCustomLabels(customFields);
   const [isOpen, setIsOpen] = useState(false);
   const [fieldType, setFieldType] = useState(defaultFieldType);
@@ -133,7 +140,7 @@ function App({ form, type, attributes }) {
         isOpen &&
         <Modal
           visible
-          className={`iamport-block-modal ${modalClassName}`}
+          className={getModalClassName(attributes)}
           centered={true}
           title={<ModalTitle />}
           footer={null}
