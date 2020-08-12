@@ -222,7 +222,7 @@ if ( !class_exists('IamportShortcode') ) {
 
 				switch($optionType) {
 					case 'name': {
-						$buyerOptions['name'] = array(
+						$buyerOptions['buyer_name'] = array(
 							'checked'		    => 'true',
 							'value' 		    => $buyerName,
 							'label' 		    => $optionLabel ? $optionLabel : __('결제자 이름', 'iamport-block'),
@@ -231,7 +231,7 @@ if ( !class_exists('IamportShortcode') ) {
             break;
 					}
 					case 'email': {
-						$buyerOptions['email'] = array(
+						$buyerOptions['buyer_email'] = array(
 							'checked'		    => 'true',
 							'value'			    => $buyerEmail,
 							'label'		      => $optionLabel ? $optionLabel : __('결제자 이메일', 'iamport-block'),
@@ -240,7 +240,7 @@ if ( !class_exists('IamportShortcode') ) {
             break;
 					}
 					case 'phone': {
-						$buyerOptions['phone'] = array(
+						$buyerOptions['buyer_tel'] = array(
 							'checked'		    => 'true',
 							'value'			    => null,
 							'label'		      => $optionLabel ? $optionLabel : __('결제자 전화번호', 'iamport-block'),
@@ -249,7 +249,7 @@ if ( !class_exists('IamportShortcode') ) {
             break;
 					}
 					case 'shipping_addr' : {
-						$buyerOptions['address'] = array(
+						$buyerOptions['buyer_addr'] = array(
 							'checked'		    => 'true',
 							'value'			    => null,
 							'label'		      => $optionLabel ? $optionLabel : __('배송주소', 'iamport-block'),

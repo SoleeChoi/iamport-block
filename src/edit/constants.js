@@ -45,22 +45,22 @@ export const BASIC_KEYS = [
 export const DEFAULT_AMOUNT_OPTIONS = [{ label: '', value: 1000, taxFreeAmount: 0 }];
 export const DEFAULT_AGREEMENT_OPTIONS = [{ label: '', value: '', type: 'link' }];
 export const DEFAULT_BUYER_OPTIONS = {
-  name: {
+  buyer_name: {
     checked: true,
     label: __('이름', 'iamport-block'),
     placeholder: '',
   },
-  email: {
+  buyer_email: {
     checked: true,
     label: __('이메일', 'iamport-block'),
     placeholder: '',
   },
-  phone: {
+  buyer_tel: {
     checked: true,
     label: __('전화번호', 'iamport-block'),
     placeholder: '',
   },
-  address: {
+  buyer_addr: {
     checked: false,
     label: __('주소', 'iamport-block'),
     placeholder: '',

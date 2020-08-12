@@ -18,7 +18,7 @@ export function BuyerFields({ getFieldDecorator }) {
               {getFieldDecorator(`buyerOptions.${option}.checked`, {
                 valuePropName: 'checked',
               })(
-                <Checkbox disabled={option !== 'address'}>
+                <Checkbox disabled={option !== 'buyer_addr'}>
                   {DEFAULT_BUYER_OPTIONS[option].label}
                 </Checkbox>
               )}
@@ -33,7 +33,7 @@ export function BuyerFields({ getFieldDecorator }) {
             />
           </Col>
           {
-            option !== 'address' &&
+            option !== 'buyer_addr' &&
             <Col span={10}>
               <InputField
                 label={index === 0 && __('입력 힌트', 'iamport-block')}
