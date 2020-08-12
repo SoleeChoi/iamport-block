@@ -16,6 +16,7 @@ export function CustomField({
   onChangeCustomFields,
 }) {
   const { label, type, placeholder, required, options, agreementOptions } = field;
+  const typeHelp = errorField && errorField.type;
   const labelHelp = errorField && errorField.label;
 
   const [placeholderVisible, setPlaceholderVisible] = useState(getPlaceholderVisible(type));
@@ -107,16 +108,18 @@ export function CustomField({
       </Row>
       <Row gutter={[8, 8]}>
         <Col span={7}>
-          <Select
-            size="large"
-            suffixIcon={<Icon type="caret-down" />}
-            value={type}
-            onChange={onChangeType}
-          >
-            {Object.keys(OPTION_TYPES).map(eachType =>
-              <Option value={eachType}>{OPTION_TYPES[eachType]}</Option>
-            )}
-          </Select>
+          <Item validateStatus={typeHelp && 'error'} help={typeHelp}>
+            <Select
+              size="large"
+              suffixIcon={<Icon type="caret-down" />}
+              value={type}
+              onChange={onChangeType}
+            >
+              {Object.keys(OPTION_TYPES).map(eachType =>
+                <Option value={eachType}>{OPTION_TYPES[eachType]}</Option>
+              )}
+            </Select>
+          </Item>
         </Col>
         <Col span={7}>
           <Item validateStatus={labelHelp && 'error'} help={labelHelp}>

@@ -9,9 +9,19 @@ export function validateCustomFields(customFields) {
   customFields.forEach(customField => {
     const { type, label, options, agreementOptions } = customField;
 
+    let typeMessage = '';
     let labelMessage = '';
     const agreementOptionsErrors = [];
     const optionsErrors = [];
+
+    if (type.startsWith('buyer')) {
+      // 중복된 유형이 있는지 검사한다
+      const duplicatedType = customFields.filter(field => field.type === type);
+      if (duplicatedType.length > 1) {
+        typeMessage = __('구매자 정보가 중복됩니다', 'iamport-block');
+      }
+    }
+
     if (!label) {
       // 라벨 값이 입력됐는지 검사한다
       labelMessage = __('필수 입력입니다', 'iamport-block');
@@ -73,6 +83,7 @@ export function validateCustomFields(customFields) {
     }
 
     errorFields.push({
+      type: typeMessage,
       label: labelMessage,
       agreementOptions: agreementOptionsErrors,
       options: optionsErrors,
