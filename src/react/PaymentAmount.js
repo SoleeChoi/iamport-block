@@ -47,6 +47,7 @@ function PaymentAmount({ getFieldDecorator, attributes }) {
           name="amount"
           disabled={true}
           addonBefore={CURRENCY_OPTIONS[currency]}
+          getFieldDecorator={getFieldDecorator}
         />
       );
     }
@@ -59,6 +60,7 @@ function PaymentAmount({ getFieldDecorator, attributes }) {
             pattern: /^(?:[1-9]\d*|0)?(?:\.\d+)?$/, message: __('결제 금액이 올바르지 않습니다', 'iamport-block'),
           }]}
           addonBefore={CURRENCY_OPTIONS[currency]}
+          getFieldDecorator={getFieldDecorator}
         />
       );
     }
