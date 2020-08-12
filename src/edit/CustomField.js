@@ -78,7 +78,7 @@ export function CustomField({
   }
 
   function getPlaceholderVisible(value) {
-    return value === 'text' || value.startsWith('buyer');
+    return value === 'text' || (value.startsWith('buyer') && value !== 'buyer_addr');
   }
 
   function getOptionVisible(value) {

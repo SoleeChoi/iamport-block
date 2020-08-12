@@ -60,11 +60,12 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
         )
       );
     }
-    case 'address': {
+    case 'address':
+    case 'buyer_addr': {
       return (
         <AddressField
           label={label}
-          name={label}
+          name={type.startsWith('buyer') ? type : label}
           required={required}
           getFieldDecorator={getFieldDecorator}
           onChange={onChangeAddress}  
@@ -85,7 +86,7 @@ function CustomField({ field, getFieldDecorator, onChangeAddress }) {
       return (
         <InputField
           label={label}
-          name={label}
+          name={type.startsWith('buyer') ? type : label}
           placeholder={placeholder}
           required={required}
           getFieldDecorator={getFieldDecorator}
