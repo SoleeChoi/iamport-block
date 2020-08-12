@@ -86,7 +86,7 @@ export function PaymentAmount({
                       if (!value) {
                         return Promise.reject(__('필수 입력입니다', 'iamport-block'));
                       }
-                      if (!value.match(/^\d+$/)) {
+                      if (!value.match(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)) {
                         return Promise.reject(__('결제 금액이 올바르지 않습니다', 'iamport-block'));
                       }
                       const taxFreeAmount = getFieldValue(`amountOptions[${index}].taxFreeAmount`);
@@ -105,7 +105,7 @@ export function PaymentAmount({
                   placeholder={__('예) 0', 'iamport-block')}
                   customRules={[{
                     validator:(_, value) => {
-                      if (value && !value.match(/^\d+$/)) {
+                      if (value && !value.match(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)) {
                         return Promise.reject(__('면세 금액이 올바르지 않습니다', 'iamport-block'));
                       }
                       const amount = getFieldValue(`amountOptions[${index}].value`);
