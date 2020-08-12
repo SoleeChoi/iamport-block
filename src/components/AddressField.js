@@ -72,7 +72,15 @@ export function AddressField({ label, name, required, getFieldDecorator, onChang
             extraAddress: extraAddr.trim(),
           },
         });
-        detailAddressRef.current.input.focus();
+        /**
+         * [TODO]
+         * 주소가 커스텀 필드와 베이직 필드 두 군데 존재하면
+         * 커스텀 필드의 detailAddressRef.current.input이 null이 된다 발생한다
+         */
+        const detailAddressDom = detailAddressRef.current;
+        if (detailAddressDom) {
+          detailAddressDom.input.focus();
+        }
 
         /**
          * iframe을 넣은 element를 안보이게 한다.
