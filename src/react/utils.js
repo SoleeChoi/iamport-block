@@ -7,7 +7,7 @@ export function getButtonStyle(buttonStyle) {
   if (buttonStyle) {
     buttonStyle.split(';').forEach(eachStyle => {
       const[key, value] = eachStyle.split(':');
-      if (key) {
+      if (key && value) {
         const keyToCamelCase = key.trim().replace(/([-][a-z])/ig, $1 => $1.toUpperCase().replace('-', ''));
         buttonStyleObj[keyToCamelCase] = value.trim();
       }
