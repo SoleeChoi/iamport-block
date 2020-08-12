@@ -1,6 +1,8 @@
-import { Form, Row, Col, Input, Checkbox } from 'antd';
+import { Form, Row, Col, Checkbox } from 'antd';
 
 import { DEFAULT_BUYER_OPTIONS } from './constants';
+
+import InputField from '../components/InputField';
 
 const { __ } = wp.i18n;
 const { Item } = Form;
@@ -23,23 +25,21 @@ export function BuyerFields({ getFieldDecorator }) {
             </Item>
           </Col>
           <Col span={7}>
-            <Item label={index === 0 && __('입력 라벨', 'iamport-block')}>
-              {getFieldDecorator(
-                `buyerOptions.${option}.label`,
-                { rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }] }
-              )(
-                <Input size="large" />
-              )}
-            </Item>
+            <InputField
+              label={index === 0 && __('입력 라벨', 'iamport-block')}
+              name={`buyerOptions.${option}.label`}
+              required={true}
+              getFieldDecorator={getFieldDecorator}
+            />
           </Col>
           {
             option !== 'address' &&
             <Col span={10}>
-              <Item label={index === 0 && __('입력 힌트', 'iamport-block')}>
-                {getFieldDecorator(`buyerOptions.${option}.placeholder`)(
-                  <Input size="large" />
-                )}
-              </Item>
+              <InputField
+                label={index === 0 && __('입력 힌트', 'iamport-block')}
+                name={`buyerOptions.${option}.placeholder`}
+                getFieldDecorator={getFieldDecorator}
+              />
             </Col>
           }
         </Row>

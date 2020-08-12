@@ -1,6 +1,9 @@
-import { Form, Row, Col, Input, Checkbox, Select, Switch, Icon } from 'antd';
+import { Form, Row, Col, Checkbox, Select, Switch, Icon } from 'antd';
 
 import { getPgLists, getPgLabel, getPayMethods } from './utils';
+
+import InputField from '../components/InputField';
+import DropdownField from '../components/DropdownField';
 
 const { __ } = wp.i18n;
 const { Item } = Form;
@@ -29,33 +32,44 @@ export function BasicFields({ type, payMethods, getFieldDecorator }) {
   return (
     <div>
       <h3>{__('기본 필드', 'iamport-block')}</h3>
-      <Item label={__('결제 버튼 라벨','iamport-block')}>
-        {getFieldDecorator('buttonName', {
-          rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block')}],
-        })(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 버튼 클래스 이름','iamport-block')}>
-        {getFieldDecorator('buttonClassName')(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 버튼 스타일 속성','iamport-block')}>
-        {getFieldDecorator('buttonStyle')(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 팝업 클래스 이름','iamport-block')}>
-        {getFieldDecorator('modalClassName')(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 팝업 타이틀','iamport-block')}>
-        {getFieldDecorator('title', {
-          rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
-        })(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 팝업 서브 타이틀','iamport-block')}>
-        {getFieldDecorator('description')(<Input size="large" />)}
-      </Item>
-      <Item label={__('주문명','iamport-block')}>
-        {getFieldDecorator('name', {
-          rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
-        })(<Input size="large" />)}
-      </Item>
+      <InputField
+        label={__('결제 버튼 라벨','iamport-block')}
+        name="buttonName"
+        required={true}
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 버튼 클래스 이름','iamport-block')}
+        name="buttonClassName"
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 버튼 스타일 속성','iamport-block')}
+        name="buttonStyle"
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 팝업 클래스 이름','iamport-block')}
+        name="modalClassName"
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 팝업 타이틀','iamport-block')}
+        name="title"
+        required={true}
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 팝업 서브 타이틀','iamport-block')}
+        name="description"
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('주문명','iamport-block')}
+        name="name"
+        required={true}
+        getFieldDecorator={getFieldDecorator}
+      />
       <Row>
         <Col span={7}>
           <Item label={__('결제 수단', 'iamport-block')}>
@@ -72,66 +86,50 @@ export function BasicFields({ type, payMethods, getFieldDecorator }) {
         </Col>
         <Col span={17}>
           {Object.keys(AllPayMethods).map((method, index) =>
-            <Item label={index === 0 && __('PG사', 'iamport-block')}>
-              {getFieldDecorator(`pgMids.${method}`)(
-                <Input
-                  size="large"
-                  placeholder={__('PG 상점아이디', 'iamport-block')}
-                  addonBefore={<PgSelector method={method} />}
-                />
-              )}
-            </Item>
+            <InputField
+              label={index === 0 && __('PG사', 'iamport-block')}
+              name={`pgMids.${method}`}
+              placeholder={__('PG 상점아이디', 'iamport-block')}
+              getFieldDecorator={getFieldDecorator}
+              addonBefore={<PgSelector method={method} />}
+            />
           )}
         </Col>
       </Row>
-      <Item
+      <DropdownField
         label={__('신용카드 할부 개월수','iamport-block')}
+        name="cardQuota"
         style={{ display: isCardQuotaVisible ? 'block' : 'none' }}
-      >
-        {getFieldDecorator('cardQuota')(
-          <Select
-            size="large"
-            suffixIcon={<Icon type="caret-down" />}
-          >
-            {Array(13).fill(1).map((value, index) => {
-              let label;
-              if (index === 0) {
-                label = __('PG사 기본 제공 옵션', 'iamport-block');
-              } else if (index === 1) {
-                label = __('일시불 (할부불가)', 'iamport-block');
-              } else {
-                label = __(`최대 ${index}개월`, 'iamport-block');
-              }
-
-              return <Option value={index} key={index}>{label}</Option>;
-            })}
-          </Select>,
-        )}
-      </Item>
-      <Item
+        options={Array(13).fill(1)}
+        optionLabel={(_, index) => {
+          if (index === 0) {
+            return __('PG사 기본 제공 옵션', 'iamport-block');
+          }
+          if (index === 1) {
+            return __('일시불 (할부불가)', 'iamport-block');
+          }
+          return  __(`최대 ${index}개월`, 'iamport-block');
+        }}
+        optionValue={(_, index) => index}
+        getFieldDecorator={getFieldDecorator}
+      />
+      <DropdownField
         label={__('가상계좌 입금 기한','iamport-block')}
+        name="vbankDue"
         style={{ display: isVbankDueVisible ? 'block' : 'none' }}
-      >
-        {getFieldDecorator('vbankDue')(
-          <Select
-            size="large"
-            suffixIcon={<Icon type="caret-down" />}
-          >
-            {Array(14).fill(1).map((value, index) => {
-              let label;
-              if (index === 0) {
-                label = __('PG사 기본 제공 옵션', 'iamport-block');
-              } else if (index === 1) {
-                label = __('당일 자정까지', 'iamport-block');
-              } else {
-                label = __(`${index - 1}일 뒤 자정까지`, 'iamport-block');
-              }
-
-              return <Option value={index -1} key={index}>{label}</Option>;
-            })}
-          </Select>,
-        )}
-      </Item>
+        options={Array(14).fill(1)}
+        optionLabel={(_, index) => {
+          if (index === 0) {
+            return __('PG사 기본 제공 옵션', 'iamport-block');
+          }
+          if (index === 1) {
+            return __('당일 자정까지', 'iamport-block');
+          }
+          return  __(`${index - 1}일 뒤 자정까지`, 'iamport-block');
+        }}
+        optionValue={(_, index) => index - 1}
+        getFieldDecorator={getFieldDecorator}
+      />
       <Item
         label={__('실물 컨텐츠 여부','iamport-block')}
         style={{ display: isDigitalVisible ? 'block' : 'none' }}
@@ -141,11 +139,12 @@ export function BasicFields({ type, payMethods, getFieldDecorator }) {
           initialValue: false,
         })(<Switch />)}
       </Item>
-      <Item label={__('결제 후 이동될 URL','iamport-block')}>
-        {getFieldDecorator('redirectAfter', {
-          rules: [{ type: 'url', message: __('URL이 올바르지 않습니다', 'iamport-block') }],
-        })(<Input size="large" />)}
-      </Item>
+      <InputField
+        label={__('결제 후 이동될 URL','iamport-block')}
+        name="redirectAfter"
+        type="url"
+        getFieldDecorator={getFieldDecorator}
+      />
     </div>
   );
 }

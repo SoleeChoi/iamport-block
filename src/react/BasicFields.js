@@ -1,14 +1,12 @@
-import { Form, Select, Icon } from 'antd';
-
 import PaymentAmount from './PaymentAmount';
-import AddressField from './AddressField';
-import InputField from './InputField';
+
+import DropdownField from '../components/DropdownField';
+import AddressField from '../components/AddressField';
+import InputField from '../components/InputField';
 
 import { PAY_METHODS_FOR_PAYMENT } from '../constants';
 
 const { __ } = wp.i18n;
-const { Item } = Form;
-const { Option } = Select;
 
 function BasicFields({ show, getFieldDecorator, attributes, onChangeAddress }) {
   const { amountType, payMethods, buyerOptions } = attributes;
@@ -19,15 +17,13 @@ function BasicFields({ show, getFieldDecorator, attributes, onChangeAddress }) {
       {
         amountType !== 'free' &&
         <div>
-          <Item label={__('결제수단','iamport-block')}>
-            {getFieldDecorator('pay_method')(
-              <Select size="large" suffixIcon={<Icon type="caret-down" />}>
-                {payMethods.map(method =>
-                  <Option value={method}>{PAY_METHODS_FOR_PAYMENT[method]}</Option>  
-                )}
-              </Select>,
-            )}
-          </Item>
+          <DropdownField
+            label={__('결제수단','iamport-block')}
+            name="pay_method"
+            options={payMethods}
+            optionLabel={eachOption => PAY_METHODS_FOR_PAYMENT[eachOption]}
+            getFieldDecorator={getFieldDecorator}
+          />
           <PaymentAmount
             getFieldDecorator={getFieldDecorator}
             attributes={attributes}

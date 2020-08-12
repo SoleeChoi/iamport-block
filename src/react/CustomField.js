@@ -1,10 +1,10 @@
-import RadioField from './RadioField';
-import CheckboxField from './CheckboxField';
-import DropdownField from './DropdownField';
-import FileField from './FileField';
-import AgreementField from './AgreementField';
-import AddressField from './AddressField';
-import InputField from './InputField';
+import RadioField from '../components/RadioField';
+import CheckboxField from '../components/CheckboxField';
+import DropdownField from '../components/DropdownField';
+import FileField from '../components/FileField';
+import AgreementField from '../components/AgreementField';
+import AddressField from '../components/AddressField';
+import InputField from '../components/InputField';
 
 function CustomField({ field, getFieldDecorator, onChangeAddress }) {
   const { label, type, placeholder, options, agreementOptions, required } = field;
