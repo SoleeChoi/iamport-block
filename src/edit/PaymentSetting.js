@@ -109,7 +109,10 @@ export function PaymentSetting({ form, attributes, type, className, setAttribute
         <CustomFields
           customFields={customFields}
           errorFields={errorFields}
-          setCustomFields={setCustomFields}
+          setCustomFields={newCustomFields => {
+            setErrorFields(defaultErorFields); // 에러 필드 초기화
+            setCustomFields(newCustomFields);
+          }}
         />
         <Button
           size="large"
