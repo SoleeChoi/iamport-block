@@ -1,6 +1,8 @@
-import { Form, Row, Col, Input, Checkbox, Select, Switch, Icon } from 'antd';
+import { Form, Row, Col, Checkbox, Select, Switch, Icon } from 'antd';
 
 import { getPgLists, getPgLabel, getPayMethods } from './utils';
+
+import InputField from '../react/InputField';
 import DropdownField from '../react/DropdownField';
 
 const { __ } = wp.i18n;
@@ -30,33 +32,44 @@ export function BasicFields({ type, payMethods, getFieldDecorator }) {
   return (
     <div>
       <h3>{__('기본 필드', 'iamport-block')}</h3>
-      <Item label={__('결제 버튼 라벨','iamport-block')}>
-        {getFieldDecorator('buttonName', {
-          rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block')}],
-        })(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 버튼 클래스 이름','iamport-block')}>
-        {getFieldDecorator('buttonClassName')(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 버튼 스타일 속성','iamport-block')}>
-        {getFieldDecorator('buttonStyle')(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 팝업 클래스 이름','iamport-block')}>
-        {getFieldDecorator('modalClassName')(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 팝업 타이틀','iamport-block')}>
-        {getFieldDecorator('title', {
-          rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
-        })(<Input size="large" />)}
-      </Item>
-      <Item label={__('결제 팝업 서브 타이틀','iamport-block')}>
-        {getFieldDecorator('description')(<Input size="large" />)}
-      </Item>
-      <Item label={__('주문명','iamport-block')}>
-        {getFieldDecorator('name', {
-          rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
-        })(<Input size="large" />)}
-      </Item>
+      <InputField
+        label={__('결제 버튼 라벨','iamport-block')}
+        name="buttonName"
+        required={true}
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 버튼 클래스 이름','iamport-block')}
+        name="buttonClassName"
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 버튼 스타일 속성','iamport-block')}
+        name="buttonStyle"
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 팝업 클래스 이름','iamport-block')}
+        name="modalClassName"
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 팝업 타이틀','iamport-block')}
+        name="title"
+        required={true}
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('결제 팝업 서브 타이틀','iamport-block')}
+        name="description"
+        getFieldDecorator={getFieldDecorator}
+      />
+      <InputField
+        label={__('주문명','iamport-block')}
+        name="name"
+        required={true}
+        getFieldDecorator={getFieldDecorator}
+      />
       <Row>
         <Col span={7}>
           <Item label={__('결제 수단', 'iamport-block')}>
@@ -73,15 +86,13 @@ export function BasicFields({ type, payMethods, getFieldDecorator }) {
         </Col>
         <Col span={17}>
           {Object.keys(AllPayMethods).map((method, index) =>
-            <Item label={index === 0 && __('PG사', 'iamport-block')}>
-              {getFieldDecorator(`pgMids.${method}`)(
-                <Input
-                  size="large"
-                  placeholder={__('PG 상점아이디', 'iamport-block')}
-                  addonBefore={<PgSelector method={method} />}
-                />
-              )}
-            </Item>
+            <InputField
+              label={index === 0 && __('PG사', 'iamport-block')}
+              name={`pgMids.${method}`}
+              placeholder={__('PG 상점아이디', 'iamport-block')}
+              getFieldDecorator={getFieldDecorator}
+              addonBefore={<PgSelector method={method} />}
+            />
           )}
         </Col>
       </Row>
@@ -128,11 +139,12 @@ export function BasicFields({ type, payMethods, getFieldDecorator }) {
           initialValue: false,
         })(<Switch />)}
       </Item>
-      <Item label={__('결제 후 이동될 URL','iamport-block')}>
-        {getFieldDecorator('redirectAfter', {
-          rules: [{ type: 'url', message: __('URL이 올바르지 않습니다', 'iamport-block') }],
-        })(<Input size="large" />)}
-      </Item>
+      <InputField
+        label={__('결제 후 이동될 URL','iamport-block')}
+        name="redirectAfter"
+        type="url"
+        getFieldDecorator={getFieldDecorator}
+      />
     </div>
   );
 }

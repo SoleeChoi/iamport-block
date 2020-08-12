@@ -1,11 +1,12 @@
-import { Form, Row, Col, Input, Button } from 'antd';
+import { Row, Col, Button } from 'antd';
 
 import { AMOUNT_TYPES } from './constants';
 
 import DropdownField from '../react/DropdownField';
+import InputField from '../react/InputField';
+
 import { CURRENCY_OPTIONS } from '../constants';
 
-const { Item } = Form;
 const { __ } = wp.i18n;
 
 export function PaymentAmount({
@@ -68,66 +69,54 @@ export function PaymentAmount({
             }
             <Row gutter={[8, 0]}>
               <Col span={7}>
-                <Item>
-                  {getFieldDecorator(`amountOptions[${index}].label`, {
-                    rules: [{ required: true, message: __('필수 입력입니다', 'iamport-block') }],
-                  })(
-                    <Input
-                      size="large"
-                      addonBefore={CURRENCY_OPTIONS[currency]}
-                      placeholder={__('예) 1000(어린이)', 'iamport-block')}
-                    />
-                  )}
-                </Item>
+                <InputField
+                  name={`amountOptions[${index}].label`}
+                  required={true}
+                  placeholder={__('예) 1000(어린이)', 'iamport-block')}
+                  addonBefore={CURRENCY_OPTIONS[currency]}
+                  getFieldDecorator={getFieldDecorator}
+                />
               </Col>
               <Col span={7}>
-                <Item>
-                  {getFieldDecorator(`amountOptions[${index}].value`, {
-                    rules: [{
-                      validator:(_, value) => {
-                        if (!value) {
-                          return Promise.reject(__('필수 입력입니다', 'iamport-block'));
-                        }
-                        if (!value.match(/^\d+$/)) {
-                          return Promise.reject(__('결제 금액이 올바르지 않습니다', 'iamport-block'));
-                        }
-                        const taxFreeAmount = getFieldValue(`amountOptions[${index}].taxFreeAmount`);
-                        if (parseInt(value, 10) < parseInt(taxFreeAmount, 10)) {
-                          return Promise.reject(__('결제 금액은 면세 금액보다 큰 값이어야 합니다', 'iamport-block'));
-                        }
-                        return Promise.resolve();
-                      },
-                    }],
-                  })(
-                    <Input
-                      size="large"
-                      placeholder={__('예) 1000', 'iamport-block')}
-                    />
-                  )}
-                </Item>
+                <InputField
+                  name={`amountOptions[${index}].value`}
+                  placeholder={__('예) 1000', 'iamport-block')}
+                  customRules={[{
+                    validator:(_, value) => {
+                      if (!value) {
+                        return Promise.reject(__('필수 입력입니다', 'iamport-block'));
+                      }
+                      if (!value.match(/^\d+$/)) {
+                        return Promise.reject(__('결제 금액이 올바르지 않습니다', 'iamport-block'));
+                      }
+                      const taxFreeAmount = getFieldValue(`amountOptions[${index}].taxFreeAmount`);
+                      if (parseInt(value, 10) < parseInt(taxFreeAmount, 10)) {
+                        return Promise.reject(__('결제 금액은 면세 금액보다 큰 값이어야 합니다', 'iamport-block'));
+                      }
+                      return Promise.resolve();
+                    },
+                  }]}
+                  getFieldDecorator={getFieldDecorator}
+                />
               </Col>
               <Col span={7}>
-                <Item>
-                  {getFieldDecorator(`amountOptions[${index}].taxFreeAmount`, {
-                    rules: [{
-                      validator:(_, value) => {
-                        if (value && !value.match(/^\d+$/)) {
-                          return Promise.reject(__('면세 금액이 올바르지 않습니다', 'iamport-block'));
-                        }
-                        const amount = getFieldValue(`amountOptions[${index}].value`);
-                        if (parseInt(value, 10) > parseInt(amount, 10)) {
-                          return Promise.reject(__('면세 금액은 결제 금액보다 작은 값이어야 합니다', 'iamport-block'));
-                        }
-                        return Promise.resolve();
-                      },
-                    }],
-                  })(
-                    <Input
-                      size="large"
-                      placeholder={__('예) 0', 'iamport-block')}
-                    />
-                  )}
-                </Item>
+                <InputField
+                  name={`amountOptions[${index}].taxFreeAmount`}
+                  placeholder={__('예) 0', 'iamport-block')}
+                  customRules={[{
+                    validator:(_, value) => {
+                      if (value && !value.match(/^\d+$/)) {
+                        return Promise.reject(__('면세 금액이 올바르지 않습니다', 'iamport-block'));
+                      }
+                      const amount = getFieldValue(`amountOptions[${index}].value`);
+                      if (parseInt(value, 10) > parseInt(amount, 10)) {
+                        return Promise.reject(__('면세 금액은 결제 금액보다 작은 값이어야 합니다', 'iamport-block'));
+                      }
+                      return Promise.resolve();
+                    },
+                  }]}
+                  getFieldDecorator={getFieldDecorator}
+                />
               </Col>
               <Col span={3}>
                 {

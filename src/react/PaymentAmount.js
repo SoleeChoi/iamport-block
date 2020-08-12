@@ -1,5 +1,6 @@
 import { Form, Input, Select, Icon } from 'antd';
 
+import InputField from './InputField';
 import { CURRENCY_OPTIONS } from '../constants';
 
 const { __ } = wp.i18n;
@@ -40,33 +41,24 @@ function PaymentAmount({ getFieldDecorator, attributes }) {
     }
     case 'fixed': {
       return (
-        <Item label={__('결제 금액', 'iamport-block')}>
-          {getFieldDecorator('amount')(
-            <Input
-              size="large"
-              disabled={true}
-              addonBefore={CURRENCY_OPTIONS[currency]}
-            />,
-          )}
-        </Item>
+        <InputField
+          label={__('결제 금액', 'iamport-block')}
+          name="amount"
+          disabled={true}
+          addonBefore={CURRENCY_OPTIONS[currency]}
+        />
       );
     }
     default: {
       return (
-        <Item label={__('결제 금액', 'iamport-block')}>
-          {getFieldDecorator('amount', {
-            rules: [{
-              required: true, message: __('필수 입력입니다', 'iamport-block')
-            }, {
-              pattern: /^(?:[1-9]\d*|0)?(?:\.\d+)?$/, message: __('결제 금액이 올바르지 않습니다', 'iamport-block'),
-            }],
-          })(
-            <Input
-              size="large"
-              addonBefore={CURRENCY_OPTIONS[currency]}
-            />,
-          )}
-        </Item>
+        <InputField
+          label={__('결제 금액', 'iamport-block')}
+          name="amount"
+          customRules={[{
+            pattern: /^(?:[1-9]\d*|0)?(?:\.\d+)?$/, message: __('결제 금액이 올바르지 않습니다', 'iamport-block'),
+          }]}
+          addonBefore={CURRENCY_OPTIONS[currency]}
+        />
       );
     }
   }
