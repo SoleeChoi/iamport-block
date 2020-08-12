@@ -12,12 +12,14 @@ function DropdownField({
   optionValue = eachOption => eachOption,
   optionLabel = eachOption => eachOption,
   required,
+  initialValue,
   onChange,
   getFieldDecorator,
 }) {
   return (
     <Item label={label} style={style}>
       {getFieldDecorator(name, {
+        initialValue,
         rules: [{ required, message: __('필수 선택입니다', 'iamport-block') }],
       })(
         <Select

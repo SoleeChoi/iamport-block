@@ -40,6 +40,7 @@ export function PaymentAmount({
             <DropdownField
               label={__('화폐 단위','iamport-block')}
               name="currency"
+              initialValue="KRW"
               options={Object.keys(CURRENCY_OPTIONS)}
               optionLabel={eachOption => CURRENCY_OPTIONS[eachOption]}
               getFieldDecorator={getFieldDecorator}
