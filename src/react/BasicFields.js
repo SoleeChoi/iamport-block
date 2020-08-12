@@ -10,7 +10,7 @@ const { __ } = wp.i18n;
 
 function BasicFields({ show, getFieldDecorator, attributes, onChangeAddress }) {
   const { amountType, payMethods, buyerOptions } = attributes;
-  const { email, name, phone, address } = buyerOptions;
+  const { buyer_name, buyer_email, buyer_tel, buyer_addr } = buyerOptions;
 
   return (
     <div style={{ display: show ? 'block' : 'none' }}>
@@ -31,32 +31,32 @@ function BasicFields({ show, getFieldDecorator, attributes, onChangeAddress }) {
         </div>
       }
       <InputField
-        label={name.label}
+        label={buyer_name.label}
         name="buyer_name"
         required={true}
-        placeholder={name.placeholder}
+        placeholder={buyer_name.placeholder}
         getFieldDecorator={getFieldDecorator}
       />
       <InputField
-        label={email.label}
+        label={buyer_email.label}
         name="buyer_email"
         type="email"
         required={true}
-        placeholder={email.placeholder}
+        placeholder={buyer_email.placeholder}
         getFieldDecorator={getFieldDecorator}
       />
       <InputField
-        label={phone.label}
+        label={buyer_tel.label}
         name="buyer_tel"
         type="number"
         required={true}
-        placeholder={phone.placeholder}
+        placeholder={buyer_tel.placeholder}
         getFieldDecorator={getFieldDecorator}
       />
       {
-        address.checked &&
+        buyer_addr.checked &&
         <AddressField
-          label={address.label}
+          label={buyer_addr.label}
           name="buyer_addr"
           required={true}
           getFieldDecorator={getFieldDecorator}
