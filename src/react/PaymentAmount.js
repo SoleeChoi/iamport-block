@@ -1,6 +1,7 @@
 import { Form, Input, Select, Icon } from 'antd';
 
-import InputField from './InputField';
+import InputField from '../components/InputField';
+
 import { CURRENCY_OPTIONS } from '../constants';
 
 const { __ } = wp.i18n;

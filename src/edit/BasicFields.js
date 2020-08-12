@@ -2,8 +2,8 @@ import { Form, Row, Col, Checkbox, Select, Switch, Icon } from 'antd';
 
 import { getPgLists, getPgLabel, getPayMethods } from './utils';
 
-import InputField from '../react/InputField';
-import DropdownField from '../react/DropdownField';
+import InputField from '../components/InputField';
+import DropdownField from '../components/DropdownField';
 
 const { __ } = wp.i18n;
 const { Item } = Form;

@@ -1,7 +1,8 @@
 import { Form, Row, Col, Checkbox } from 'antd';
 
 import { DEFAULT_BUYER_OPTIONS } from './constants';
-import InputField from '../react/InputField';
+
+import InputField from '../components/InputField';
 
 const { __ } = wp.i18n;
 const { Item } = Form;

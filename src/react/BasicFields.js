@@ -1,7 +1,8 @@
-import DropdownField from './DropdownField';
 import PaymentAmount from './PaymentAmount';
-import AddressField from './AddressField';
-import InputField from './InputField';
+
+import DropdownField from '../components/DropdownField';
+import AddressField from '../components/AddressField';
+import InputField from '../components/InputField';
 
 import { PAY_METHODS_FOR_PAYMENT } from '../constants';
 

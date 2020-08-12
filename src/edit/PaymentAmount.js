@@ -2,8 +2,8 @@ import { Row, Col, Button } from 'antd';
 
 import { AMOUNT_TYPES } from './constants';
 
-import DropdownField from '../react/DropdownField';
-import InputField from '../react/InputField';
+import DropdownField from '../components/DropdownField';
+import InputField from '../components/InputField';
 
 import { CURRENCY_OPTIONS } from '../constants';
 
