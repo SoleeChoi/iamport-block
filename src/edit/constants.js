@@ -15,6 +15,10 @@ export const OPTION_TYPES = {
   checkbox: __('복수선택', 'iamport-block'),
   radio: __('단일선택 (라디오)', 'iamport-block'),
   dropdown: __('단일선택 (드롭다운)', 'iamport-block'),
+  buyer_name: __('구매자 이름', 'iamport-block'),
+  buyer_email: __('구매자 이메일', 'iamport-block'),
+  buyer_tel: __('구매자 전화번호', 'iamport-block'),
+  buyer_addr: __('구매자 주소', 'iamport-block'),
 };
 
 export const BASIC_KEYS = [

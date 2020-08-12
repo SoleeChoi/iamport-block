@@ -27,7 +27,7 @@ export function CustomFields({ customFields, errorFields, setCustomFields }) {
       if (index === fieldIndex) {
         return {
           ...field,
-          [type]: field[type].filter((option, eachOptionIndex) => eachOptionIndex !== optionIndex),
+          [type]: field[type].filter((_, eachOptionIndex) => eachOptionIndex !== optionIndex),
         };
       }
       return field;
@@ -49,7 +49,7 @@ export function CustomFields({ customFields, errorFields, setCustomFields }) {
   function onDeleteCustomField(index) {
     // customField 삭제
     showDeleteCustomFieldModal(() => {
-      const newCustomFields = customFields.filter((field, fieldIndex) => fieldIndex !== index);
+      const newCustomFields = customFields.filter((_, fieldIndex) => fieldIndex !== index);
       setCustomFields(newCustomFields);
     });
   }

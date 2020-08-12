@@ -70,7 +70,7 @@ export function PaymentSetting({ form, attributes, type, className, setAttribute
 
   function onDeleteAmountOptions(index) {
     // 금액 옵션 삭제했을때
-    setAmountOptions(amountOptions.filter((option, optionIndex) => optionIndex !== index));
+    setAmountOptions(amountOptions.filter((_, optionIndex) => optionIndex !== index));
   }
 
   function onAddCustomField() {
