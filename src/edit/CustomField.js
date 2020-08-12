@@ -78,11 +78,11 @@ export function CustomField({
   }
 
   function getPlaceholderVisible(value) {
-    return value === 'text';
+    return value === 'text' || value.startsWith('buyer');
   }
 
   function getOptionVisible(value) {
-    return value !== 'text' && value !== 'file' && value !== 'address' && !getAgreementVisible(value);
+    return value === 'checkbox' || value === 'radio' || value === 'dropdown';
   }
 
   function getAgreementVisible(value) {
