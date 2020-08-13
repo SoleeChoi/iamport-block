@@ -204,7 +204,10 @@ if ( !class_exists('IamportBlock') ) {
     
     public function add_custom_action_button()
     {
-      if (get_query_var('post_type') === 'iamport_block') {
+      if (
+        get_query_var('post_type') === 'iamport_block' &&
+        wp_count_posts('iamport_block')->publish > 0
+      ) {
         ?>
           <script type="text/javascript">
             jQuery(document).ready(function($) {
