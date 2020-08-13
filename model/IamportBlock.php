@@ -1,5 +1,27 @@
 <?php
 
+global $wpdb;
+
+if ( isset($_POST['action']) && $_POST['action'] === "rollback_to_iamport_payment") {  
+  // 모든 결제내역 일괄 복구
+  $table = 'wp_posts';
+  $data = array(
+    'post_type' => 'iamport_payment'
+  );
+  $where = array(
+    'post_type'   => 'iamport_block',
+    'post_status' => 'publish'
+  );
+  $wpdb->update($table, $data, $where); 
+
+  // TODO
+  ?>
+    <script type="text/javascript">
+      window.location.href = "<?=admin_url('edit.php?post_type=iamport_block')?>";
+    </script>
+  <?php
+}
+
 if ( !class_exists('IamportBlock') ) {
 	require_once(dirname(__FILE__).'/IamportBlockApi.php');
   require_once(dirname(__FILE__).'/IamportBlockOrder.php');
@@ -26,6 +48,13 @@ if ( !class_exists('IamportBlock') ) {
 
 			add_action( 'add_meta_boxes', array($this, 'iamport_order_metabox') );
       add_action( 'save_post', array($this, 'save_iamport_order_metabox') );
+
+      add_action( 'admin_head-edit.php', array($this, 'add_custom_action_button') );
+
+      add_filter( 'bulk_actions-edit-iamport_block', array($this, 'register_custom_bulk_actions') );
+      add_filter( 'handle_bulk_actions-edit-iamport_block', array($this, 'custom_bulk_action_handler'), 10, 3 );
+
+      add_action( 'admin_notices', array($this, 'custom_bulk_actions_notices') );
     }
 
 		public function iamport_admin_menu() {
@@ -171,7 +200,63 @@ if ( !class_exists('IamportBlock') ) {
 
         wp_send_json($response);
       }
-		}
+    }
+    
+    public function add_custom_action_button()
+    {
+      if (
+        get_query_var('post_type') === 'iamport_block' &&
+        wp_count_posts('iamport_block')->publish > 0
+      ) {
+        ?>
+          <script type="text/javascript">
+            jQuery(document).ready(function($) {
+              jQuery(jQuery(".wp-heading-inline")[0]).after("<form method='post' action='' style='display: inline-block;'><input type='hidden' name='action' value='rollback_to_iamport_payment' /><input type='submit' class='button-primary' style='margin-left: 5px;' value='결제내역 일괄 복구' /></form>");
+            });
+          </script>
+        <?php
+      }
+    }
+
+    public function register_custom_bulk_actions($bulk_actions) {
+      $bulk_actions['copy-to-iamport-payment'] = __('아임포트 결제내역 복구', 'iamport-payment');
+      return $bulk_actions;
+    }
+
+    public function custom_bulk_action_handler( $redirect_to, $doaction, $post_ids ) {
+      global $wpdb;
+
+      if ( $doaction !== 'copy-to-iamport-payment' ) {
+        return $redirect_to;
+      }
+
+      // 선택된 결제내역에만 적용
+      $postIdsString = implode(',', $post_ids);
+      $wpdb->query(
+        $wpdb->prepare(
+          "UPDATE {$wpdb->posts} SET post_type = %s WHERE ID IN ($postIdsString)",
+          "iamport_payment"
+        )
+      );
+
+      $redirect_to = add_query_arg('rollback_count', count( $post_ids ), $redirect_to);
+      return $redirect_to;
+    }
+
+    function custom_bulk_actions_notices() {
+      $rollback_count = $_GET['rollback_count'];
+      if (!empty($rollback_count)) {
+        $class = 'updated notice is-dismissable';
+
+        printf(
+          '<div class="%s" style="margin-left: 0;"><p>' .
+          __('%s건의 결제내역이 복구 되었습니다.', 'iamport-block') .
+          '</p></div>',
+          esc_attr( $class ),
+          $rollback_count
+        ); 
+      }
+    }
 
 		private function get_order_uid() {
 			return uniqid(date('mdis_'));
